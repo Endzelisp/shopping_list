@@ -1,0 +1,63 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: rgb(247,254,255);
+  background: linear-gradient(180deg, rgba(247,254,255,1) 38%, rgba(0,65,255,1) 100%);
+}
+
+
+@media only screen and (max-width: 600px){
+  html {
+    min-height: 100vh;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 8vh;
+  }
+
+  .input-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 5vh;
+    margin-bottom: 1rem;
+  }
+
+  .input-area input, .input-area button {
+    height: 3.5vh;
+  }
+
+  .input-area input{
+    width: 70vw;
+  }
+
+  .input-area button {
+    padding: 0 3%;
+  } 
+
+  .items li {
+    justify-content: space-between;
+    align-items: baseline;
+    max-width: 90%;
+    margin: 0 auto 12px;
+    display: flex;
+    font-size: 1.5rem;
+    box-shadow: 0 5px 6px -5px black;
+  }
+
+  .delete-cross {
+    align-self: center;
+    padding-right: 1%;
+    font-size: 0.8rem;
+  }
+}
