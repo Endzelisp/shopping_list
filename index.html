@@ -6,22 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Armando Endzelis">
     <meta name="description" content="Interactive shopping list">
-    <link rel="stylesheet" href="./sytles.css">
+    <link rel="stylesheet" href="./styles.css">
     <script src="./script.js" defer></script>
     <title>Lista de Compras</title>
   </head>
 
   <body>
-    <header>
-      <h1>Total</h1>
-      <p data-currency="bs">0</p>
-      <p data-currency="usd">0</p>
-      <img src="" alt="add a new product">
-    </header>
-    <main>
-      <div class="container">
-        
-      </div>
-    </main>
+    <div class="container">
+      <header class="container__header">
+        <h1>Total</h1>
+        <span data-currency="bs" id="currency-bs">
+          <span id="value">0</span>
+          <p>Bs</p>
+        </span>
+        <span data-currency="usd" id="currency-usd">
+          <span id="value">0</span>
+          <p>USD</p>
+        </span>
+        <span class="container__header-exchange">
+          <span>24.20</span>
+          <p>bs</p>
+        </span>
+        <img src="" alt="añadir nuevo producto">
+      </header>
+      <main class="container__main">
+        <section class="container__main-list">
+        </section>
+      </main>
+    </div>
   </body>
 </html>
