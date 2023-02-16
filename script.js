@@ -16,18 +16,23 @@ const UserInterface = (function () {
   }
 })()
 
+function main () {
 
-function createItem (name, price) {
-  const clone = UserInterface.template.content.cloneNode(true);
-  const newItem = clone.querySelector('div.item');
-  const itemName = newItem.querySelector('#item-name');
-  const itemPrice = newItem.querySelector('#item-price');
-  itemName.innerText = name;
-  itemPrice.innerText = `${price} Bs.`;
-  return newItem
+  function createItem (name, price) {
+    const clone = UserInterface.template.content.cloneNode(true);
+    const newItem = clone.querySelector('div.item');
+    const itemName = newItem.querySelector('#item-name');
+    const itemPrice = newItem.querySelector('#item-price');
+    itemName.innerText = name;
+    itemPrice.innerText = `${price} Bs.`;
+    return newItem
+  }
+
+  UserInterface.itemContainer.appendChild(createItem('Salsa de tomate', 35));
+
 }
 
-UserInterface.itemContainer.appendChild(createItem('Salsa de tomate', 35));
+main()
 
 
 // // Functions
