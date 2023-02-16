@@ -6,6 +6,10 @@
   padding: 0;
 }
 
+:root {
+  --border-clr: #470ee6;
+}
+
 html,
 body {
   height: 100%;
@@ -21,7 +25,7 @@ body {
   display: grid;
   grid-template-columns: 60vw 40vw;
   padding: .5em;
-  border-bottom: 2px solid #4b15df;
+  border-bottom: 2px solid var(--border-clr);
 }
 
 .container__header > div:nth-of-type(1) {
@@ -60,6 +64,31 @@ body {
 .container__header > div:nth-of-type(2) > img {
   justify-self: center;
   align-self: center;
+}
+
+/* Item's list elements  */
+
+.container__main-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .65em;
+  width: 100vw;
+  min-height: 100%;
+  padding: .5em;
+}
+
+.container__main-list > .item {
+  display: grid;
+  grid-template-columns: 60% 20% 20%;
+  width: 90vw;
+  height: min-content;
+  box-shadow: 1px 1px 3px var(--border-clr);
+}
+
+.container__main-list > .item > #delete {
+  text-align: center;
+  cursor: pointer;
 }
 
 /* exchange rate dialog box */
