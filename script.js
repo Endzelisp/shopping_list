@@ -1,7 +1,20 @@
-// // Const and variables declarations
+// User Interface Module
 
-// const inputTextFieldEl = document.querySelector('.container input');
-// const addButtonEl = document.querySelector('.container #add');
+const UserInterface = (function () {
+  const exchangeRateBtn = document.querySelector('.container__header-exchange > span');
+  const dialogExchangeRate = document.querySelector('dialog.exchange-rate');
+  const newItem = document.querySelector('.container__header > div:nth-of-type(2) > img');
+  const itemContainer = document.querySelector('section.container__main-list');
+
+  return {
+    exchangeRateBtn,
+    dialogExchangeRate,
+    newItem,
+    itemContainer,
+  }
+})()
+
+
 
 // // Functions
 
