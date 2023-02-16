@@ -5,15 +5,29 @@ const UserInterface = (function () {
   const dialogExchangeRate = document.querySelector('dialog.exchange-rate');
   const newItem = document.querySelector('.container__header > div:nth-of-type(2) > img');
   const itemContainer = document.querySelector('section.container__main-list');
+  const template = document.querySelector('template#item-template');
 
   return {
     exchangeRateBtn,
     dialogExchangeRate,
     newItem,
     itemContainer,
+    template,
   }
 })()
 
+
+function createItem (name, price) {
+  const clone = UserInterface.template.content.cloneNode(true);
+  const newItem = clone.querySelector('div.item');
+  const itemName = newItem.querySelector('#item-name');
+  const itemPrice = newItem.querySelector('#item-price');
+  itemName.innerText = name;
+  itemPrice.innerText = `${price} Bs.`;
+  return newItem
+}
+
+UserInterface.itemContainer.appendChild(createItem('Salsa de tomate', 35));
 
 
 // // Functions
