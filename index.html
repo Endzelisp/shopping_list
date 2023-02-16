@@ -53,15 +53,18 @@
     <dialog class="exchange-rate">
       <form method="dialog">
         <h2>Tasa de Cambio BCV</h2>
-        <input type="number" id="exchange-rate">
+        <input type="number" id="exchange-rate" min="0" value="0" step=".01">
         <button>Guardar</button>
       </form>
     </dialog>
     <dialog class="new-item">
-      <form method="dialog">
-        <h2>Producto</h2>
-        <input type="text" id="product">
-        <input type="number" id="price">
+      <form method="dialog">  
+        <label for="product">Producto
+          <input type="text" id="product">
+        </label>
+        <label for="price">Precio
+          <input type="number" id="price" min="0" step=".01">
+        </label>
         <button>Guardar</button>
       </form>
     </dialog>
