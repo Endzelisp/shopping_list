@@ -1,12 +1,17 @@
-// User Interface Module
+// User Interface Elements Module
 
-const UserInterface = (function () {
-  const exchangeRateBtn = document.querySelector('.container__header-exchange > span');
-  const dialogExchangeRate = document.querySelector('dialog.exchange-rate');
-  const dialogNewItem = document.querySelector('dialog.new-item');
-  const newItem = document.querySelector('.container__header > div:nth-of-type(2) > img');
-  const itemContainer = document.querySelector('section.container__main-list');
-  const template = document.querySelector('template#item-template');
+const UIElem = (function () {
+  
+  function _getElem (selector) {
+    return document.querySelector(selector)
+  }
+
+  const exchangeRateBtn = _getElem('.container__header-exchange > span');
+  const dialogExchangeRate = _getElem('dialog.exchange-rate');
+  const dialogNewItem = _getElem('dialog.new-item');
+  const newItem = _getElem('.container__header > div:nth-of-type(2) > img');
+  const itemContainer = _getElem('section.container__main-list');
+  const template = _getElem('template#item-template');
 
   return {
     exchangeRateBtn,
@@ -23,7 +28,7 @@ function main () {
   let exchangeRate;
 
   function createItem (name, price) {
-    const clone = UserInterface.template.content.cloneNode(true);
+    const clone = UIElem.template.content.cloneNode(true);
     const newItem = clone.querySelector('div.item');
     const itemName = newItem.querySelector('#item-name');
     const itemPrice = newItem.querySelector('#item-price');
@@ -32,39 +37,39 @@ function main () {
     return newItem
   }
 
-  UserInterface.exchangeRateBtn.addEventListener('pointerdown', () => {
-    UserInterface.dialogExchangeRate.showModal()
+  UIElem.exchangeRateBtn.addEventListener('pointerdown', () => {
+    UIElem.dialogExchangeRate.showModal()
   })
 
-  UserInterface.dialogExchangeRate.addEventListener('close', () => {
-    const rate = UserInterface.dialogExchangeRate.querySelector('#exchange-rate');
+  UIElem.dialogExchangeRate.addEventListener('close', () => {
+    const rate = UIElem.dialogExchangeRate.querySelector('#exchange-rate');
     exchangeRate = rate.value;
     if (exchangeRate !== undefined && exchangeRate > 0) {
-      UserInterface.exchangeRateBtn.innerText = exchangeRate;
+      UIElem.exchangeRateBtn.innerText = exchangeRate;
     } else {
       alert('Tasa de cambio no actualizada');
     }
   })
 
-  UserInterface.newItem.addEventListener('pointerdown', () => {
-    const product = UserInterface.dialogNewItem.querySelector('input#product');
-    const price = UserInterface.dialogNewItem.querySelector('input#price');
+  UIElem.newItem.addEventListener('pointerdown', () => {
+    const product = UIElem.dialogNewItem.querySelector('input#product');
+    const price = UIElem.dialogNewItem.querySelector('input#price');
     product.value = '';
     price.value = null;
-    UserInterface.dialogNewItem.showModal();
+    UIElem.dialogNewItem.showModal();
   })
 
-  UserInterface.dialogNewItem.addEventListener('close', () => {
-    const product = UserInterface.dialogNewItem.querySelector('input#product');
-    const price = UserInterface.dialogNewItem.querySelector('input#price');
+  UIElem.dialogNewItem.addEventListener('close', () => {
+    const product = UIElem.dialogNewItem.querySelector('input#product');
+    const price = UIElem.dialogNewItem.querySelector('input#price');
     if (product.value !== '' && price.value !== null) {
-      UserInterface.itemContainer.appendChild(
+      UIElem.itemContainer.appendChild(
         createItem(product.value, price.value)
       )
     }
   })
 
-  UserInterface.itemContainer.appendChild(createItem('Salsa de tomate', 35));
+  UIElem.itemContainer.appendChild(createItem('Salsa de tomate', 35));
 
 }
 
