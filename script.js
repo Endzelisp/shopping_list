@@ -3,6 +3,7 @@
 const UserInterface = (function () {
   const exchangeRateBtn = document.querySelector('.container__header-exchange > span');
   const dialogExchangeRate = document.querySelector('dialog.exchange-rate');
+  const dialogNewItem = document.querySelector('dialog.new-item');
   const newItem = document.querySelector('.container__header > div:nth-of-type(2) > img');
   const itemContainer = document.querySelector('section.container__main-list');
   const template = document.querySelector('template#item-template');
@@ -10,6 +11,7 @@ const UserInterface = (function () {
   return {
     exchangeRateBtn,
     dialogExchangeRate,
+    dialogNewItem,
     newItem,
     itemContainer,
     template,
@@ -17,6 +19,8 @@ const UserInterface = (function () {
 })()
 
 function main () {
+  
+  let exchangeRate;
 
   function createItem (name, price) {
     const clone = UserInterface.template.content.cloneNode(true);
@@ -28,110 +32,40 @@ function main () {
     return newItem
   }
 
+  UserInterface.exchangeRateBtn.addEventListener('pointerdown', () => {
+    UserInterface.dialogExchangeRate.showModal()
+  })
+
+  UserInterface.dialogExchangeRate.addEventListener('close', () => {
+    const rate = UserInterface.dialogExchangeRate.querySelector('#exchange-rate');
+    exchangeRate = rate.value;
+    if (exchangeRate !== undefined && exchangeRate > 0) {
+      UserInterface.exchangeRateBtn.innerText = exchangeRate;
+    } else {
+      alert('Tasa de cambio no actualizada');
+    }
+  })
+
+  UserInterface.newItem.addEventListener('pointerdown', () => {
+    const product = UserInterface.dialogNewItem.querySelector('input#product');
+    const price = UserInterface.dialogNewItem.querySelector('input#price');
+    product.value = '';
+    price.value = null;
+    UserInterface.dialogNewItem.showModal();
+  })
+
+  UserInterface.dialogNewItem.addEventListener('close', () => {
+    const product = UserInterface.dialogNewItem.querySelector('input#product');
+    const price = UserInterface.dialogNewItem.querySelector('input#price');
+    if (product.value !== '' && price.value !== null) {
+      UserInterface.itemContainer.appendChild(
+        createItem(product.value, price.value)
+      )
+    }
+  })
+
   UserInterface.itemContainer.appendChild(createItem('Salsa de tomate', 35));
 
 }
 
 main()
-
-
-// // Functions
-
-// function getInputText (inputField) {
-//   const inputContent = inputField.value
-//   if (inputContent === '') {
-//     inputField.focus()
-//     return null
-//   }
-//   inputField.value = ''
-//   inputField.focus()
-//   return inputContent
-// };
-
-// function createNewitem (item) {
-//   if (item === null || item === '') return
-
-//   const listItem = document.createElement('li');
-//   const para = document.createElement('p');
-//   const span = document.createElement('span');
-
-//   para.textContent = item;
-//   span.textContent = '❌';
-//   span.classList.add('delete-cross')
-//   listItem.appendChild(para);
-//   listItem.appendChild(span);
-//   return listItem;
-// };
-
-// // Local storage functions
-
-// let arrayList = []
-
-// function readFromLocal () {
-//   let tempArr = localStorage.getItem('key');
-//   if (tempArr === null) return
-//   tempArr = tempArr.split(',')  
-//   if (tempArr !== []) {
-//     arrayList = tempArr;
-//   }
-// }
-
-// function displayList (arr) {
-//   const itemsNodeList = document.querySelector('.items ul');
-//   if (arr !== []) {
-//     for (let i of arr) {
-//       if (i === '') return
-//       itemsNodeList.appendChild(createNewitem(i));
-//     }
-//   }
-// }
-
-// function writeLocal (item) {
-//   if (arrayList[0] === '') {
-//     arrayList[0] = item;
-//     localStorage.setItem('key', arrayList)
-//     return
-//   }
-//   arrayList.push(item);
-//   localStorage.setItem('key', arrayList)
-// }
-
-// function deleteFromLocal (item) {
-//   if (arrayList.includes(item)) {
-//     let index = arrayList.indexOf(item);
-//     arrayList.splice(index, 1);
-//   }
-//   localStorage.setItem('key', arrayList)
-// }
-
-// readFromLocal()
-// displayList(arrayList)
-
-// // Event listeners
-
-// function addNewItem () {
-//   const itemsNodeList = document.querySelector('.items ul');
-//   let inputText = getInputText(inputTextFieldEl);
-//   if (inputText === '') return
-//   writeLocal(inputText);
-//   itemsNodeList.appendChild(createNewitem(inputText));
-// }
-
-
-// addButtonEl.addEventListener('click', addNewItem);
-// inputTextFieldEl.addEventListener('keydown', (e) => {
-//   if (e.keyCode === 13) {
-//     addNewItem()
-//   }
-// })
-
-// // event listener to delete items
-
-// document.addEventListener('click', (e) => {
-//   let cross = e.target;
-//   if (cross.className === 'delete-cross') {
-//     cross.parentNode.remove()
-//     let itemToDelete = cross.parentNode.firstChild.textContent;
-//     deleteFromLocal(itemToDelete)
-//   }
-// })
