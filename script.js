@@ -12,6 +12,8 @@ const UIElem = (function () {
   const newItem = _getElem('.container__header > div:nth-of-type(2) > img');
   const itemContainer = _getElem('section.container__main-list');
   const template = _getElem('template#item-template');
+  const totalPriceBs = _getElem('span#currency-bs > #value');
+  const totalPriceUSD = _getElem('span#currency-usd > #value');
 
   return {
     exchangeRateBtn,
@@ -20,12 +22,15 @@ const UIElem = (function () {
     newItem,
     itemContainer,
     template,
+    totalPriceBs,
+    totalPriceUSD,
   }
 })()
 
 function main () {
   
   let exchangeRate;
+  let savedItems = {};
 
   function createItem (name, price) {
     const clone = UIElem.template.content.cloneNode(true);
@@ -63,14 +68,26 @@ function main () {
     const product = UIElem.dialogNewItem.querySelector('input#product');
     const price = UIElem.dialogNewItem.querySelector('input#price');
     if (product.value !== '' && price.value !== null) {
+      savedItems[product.value] = price.value;
       UIElem.itemContainer.appendChild(
         createItem(product.value, price.value)
-      )
+      );
+      localStorage.setItem('savedItems', JSON.stringify(savedItems))
     }
   })
 
-  UIElem.itemContainer.appendChild(createItem('Salsa de tomate', 35));
 
+
+  if (('savedItems' in localStorage)) {
+    // Read the localStorage and if savedItems exist
+    // display all elements that are present
+    savedItems = JSON.parse(localStorage.savedItems);
+    for (const key in savedItems) {
+      UIElem.itemContainer.appendChild(
+        createItem(`${key}`, savedItems[key])
+      )
+    }
+  }  
 }
 
 main()
