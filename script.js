@@ -16,6 +16,10 @@ function main () {
     const template = _getElem('template#item-template');
     const totalPriceBs = _getElem('span#currency-bs > #value');
     const totalPriceUSD = _getElem('span#currency-usd > #value');
+    const clearList = function () {
+      const list = itemContainer.querySelectorAll('.item');
+      list.forEach((item) => item.remove());
+    }
 
     return {
       exchangeRateBtn,
@@ -26,6 +30,7 @@ function main () {
       template,
       totalPriceBs,
       totalPriceUSD,
+      clearList,
     }
   })()
 
