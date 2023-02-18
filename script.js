@@ -35,7 +35,10 @@ function main () {
   function createItem (name, price) {
 
     function _removeItemFn () {
-      this.parentElement.remove()
+      const itemEl = this.parentElement.querySelector('#item-name');
+      delete savedItems[itemEl.innerText];
+      localStorage.setItem('savedItems', JSON.stringify(savedItems));
+      this.parentElement.remove();
     }
 
     const clone = UIElem.template.content.cloneNode(true);
