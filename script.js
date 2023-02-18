@@ -1,33 +1,33 @@
-// User Interface Elements Module
-
-const UIElem = (function () {
-  
-  function _getElem (selector) {
-    return document.querySelector(selector)
-  }
-
-  const exchangeRateBtn = _getElem('.container__header-exchange > span');
-  const dialogExchangeRate = _getElem('dialog.exchange-rate');
-  const dialogNewItem = _getElem('dialog.new-item');
-  const newItem = _getElem('.container__header > div:nth-of-type(2) > img');
-  const itemContainer = _getElem('section.container__main-list');
-  const template = _getElem('template#item-template');
-  const totalPriceBs = _getElem('span#currency-bs > #value');
-  const totalPriceUSD = _getElem('span#currency-usd > #value');
-
-  return {
-    exchangeRateBtn,
-    dialogExchangeRate,
-    dialogNewItem,
-    newItem,
-    itemContainer,
-    template,
-    totalPriceBs,
-    totalPriceUSD,
-  }
-})()
-
 function main () {
+
+  // User Interface Elements Module
+
+  const UIElem = (function () {
+    
+    function _getElem (selector) {
+      return document.querySelector(selector)
+    }
+
+    const exchangeRateBtn = _getElem('.container__header-exchange > span');
+    const dialogExchangeRate = _getElem('dialog.exchange-rate');
+    const dialogNewItem = _getElem('dialog.new-item');
+    const newItem = _getElem('.container__header > div:nth-of-type(2) > img');
+    const itemContainer = _getElem('section.container__main-list');
+    const template = _getElem('template#item-template');
+    const totalPriceBs = _getElem('span#currency-bs > #value');
+    const totalPriceUSD = _getElem('span#currency-usd > #value');
+
+    return {
+      exchangeRateBtn,
+      dialogExchangeRate,
+      dialogNewItem,
+      newItem,
+      itemContainer,
+      template,
+      totalPriceBs,
+      totalPriceUSD,
+    }
+  })()
   
   let exchangeRate;
   let savedItems = {};
