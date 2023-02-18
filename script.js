@@ -98,23 +98,25 @@ function main () {
   })
 
   UIElem.newItem.addEventListener('pointerdown', () => {
-    const product = UIElem.dialogNewItem.querySelector('input#product');
-    const price = UIElem.dialogNewItem.querySelector('input#price');
-    product.value = '';
-    price.value = null;
+    const productEl = UIElem.dialogNewItem.querySelector('input#product');
+    const priceEl = UIElem.dialogNewItem.querySelector('input#price');
+    productEl.value = '';
+    priceEl.value = null;
     UIElem.dialogNewItem.showModal();
   })
 
   UIElem.dialogNewItem.addEventListener('close', () => {
-    const product = UIElem.dialogNewItem.querySelector('input#product');
-    const price = UIElem.dialogNewItem.querySelector('input#price');
-    if (product.value !== '' && price.value !== null) {
-      State.savedItems[product.value] = price.value;
+    const productEl = UIElem.dialogNewItem.querySelector('input#product');
+    const priceEl = UIElem.dialogNewItem.querySelector('input#price');
+    const product = productEl.value;
+    const price = priceEl.value;
+    if (product !== '' && price !== null) {
+      State.savedItems[product] = price;
       UIElem.itemContainer.appendChild(
-        createItem(product.value, price.value)
+        createItem(product, price)
       );
       UIElem.totalPriceBs.innerText = 
-        parseFloat(UIElem.totalPriceBs.innerText) + (parseFloat(price.value));
+        parseFloat(UIElem.totalPriceBs.innerText) + (parseFloat(price));
       Local.save();
     }
   })
