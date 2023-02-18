@@ -33,7 +33,7 @@ function main () {
 
   const Local = (function() {
     const save = function () {
-      localStorage.setItem('savedItems', JSON.stringify(savedItems));
+      localStorage.setItem('savedItems', JSON.stringify(State.savedItems));
     }
     const read = function () {
       return JSON.parse(localStorage.savedItems);
@@ -44,19 +44,30 @@ function main () {
       read,
     }
   })()
+
+  // State Management Module
+
+  const State = (function () {
+    let exchangeRate;
+    let savedItems = {};
+
+
+    return {
+      exchangeRate,
+      savedItems,
+    }
+  })()
   
-  let exchangeRate;
-  let savedItems = {};
 
   function createItem (name, price) {
 
     function _removeItemFn () {
       const itemEl = this.parentElement.querySelector('#item-name');
-      const itemPrice = savedItems[itemEl.innerText];
+      const itemPrice = State.savedItems[itemEl.innerText];
       UIElem.totalPriceBs.innerText = (
         parseFloat(UIElem.totalPriceBs.innerText) - parseFloat(itemPrice)
       )
-      delete savedItems[itemEl.innerText];
+      delete State.savedItems[itemEl.innerText];
       Local.save();
       this.parentElement.remove();
     }
@@ -78,9 +89,9 @@ function main () {
 
   UIElem.dialogExchangeRate.addEventListener('close', () => {
     const rate = UIElem.dialogExchangeRate.querySelector('#exchange-rate');
-    exchangeRate = rate.value;
-    if (exchangeRate !== undefined && exchangeRate > 0) {
-      UIElem.exchangeRateBtn.innerText = exchangeRate;
+    State.exchangeRate = rate.value;
+    if (State.exchangeRate !== undefined && State.exchangeRate > 0) {
+      UIElem.exchangeRateBtn.innerText = State.exchangeRate;
     } else {
       alert('Tasa de cambio no actualizada');
     }
@@ -98,7 +109,7 @@ function main () {
     const product = UIElem.dialogNewItem.querySelector('input#product');
     const price = UIElem.dialogNewItem.querySelector('input#price');
     if (product.value !== '' && price.value !== null) {
-      savedItems[product.value] = price.value;
+      State.savedItems[product.value] = price.value;
       UIElem.itemContainer.appendChild(
         createItem(product.value, price.value)
       );
@@ -111,13 +122,13 @@ function main () {
   if (('savedItems' in localStorage)) {
     // Read the localStorage and if savedItems exist
     // display all elements that are present
-    savedItems = Local.read();
+    State.savedItems = Local.read();
     totalPriceBs = 0;
-    for (const key in savedItems) {
+    for (const key in State.savedItems) {
       UIElem.itemContainer.appendChild(
-        createItem(`${key}`, savedItems[key])
+        createItem(`${key}`, State.savedItems[key])
       )
-      totalPriceBs += parseFloat(savedItems[key]);
+      totalPriceBs += parseFloat(State.savedItems[key]);
     }
     UIElem.totalPriceBs.innerText = totalPriceBs;
   }  
