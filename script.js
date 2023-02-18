@@ -83,7 +83,7 @@ function main () {
         createItem(product.value, price.value)
       );
       UIElem.totalPriceBs.innerText = 
-        parseInt(UIElem.totalPriceBs.innerText) + parseInt(price.value);
+        parseFloat(UIElem.totalPriceBs.innerText) + (parseFloat(price.value));
       localStorage.setItem('savedItems', JSON.stringify(savedItems));
     }
   })
@@ -99,7 +99,7 @@ function main () {
       UIElem.itemContainer.appendChild(
         createItem(`${key}`, savedItems[key])
       )
-      totalPriceBs += parseInt(savedItems[key]);
+      totalPriceBs += parseFloat(savedItems[key]);
     }
     UIElem.totalPriceBs.innerText = totalPriceBs;
   }  
