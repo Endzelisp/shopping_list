@@ -28,6 +28,22 @@ function main () {
       totalPriceUSD,
     }
   })()
+
+  // localStorage Management Module
+
+  const Local = (function() {
+    const save = function () {
+      localStorage.setItem('savedItems', JSON.stringify(savedItems));
+    }
+    const read = function () {
+      return JSON.parse(localStorage.savedItems);
+    } 
+
+    return {
+      save,
+      read,
+    }
+  })()
   
   let exchangeRate;
   let savedItems = {};
@@ -41,7 +57,7 @@ function main () {
         parseFloat(UIElem.totalPriceBs.innerText) - parseFloat(itemPrice)
       )
       delete savedItems[itemEl.innerText];
-      localStorage.setItem('savedItems', JSON.stringify(savedItems));
+      Local.save();
       this.parentElement.remove();
     }
 
@@ -88,16 +104,14 @@ function main () {
       );
       UIElem.totalPriceBs.innerText = 
         parseFloat(UIElem.totalPriceBs.innerText) + (parseFloat(price.value));
-      localStorage.setItem('savedItems', JSON.stringify(savedItems));
+      Local.save();
     }
   })
-
-
 
   if (('savedItems' in localStorage)) {
     // Read the localStorage and if savedItems exist
     // display all elements that are present
-    savedItems = JSON.parse(localStorage.savedItems);
+    savedItems = Local.read();
     totalPriceBs = 0;
     for (const key in savedItems) {
       UIElem.itemContainer.appendChild(
