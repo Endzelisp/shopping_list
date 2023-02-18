@@ -36,6 +36,10 @@ function main () {
 
     function _removeItemFn () {
       const itemEl = this.parentElement.querySelector('#item-name');
+      const itemPrice = savedItems[itemEl.innerText];
+      UIElem.totalPriceBs.innerText = (
+        parseFloat(UIElem.totalPriceBs.innerText) - parseFloat(itemPrice)
+      )
       delete savedItems[itemEl.innerText];
       localStorage.setItem('savedItems', JSON.stringify(savedItems));
       this.parentElement.remove();
