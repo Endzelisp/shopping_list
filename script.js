@@ -94,11 +94,14 @@ function main () {
     // Read the localStorage and if savedItems exist
     // display all elements that are present
     savedItems = JSON.parse(localStorage.savedItems);
+    totalPriceBs = 0;
     for (const key in savedItems) {
       UIElem.itemContainer.appendChild(
         createItem(`${key}`, savedItems[key])
       )
+      totalPriceBs += parseInt(savedItems[key]);
     }
+    UIElem.totalPriceBs.innerText = totalPriceBs;
   }  
 }
 
