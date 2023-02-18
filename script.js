@@ -82,7 +82,9 @@ function main () {
       UIElem.itemContainer.appendChild(
         createItem(product.value, price.value)
       );
-      localStorage.setItem('savedItems', JSON.stringify(savedItems))
+      UIElem.totalPriceBs.innerText = 
+        parseInt(UIElem.totalPriceBs.innerText) + parseInt(price.value);
+      localStorage.setItem('savedItems', JSON.stringify(savedItems));
     }
   })
 
