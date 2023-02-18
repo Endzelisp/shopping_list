@@ -33,10 +33,17 @@ function main () {
   let savedItems = {};
 
   function createItem (name, price) {
+
+    function _removeItemFn () {
+      this.parentElement.remove()
+    }
+
     const clone = UIElem.template.content.cloneNode(true);
     const newItem = clone.querySelector('div.item');
     const itemName = newItem.querySelector('#item-name');
     const itemPrice = newItem.querySelector('#item-price');
+    const removeItem = newItem.querySelector('span#delete');
+    removeItem.addEventListener('pointerdown', _removeItemFn);
     itemName.innerText = name;
     itemPrice.innerText = `${price} Bs.`;
     return newItem
