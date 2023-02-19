@@ -9,7 +9,7 @@ function main () {
     }
 
     const mainContainer = _getElem('div.container');
-    const exchangeRateBtn = _getElem('.container__header-exchange > span');
+    const exchangeRateEl = _getElem('.container__header-exchange > span');
     const dialogExchangeRate = _getElem('dialog.exchange-rate');
     const dialogNewItem = _getElem('dialog.new-item');
     const newItem = _getElem('.container__header > div:nth-of-type(2) > img');
@@ -24,7 +24,7 @@ function main () {
 
     return {
       mainContainer,
-      exchangeRateBtn,
+      exchangeRateEl,
       dialogExchangeRate,
       dialogNewItem,
       newItem,
@@ -140,7 +140,7 @@ function main () {
     UIElem.totalPriceBs.innerText = total;
   })
 
-  UIElem.exchangeRateBtn.addEventListener('pointerdown', () => {
+  UIElem.exchangeRateEl.addEventListener('pointerdown', () => {
     UIElem.dialogExchangeRate.showModal()
   })
 
@@ -149,7 +149,7 @@ function main () {
     const exRate = exRateInputEl.value;
     if (exRate !== undefined && exRate > 0) {
       State.exchangeRate = exRate;
-      UIElem.exchangeRateBtn.innerText = exRate;
+      UIElem.exchangeRateEl.innerText = exRate;
       localStorage.setItem('exchangeRate', exRate);
     } else {
       alert('Tasa de cambio no actualizada');
@@ -202,10 +202,10 @@ function main () {
   if ('exchangeRate' in localStorage) {
     const exRate = localStorage.getItem('exchangeRate');
     State.exchangeRate = exRate;
-    UIElem.exchangeRateBtn.innerText = exRate;
+    UIElem.exchangeRateEl.innerText = exRate;
   } else {
     alert('Tasa de cambio no configurada');
-    UIElem.exchangeRateBtn.innerText = 0;
+    UIElem.exchangeRateEl.innerText = 0;
   }
 }
 
