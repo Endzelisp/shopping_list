@@ -39,15 +39,19 @@ function main () {
   // localStorage Management Module
 
   const Local = (function() {
-    const save = function () {
+    const saveList = function () {
       localStorage.setItem('savedItems', JSON.stringify(State.savedItems));
     }
     const read = function () {
       return JSON.parse(localStorage.savedItems);
-    } 
+    }
+    const saveExRate = function () {
+      localStorage.setItem('exchangeRate', exRate);
+    }
 
     return {
-      save,
+      saveList,
+      saveExRate,
       read,
     }
   })()
@@ -91,7 +95,7 @@ function main () {
     function _removeItemFn () {
       const itemEl = this.parentElement.querySelector('#item-name');
       delete State.savedItems[itemEl.innerText];
-      Local.save();
+      Local.saveList();
       this.parentElement.remove();
       UIElem.mainContainer.dispatchEvent(renderList);
     }
@@ -150,7 +154,7 @@ function main () {
     if (exRate !== undefined && exRate > 0) {
       State.exchangeRate = exRate;
       UIElem.exchangeRateEl.innerText = exRate;
-      localStorage.setItem('exchangeRate', exRate);
+      Local.saveExRate()
     } else {
       alert('Tasa de cambio no actualizada');
     }
