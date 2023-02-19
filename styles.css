@@ -126,6 +126,8 @@ dialog.exchange-rate > form h2 {
   text-align: center;
 }
 
+/* new item dialog box */
+
 dialog.new-item form {
   display: grid;
   gap: 1em;
@@ -134,6 +136,10 @@ dialog.new-item form {
 dialog.new-item label {
   display: flex;
   flex-direction: column;
+}
+
+dialog.new-item label[for="quantity"] {
+  width: 5em;
 }
 
 dialog.new-item button{
