@@ -72,6 +72,13 @@ function main () {
     composed: false,
   })
 
+    const renderList = new CustomEvent ('renderList', {
+    detail: {},
+    bubbles: true,
+    cancelable: false,
+    composed: false,
+  })
+
   function createItem (name, price) {
 
     function _removeItemFn () {
@@ -104,6 +111,19 @@ function main () {
     price *= parseInt(quantity);
     price = (currency === 'bs') ? price : (price * State.exchangeRate).toFixed(2);
     State.savedItems[product] = price;
+    UIElem.mainContainer.dispatchEvent(renderList);
+  })
+
+  UIElem.mainContainer.addEventListener('renderList', () => {
+    // Clear out the actual displayed list of items
+    UIElem.clearList();
+
+    // Render all saved items on the list
+    for (const key in State.savedItems) {
+      UIElem.itemContainer.appendChild(
+        createItem(key, State.savedItems[key])
+      )
+    }
   })
 
   UIElem.exchangeRateBtn.addEventListener('pointerdown', () => {
