@@ -8,6 +8,7 @@ function main () {
       return document.querySelector(selector)
     }
 
+    const mainContainer = _getElem('div.container');
     const exchangeRateBtn = _getElem('.container__header-exchange > span');
     const dialogExchangeRate = _getElem('dialog.exchange-rate');
     const dialogNewItem = _getElem('dialog.new-item');
@@ -22,6 +23,7 @@ function main () {
     }
 
     return {
+      mainContainer,
       exchangeRateBtn,
       dialogExchangeRate,
       dialogNewItem,
@@ -62,7 +64,13 @@ function main () {
       savedItems,
     }
   })()
-  
+
+  const updateList = new CustomEvent ('updateList', {
+    detail: {},
+    bubbles: true,
+    cancelable: false,
+    composed: false,
+  })
 
   function createItem (name, price) {
 
@@ -86,6 +94,17 @@ function main () {
     itemPrice.innerText = `${price} Bs.`;
     return newItem
   }
+
+  UIElem.mainContainer.addEventListener('updateList', (e) => {
+    const product = e.detail.product;
+    const currency = e.detail.currency;
+    const quantity = e.detail.quantity;
+    let price = e.detail.price;
+
+    price *= parseInt(quantity);
+    price = (currency === 'bs') ? price : (price * State.exchangeRate).toFixed(2);
+    State.savedItems[product] = price;
+  })
 
   UIElem.exchangeRateBtn.addEventListener('pointerdown', () => {
     UIElem.dialogExchangeRate.showModal()
@@ -112,24 +131,23 @@ function main () {
   })
 
   UIElem.dialogNewItem.addEventListener('close', () => {
-    const productEl = UIElem.dialogNewItem.querySelector('input#product');
-    const priceEl = UIElem.dialogNewItem.querySelector('input#price');
-    const currencyEl = UIElem.dialogNewItem.querySelector('select#currency');
-    const quantityEl = UIElem.dialogNewItem.querySelector('input#quantity');
+    const dialogEl = UIElem.dialogNewItem;
+    const productEl = dialogEl.querySelector('input#product');
+    const priceEl = dialogEl.querySelector('input#price');
+    const currencyEl = dialogEl.querySelector('select#currency');
+    const quantityEl = dialogEl.querySelector('input#quantity');
     const product = productEl.value;
     const currency = currencyEl.value;
     const quantity = quantityEl.value;
     let price = priceEl.value;
     if (product !== '' && price !== null) {
-      price *= parseInt(quantity);
-      price = (currency === 'bs') ? price : (price * State.exchangeRate).toFixed(2);
-      State.savedItems[product] = price;
-      UIElem.itemContainer.appendChild(
-        createItem(product, price)
-      );
-      UIElem.totalPriceBs.innerText = 
-        parseFloat(UIElem.totalPriceBs.innerText) + (parseFloat(price));
-      Local.save();
+      // Add the captured info to the event detail object
+      updateList.detail.product = product;
+      updateList.detail.currency = currency;
+      updateList.detail.quantity = quantity;
+      updateList.detail.price = price;
+
+      UIElem.dialogNewItem.dispatchEvent(updateList);
     }
   })
 

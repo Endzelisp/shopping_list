@@ -49,31 +49,31 @@
           </template>
         </section>
       </main>
+      <dialog class="exchange-rate">
+        <form method="dialog">
+          <h2>Tasa de Cambio BCV</h2>
+          <input type="number" id="exchange-rate" min="0" value="0" step=".01">
+          <button>Guardar</button>
+        </form>
+      </dialog>
+      <dialog class="new-item">
+        <form method="dialog">
+          <label for="quantity">Cantidad
+            <input type="number" id="quantity" value="1" autofocus>
+          </label>
+          <label for="product">Producto
+            <input type="text" id="product">
+          </label>
+          <label for="price">Precio
+            <input type="number" id="price" min="0" step=".01">
+          </label>
+          <select id="currency">
+            <option value="usd" selected>Dolares</option>
+            <option value="bs">Bolivares</option>
+          </select>
+          <button>Guardar</button>
+        </form>
+      </dialog>
     </div>
-    <dialog class="exchange-rate">
-      <form method="dialog">
-        <h2>Tasa de Cambio BCV</h2>
-        <input type="number" id="exchange-rate" min="0" value="0" step=".01">
-        <button>Guardar</button>
-      </form>
-    </dialog>
-    <dialog class="new-item">
-      <form method="dialog">
-        <label for="quantity">Cantidad
-          <input type="number" id="quantity" value="1" autofocus>
-        </label>
-        <label for="product">Producto
-          <input type="text" id="product">
-        </label>
-        <label for="price">Precio
-          <input type="number" id="price" min="0" step=".01">
-        </label>
-        <select id="currency">
-          <option value="usd" selected>Dolares</option>
-          <option value="bs">Bolivares</option>
-        </select>
-        <button>Guardar</button>
-      </form>
-    </dialog>
   </body>
 </html>
