@@ -93,10 +93,12 @@ function main () {
   })
 
   UIElem.dialogExchangeRate.addEventListener('close', () => {
-    const rate = UIElem.dialogExchangeRate.querySelector('#exchange-rate');
-    State.exchangeRate = rate.value;
-    if (State.exchangeRate !== undefined && State.exchangeRate > 0) {
-      UIElem.exchangeRateBtn.innerText = State.exchangeRate;
+    const exRateInputEl = UIElem.dialogExchangeRate.querySelector('input#exchange-rate');
+    const exRate = exRateInputEl.value;
+    if (exRate !== undefined && exRate > 0) {
+      State.exchangeRate = exRate;
+      UIElem.exchangeRateBtn.innerText = exRate;
+      localStorage.setItem('exchangeRate', exRate);
     } else {
       alert('Tasa de cambio no actualizada');
     }
@@ -138,7 +140,16 @@ function main () {
       totalPriceBs += parseFloat(State.savedItems[key]);
     }
     UIElem.totalPriceBs.innerText = totalPriceBs;
-  }  
+  }
+
+  if ('exchangeRate' in localStorage) {
+    const exRate = localStorage.getItem('exchangeRate');
+    State.exchangeRate = exRate;
+    UIElem.exchangeRateBtn.innerText = exRate;
+  } else {
+    alert('Tasa de cambio no configurada');
+    UIElem.exchangeRateBtn.innerText = 0;
+  }
 }
 
 main()
