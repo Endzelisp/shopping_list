@@ -174,7 +174,7 @@ function main () {
     const priceEl = dialogEl.querySelector('input#price');
     const currencyEl = dialogEl.querySelector('select#currency');
     const quantityEl = dialogEl.querySelector('input#quantity');
-    const product = productEl.value;
+    const product = (productEl.value).trim();
     const currency = currencyEl.value;
     const quantity = quantityEl.value;
     let price = priceEl.value;
