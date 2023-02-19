@@ -79,16 +79,21 @@ function main () {
     composed: false,
   })
 
+  const renderTotalBs = new CustomEvent ('renderTotalBs', {
+    detail: {},
+    bubbles: true,
+    cancelable: false,
+    composed: false,
+  })
+
   function createItem (name, price) {
 
     function _removeItemFn () {
       const itemEl = this.parentElement.querySelector('#item-name');
-      const itemPrice = State.savedItems[itemEl.innerText];
-      UIElem.totalPriceBs.innerText = 
-        parseFloat(UIElem.totalPriceBs.innerText) - parseFloat(itemPrice);
       delete State.savedItems[itemEl.innerText];
       Local.save();
       this.parentElement.remove();
+      UIElem.mainContainer.dispatchEvent(renderList);
     }
 
     const clone = UIElem.template.content.cloneNode(true);
@@ -124,6 +129,15 @@ function main () {
         createItem(key, State.savedItems[key])
       )
     }
+    UIElem.mainContainer.dispatchEvent(renderTotalBs);
+  })
+
+  UIElem.mainContainer.addEventListener('renderTotalBs', () => {
+    let total = 0;
+    for (const key in State.savedItems) {
+      total += parseFloat(State.savedItems[key]);
+    }
+    UIElem.totalPriceBs.innerText = total;
   })
 
   UIElem.exchangeRateBtn.addEventListener('pointerdown', () => {
