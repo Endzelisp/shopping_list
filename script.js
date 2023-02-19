@@ -115,9 +115,15 @@ function main () {
   UIElem.dialogNewItem.addEventListener('close', () => {
     const productEl = UIElem.dialogNewItem.querySelector('input#product');
     const priceEl = UIElem.dialogNewItem.querySelector('input#price');
+    const currencyEl = UIElem.dialogNewItem.querySelector('select#currency');
+    const quantityEl = UIElem.dialogNewItem.querySelector('input#quantity');
     const product = productEl.value;
-    const price = priceEl.value;
+    const currency = currencyEl.value;
+    const quantity = quantityEl.value;
+    let price = priceEl.value;
     if (product !== '' && price !== null) {
+      price *= parseInt(quantity);
+      price = (currency === 'bs') ? price : (price * State.exchangeRate).toFixed(2);
       State.savedItems[product] = price;
       UIElem.itemContainer.appendChild(
         createItem(product, price)
