@@ -223,8 +223,10 @@ function main () {
 
     // Render all saved items on the list
     for (const key in State.savedItems) {
+      const price = parseFloat(State.savedItems[key]);
+      const priceInBs = price * parseFloat(State.exchangeRate);
       UIElem.itemContainer.appendChild(
-        createItem(key, State.savedItems[key])
+        createItem(key, priceInBs)
       )
     }
     UIElem.mainContainer.dispatchEvent(renderTotalBs);
