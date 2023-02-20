@@ -162,11 +162,15 @@ function main () {
   })
 
   UIElem.newItem.addEventListener('pointerdown', () => {
-    const productEl = UIElem.dialogNewItem.querySelector('input#product');
-    const priceEl = UIElem.dialogNewItem.querySelector('input#price');
-    productEl.value = '';
-    priceEl.value = null;
-    UIElem.dialogNewItem.showModal();
+    if ('exchangeRate' in localStorage) {   
+      const productEl = UIElem.dialogNewItem.querySelector('input#product');
+      const priceEl = UIElem.dialogNewItem.querySelector('input#price');
+      productEl.value = '';
+      priceEl.value = null;
+      UIElem.dialogNewItem.showModal();
+    } else {
+      alert('La tasa de cambio no ha sido configurada');
+    }
   })
 
   UIElem.dialogNewItem.addEventListener('close', () => {
