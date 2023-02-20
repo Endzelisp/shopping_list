@@ -128,6 +128,11 @@ function main () {
     // Clear out the actual displayed list of items
     UIElem.clearList();
 
+    if (!(State.savedItems.hasOwnProperty())) {
+      // Runs when the saved items list obj is empty
+      State.savedItems = Local.read();
+    }
+
     // Render all saved items on the list
     for (const key in State.savedItems) {
       UIElem.itemContainer.appendChild(
@@ -194,19 +199,7 @@ function main () {
     }
   })
 
-  if (('savedItems' in localStorage)) {
-    // Read the localStorage and if savedItems exist
-    // display all elements that are present
-    State.savedItems = Local.read();
-    totalPriceBs = 0;
-    for (const key in State.savedItems) {
-      UIElem.itemContainer.appendChild(
-        createItem(`${key}`, State.savedItems[key])
-      )
-      totalPriceBs += parseFloat(State.savedItems[key]);
-    }
-    UIElem.totalPriceBs.innerText = totalPriceBs;
-  }
+  UIElem.mainContainer.dispatchEvent(renderList);
 
   if ('exchangeRate' in localStorage) {
     const exRate = localStorage.getItem('exchangeRate');
