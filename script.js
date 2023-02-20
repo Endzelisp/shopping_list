@@ -91,7 +91,7 @@ function main () {
     composed: false,
   })
 
-  const renderTotalBs = new CustomEvent ('renderTotalBs', {
+  const renderTotalUSD = new CustomEvent ('renderTotalUSD', {
     detail: {},
     bubbles: true,
     cancelable: false,
@@ -229,17 +229,17 @@ function main () {
         createItem(key, priceInBs)
       )
     }
-    UIElem.mainContainer.dispatchEvent(renderTotalBs);
+    UIElem.mainContainer.dispatchEvent(renderTotalUSD);
   })
 
 
-  UIElem.mainContainer.addEventListener('renderTotalBs', () => {
-    // Total all product prices in Bs
+  UIElem.mainContainer.addEventListener('renderTotalUSD', () => {
+    // Total all product prices in USD
     let total = 0;
     for (const key in State.savedItems) {
       total += parseFloat(State.savedItems[key]);
     }
-    UIElem.totalPriceBs.innerText = (total).toFixed(2);
+    UIElem.totalPriceUSD.innerText = (total).toFixed(2);
   })
 
 
