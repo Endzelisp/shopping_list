@@ -247,8 +247,6 @@ function main () {
   // one time run code
 
 
-  UIElem.mainContainer.dispatchEvent(renderList);
-
   if ('exchangeRate' in localStorage) {
     const exRate = localStorage.getItem('exchangeRate');
     State.exchangeRate = exRate;
@@ -257,6 +255,8 @@ function main () {
     alert('Tasa de cambio no configurada');
     UIElem.exchangeRateEl.innerText = 0;
   }
+
+  UIElem.mainContainer.dispatchEvent(renderList);
 }
 
 main()
