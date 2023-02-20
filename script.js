@@ -98,6 +98,13 @@ function main () {
     composed: false,
   })
 
+    const renderTotalBs = new CustomEvent ('renderTotalBs', {
+    detail: {},
+    bubbles: true,
+    cancelable: false,
+    composed: false,
+  })
+
 
   // ------------
   //  Functions
@@ -240,6 +247,17 @@ function main () {
       total += parseFloat(State.savedItems[key]);
     }
     UIElem.totalPriceUSD.innerText = (total).toFixed(2);
+
+    renderTotalBs.detail.totalInUSD = total;
+    UIElem.mainContainer.dispatchEvent(renderTotalBs);
+  })
+
+
+  UIElem.mainContainer.addEventListener('renderTotalBs', (e) => {
+    // Exchange the product prices from USD to Bs
+    let total = e.detail.totalInUSD;
+    total *= parseFloat(State.exchangeRate); 
+    UIElem.totalPriceBs.innerText = (total).toFixed(2);
   })
 
 
