@@ -46,7 +46,7 @@ function main () {
       return JSON.parse(localStorage.savedItems);
     }
     const saveExRate = function () {
-      localStorage.setItem('exchangeRate', exRate);
+      localStorage.setItem('exchangeRate', State.exchangeRate);
     }
 
     return {
