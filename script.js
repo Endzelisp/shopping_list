@@ -147,7 +147,7 @@ function main () {
     for (const key in State.savedItems) {
       total += parseFloat(State.savedItems[key]);
     }
-    UIElem.totalPriceBs.innerText = total;
+    UIElem.totalPriceBs.innerText = (total).toFixed(2);
   })
 
   UIElem.exchangeRateEl.addEventListener('pointerdown', () => {
