@@ -120,6 +120,7 @@ function main () {
     price *= parseInt(quantity);
     price = (currency === 'bs') ? price : (price * State.exchangeRate).toFixed(2);
     State.savedItems[product] = price;
+    Local.saveList();
     UIElem.mainContainer.dispatchEvent(renderList);
   })
 
