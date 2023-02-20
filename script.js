@@ -207,8 +207,9 @@ function main () {
     let price = e.detail.price;
 
     price *= parseInt(quantity);
-    price = (currency === 'bs') ?
-      price : (price * State.exchangeRate).toFixed(2);
+    if (currency === 'bs') {
+      price = (price / State.exchangeRate);
+    }
     State.savedItems[product] = price;
     Local.saveList();
     UIElem.mainContainer.dispatchEvent(renderList);
