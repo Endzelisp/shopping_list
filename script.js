@@ -233,7 +233,7 @@ function main () {
       const price = parseFloat(State.savedItems[key]);
       const priceInBs = price * parseFloat(State.exchangeRate);
       UIElem.itemContainer.appendChild(
-        createItem(key, priceInBs)
+        createItem(key, (priceInBs).toFixed(2))
       )
     }
     UIElem.mainContainer.dispatchEvent(renderTotalUSD);
