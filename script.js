@@ -64,17 +64,13 @@ function main () {
 
 
   // -----------------------
-  // State Management Module
+  // State Management Object
 
 
-  const State = (function () {
-    let exchangeRate;
-    let savedItems = {};
-    return {
-      exchangeRate,
-      savedItems,
-    };
-  })()
+  const State = {
+    exchangeRate: 0,
+    savedItems: {},
+  }
 
 
   // ----------------
@@ -220,7 +216,7 @@ function main () {
     // Clear out the actual displayed list of items
     UIElem.clearList();
 
-    if (!(State.savedItems.hasOwnProperty())) {
+    if (!(State.savedItems.hasOwnProperty()) && 'savedItems' in localStorage) {
       // Runs when the saved items list obj is empty
       State.savedItems = Local.read();
     }
