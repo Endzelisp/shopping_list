@@ -168,7 +168,7 @@ function main () {
 
     if (exRate !== undefined && exRate > 0) {
       State.exchangeRate = exRate;
-      UIElem.exchangeRateEl.innerText = exRate;
+      UIElem.exchangeRateEl.innerText = (parseFloat(exRate)).toFixed(2);
       Local.saveExRate();
     } else {
       alert('Tasa de cambio no actualizada');
@@ -271,7 +271,7 @@ function main () {
   if ('exchangeRate' in localStorage) {
     const exRate = localStorage.getItem('exchangeRate');
     State.exchangeRate = exRate;
-    UIElem.exchangeRateEl.innerText = exRate;
+    UIElem.exchangeRateEl.innerText = (parseFloat(exRate)).toFixed(2);
   } else {
     alert('Tasa de cambio no configurada');
     UIElem.exchangeRateEl.innerText = 0;
