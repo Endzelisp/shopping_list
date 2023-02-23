@@ -173,6 +173,9 @@ function main () {
     } else {
       alert('Tasa de cambio no actualizada');
     }
+
+    // Update item's price when the exchange rate changes
+    UIElem.dialogExchangeRate.dispatchEvent(renderList);
   })
 
   UIElem.dialogNewItem.addEventListener('close', () => {
