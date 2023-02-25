@@ -11,15 +11,16 @@ function main () {
       return document.querySelector(selector);
     }
 
-    const mainContainer = _getElem('div.container');
-    const exchangeRateEl = _getElem('.container__header-exchange > span');
+    const mainContainer = _getElem('[data-container="data-container"]');
+    const exchangeRateEl = _getElem('[data-rate="exchange-rate"]');
+    const totalPriceBs = _getElem('[data-total="total-bs"]');
+    const totalPriceUSD = _getElem('[data-total="total-usd"]');
+    const newItem = _getElem('[data-button="new-item"]');
+    const itemContainer = _getElem('section.container__main-list');
     const dialogExchangeRate = _getElem('dialog.exchange-rate');
     const dialogNewItem = _getElem('dialog.new-item');
-    const newItem = _getElem('.container__header > div:nth-of-type(2) > img');
-    const itemContainer = _getElem('section.container__main-list');
     const template = _getElem('template#item-template');
-    const totalPriceBs = _getElem('span#currency-bs > #value');
-    const totalPriceUSD = _getElem('span#currency-usd > #value');
+    
     const clearList = function () {
       const list = itemContainer.querySelectorAll('.item');
       list.forEach((item) => item.remove());
