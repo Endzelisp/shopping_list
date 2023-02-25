@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'quicksand-regular';
+  src: url(./fonts/quicksand_book-webfont.woff2) format('woff2'),
+       url(./fonts/quicksand_book-webfont.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'quicksand-bold';
+  src: url(./fonts/quicksand_bold-webfont.woff2) format('woff2'),
+       url(./fonts/quicksand_bold-webfont.woff) format('woff');
+}
+
 *,
 *::before,
 *::after {
@@ -7,6 +19,8 @@
 }
 
 :root {
+  --quicksand-regular: 'quicksand-regular';
+  --quicksand-bold: 'quicksand-bold';
   --header-bg-clr: #d9d9d9;
   --header-txt-clr: #1a3649;
   --header-shadow-clr: #3c6e71;
@@ -24,6 +38,7 @@ body {
   display: grid;
   grid-template-rows: var(--header-height) 
     minmax(calc(var(--header-height) - 100vh), auto);
+  font-family: var(--quicksand-regular) ;
 }
 
 /* Header Styling */
