@@ -12,30 +12,31 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class="container" data-container="data-container">
       <header class="container__header">
-        <div>
+        <div class="container__header-total">
           <h1>Total</h1>
-          <span data-currency="bs" id="currency-bs">
-            <span id="value">0</span>
+          <span class="price-format">
+            <span data-total="total-bs">0</span>
             <p>Bs</p>
           </span>
-          <span data-currency="usd" id="currency-usd">
-            <span id="value">0</span>
+          <span class="price-format">
+            <span data-total="total-usd">0</span>
             <p>USD</p>
           </span>
         </div>
-        <div>
-          <span class="container__header-exchange">
-            <span></span>
+        <div class="container__header-options">
+          <span class="price-format">
+            <span data-rate="exchange-rate"></span>
             <p>bs</p>
           </span>
-          <img id="new-item"
+          <img
             src="./img/plus-box.png"
             alt="añadir nuevo producto"
             width="35"
-            height="35">
-          <button>🥦</button>
+            height="35"
+            data-button="new-item">
+          <button data-button="new-veggie">🥦</button>
         </div>
       </header>
       <main class="container__main">
