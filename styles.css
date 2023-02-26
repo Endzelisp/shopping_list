@@ -27,6 +27,9 @@
   --item-bg-clr: #c37438;
   --item-txt-clr: #e4e5e8;
   --item-shadow: #464646;
+  --orange: #ff7d0a;
+  --medium-gray: #858585;
+  --dark-gray: #262626;
   --header-height: 6rem;
   --item-list-height: calc(100vh - var(--header-height));
 }
@@ -87,13 +90,24 @@
   align-self: center;
 }
 
-.container__header-options > span.price-format {
+.container__header-options > .price-format {
   grid-column: 1 / 3;
 }
 
-.container__header-options > button {
-  padding: .10em .12em;
-  font-size: 1.5rem;
+.container__header-options svg {
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--list-container-bg-clr);
+  border-radius: 6px;
+  box-shadow: -3px -3px 1px var(--medium-gray);
+}
+
+.container__header-options svg[data-button="new-item"] {
+  fill: var(--dark-gray);
+}
+
+.container__header-options svg[data-button="new-veggie"] {
+  fill: var(--orange);
 }
 
 /* Item's list elements  */
