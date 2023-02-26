@@ -92,6 +92,9 @@
 
 .container__header-options > .price-format {
   grid-column: 1 / 3;
+  padding: .25em 1em;
+  background-color: var(--list-container-bg-clr);
+  border-radius: 1rem;
 }
 
 .container__header-options svg {
