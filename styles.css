@@ -30,7 +30,7 @@
   --orange: #ff7d0a;
   --medium-gray: #858585;
   --dark-gray: #262626;
-  --header-height: 6rem;
+  --header-height: 7rem;
   --item-list-height: calc(100vh - var(--header-height));
 }
 
@@ -90,8 +90,21 @@
   align-self: center;
 }
 
-.container__header-options > .price-format {
+.container__header-options div:first-of-type {
   grid-column: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: .125em;
+}
+
+.container__header-options div:first-of-type h3 {
+  font-size: .5rem;
+  font-weight: lighter;
+  color: var(--header-txt-clr);
+  text-align: center;
+}
+
+.container__header-options .price-format {
   padding: .25em 1em;
   background-color: var(--list-container-bg-clr);
   border-radius: 1rem;
