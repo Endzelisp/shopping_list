@@ -44,36 +44,56 @@
         </div>
       </header>
       <main class="container__main">
-        <section class="container__main-list">
+        <section class="container__main-list" data-container="main-list">
           <!-- template for add new items -->
-          <template id="item-template">
-            <div class="item">
-              <p id="item-name"></p>
-              <span id="item-price"></span>
-              <span id="delete">❌</span>
+          <template id="item-template" data-template="new-item">
+            <div class="item" data-item="container">
+              <p id="item-name" data-item="name"></p>
+              <span id="item-price" data-item="price"></span>
+              <span id="delete" data-item="delete">❌</span>
             </div>
           </template>
         </section>
       </main>
-      <dialog class="exchange-rate">
+      <dialog class="exchange-rate" data-dialog="exchange-rate">
         <form method="dialog">
           <h2>Tasa de Cambio BCV</h2>
-          <input type="number" id="exchange-rate" min="0" step=".01">
+          <input
+            type="number"
+            id="exchange-rate"
+            min="0" step=".01"
+            data-input="exchange-rate"
+          >
           <button>Guardar</button>
         </form>
       </dialog>
-      <dialog class="new-item">
+      <dialog class="new-item" data-dialog="new-item">
         <form method="dialog">
           <label for="quantity">Cantidad
-            <input type="number" id="quantity" value="1" autofocus>
+            <input
+              type="number"
+              id="quantity"
+              value="1"
+              autofocus
+              data-input="item-quantity"
+            >
           </label>
           <label for="product">Producto
-            <input type="text" id="product">
+            <input
+              type="text"
+              id="product"
+              data-input="name"
+            >
           </label>
           <label for="price">Precio
-            <input type="number" id="price" min="0" step=".01">
+            <input
+              type="number"
+              id="price"
+              min="0"
+              step=".01"
+              data-input="price">
           </label>
-          <select id="currency">
+          <select id="currency" data-input="currency">
             <option value="usd" selected>Dolares</option>
             <option value="bs">Bolivares</option>
           </select>
