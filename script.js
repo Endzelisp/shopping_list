@@ -16,10 +16,10 @@ function main () {
     const totalPriceBs = _getElem('[data-total="total-bs"]');
     const totalPriceUSD = _getElem('[data-total="total-usd"]');
     const newItem = _getElem('[data-button="new-item"]');
-    const itemContainer = _getElem('section.container__main-list');
-    const dialogExchangeRate = _getElem('dialog.exchange-rate');
-    const dialogNewItem = _getElem('dialog.new-item');
-    const template = _getElem('template#item-template');
+    const itemContainer = _getElem('[data-container="main-list"]');
+    const dialogExchangeRate = _getElem('[data-dialog="exchange-rate"]');
+    const dialogNewItem = _getElem('[data-dialog="new-item"]');
+    const template = _getElem('[data-template="new-item"]');
     
     const clearList = function () {
       const list = itemContainer.querySelectorAll('.item');
