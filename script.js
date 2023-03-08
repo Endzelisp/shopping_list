@@ -152,8 +152,8 @@ function main () {
     // just if the exchangeRate is set
 
     if ('exchangeRate' in localStorage) {
-      const productEl = UIElem.dialogNewItem.querySelector('input#product');
-      const priceEl = UIElem.dialogNewItem.querySelector('input#price');
+      const productEl = UIElem.dialogNewItem.querySelector('[data-input="name"]');
+      const priceEl = UIElem.dialogNewItem.querySelector('[data-input="price"]');
       productEl.value = '';
       priceEl.value = null;
       UIElem.dialogNewItem.showModal();
@@ -171,7 +171,7 @@ function main () {
     // and save it to local storage
 
     const exRateInputEl = UIElem.dialogExchangeRate
-      .querySelector('input#exchange-rate');
+      .querySelector('[data-input="exchange-rate"]');
     const exRate = exRateInputEl.value;
 
     if (exRate !== undefined && exRate > 0) {
