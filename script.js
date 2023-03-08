@@ -191,10 +191,10 @@ function main () {
     // send it through the event detail object
 
     const dialogEl = UIElem.dialogNewItem;
-    const productEl = dialogEl.querySelector('input#product');
-    const priceEl = dialogEl.querySelector('input#price');
-    const currencyEl = dialogEl.querySelector('select#currency');
-    const quantityEl = dialogEl.querySelector('input#quantity');
+    const quantityEl = dialogEl.querySelector('[data-input="item-quantity"]');
+    const priceEl = dialogEl.querySelector('[data-input="price"]');
+    const currencyEl = dialogEl.querySelector('[data-input="currency"]');
+    const productEl = dialogEl.querySelector('[data-input="name"]');
     const product = (productEl.value).trim();
     const currency = currencyEl.value;
     const quantity = quantityEl.value;
