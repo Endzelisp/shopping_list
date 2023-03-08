@@ -122,17 +122,15 @@
 .container__header-options svg {
   width: 2rem;
   height: 2rem;
-  background-color: var(--list-container-bg-clr);
-  border-radius: 6px;
-  box-shadow: -3px -3px 1px var(--medium-gray);
+  padding: .2em;
+  background-color: var(--baby-powder);
+  border-radius: 2rem;
+  box-shadow: 1px 1px 2px 1px var(--red);
 }
 
-.container__header-options svg[data-button="new-item"] {
+.container__header-options svg[data-button="new-item"],
+.container__header-options svg[data-button="weighted-item"] {
   fill: var(--dark-gray);
-}
-
-.container__header-options svg[data-button="new-veggie"] {
-  fill: var(--red);
 }
 
 /* Item's list elements  */
