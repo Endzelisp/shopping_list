@@ -56,16 +56,17 @@
           </template>
         </section>
       </main>
-      <dialog class="exchange-rate" data-dialog="exchange-rate">
+      <dialog data-dialog="exchange-rate">
         <form method="dialog">
-          <h2>Tasa de Cambio BCV</h2>
-          <input
-            type="number"
-            id="exchange-rate"
-            min="0" step=".01"
-            data-input="exchange-rate"
-          >
-          <button>Guardar</button>
+          <label for="exchange-rate">Tasa de Cambio BCV
+            <input
+              type="number"
+              id="exchange-rate"
+              min="0" step=".01"
+              data-input="exchange-rate"
+            >
+          </label>
+          <button class="dialog-btn">Guardar</button>
         </form>
       </dialog>
       <dialog class="new-item" data-dialog="new-item">
@@ -98,7 +99,7 @@
             <option value="usd" selected>Dolares</option>
             <option value="bs">Bolivares</option>
           </select>
-          <button>Guardar</button>
+          <button class="dialog-btn">Agregar</button>
         </form>
       </dialog>
       <dialog class="weighted-item" data-dialog="weighted-item">
@@ -134,7 +135,7 @@
             </label>
           </div>
           <div>
-            <button>Agregar</button>
+            <button class="dialog-btn">Agregar</button>
           </div>
         </form>
       </dialog>
