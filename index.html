@@ -100,6 +100,43 @@
           <button>Guardar</button>
         </form>
       </dialog>
+      <dialog class="weighted-item" data-dialog="weighted-item">
+        <form method="dialog">
+          <div>
+            <label for="weight">Peso
+              <input
+                type="number"
+                id="weight"
+                value="0"
+                autofocus
+                data-input="item-weight"
+              >
+            </label>
+            <span>Kg</span>
+          </div>
+          <div>
+            <label for="price">Precio / kg
+              <input
+                type="number"
+                id="price"
+                data-input="item-price"
+              >
+            </label>
+            <select>
+              <option value="bs" selected>Bs</option>
+              <option value="usd">USD</option>
+            </select>
+          </div>
+          <div>
+            <label for="new-weighted-item">Producto
+              <input type="text" id="new-weighted-item">
+            </label>
+          </div>
+          <div>
+            <button>Agregar</button>
+          </div>
+        </form>
+      </dialog>
     </div>
   </body>
 </html>
