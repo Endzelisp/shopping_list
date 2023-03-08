@@ -19,17 +19,20 @@
 }
 
 :root {
+    /* CSS HEX */
+  --baby-powder: #fffffa;
+  --medium-gray: #515052;
+  --dark-gray: #333138;
+  --red: #ff312e;
+  --header-bg-clr: var(--dark-gray);
+  --title-txt-clr:  var(--baby-powder);
+  --list-container-bg-clr: var(--baby-powder);
+  --item-bg-clr: var(--baby-powder);
+  --body-txt-clr: var(--dark-gray);
+  --item-shadow: var(--medium-gray);
+  --button-bg-clr: var(--red);
   --quicksand-regular: 'quicksand-regular';
   --quicksand-bold: 'quicksand-bold';
-  --header-bg-clr: #e4e5e8;
-  --header-txt-clr:  #743b16;
-  --list-container-bg-clr: #ffffff;
-  --item-bg-clr: #c37438;
-  --item-txt-clr: #e4e5e8;
-  --item-shadow: #464646;
-  --orange: #ff7d0a;
-  --medium-gray: #858585;
-  --dark-gray: #262626;
   --header-height: 7rem;
   --item-list-height: calc(100vh - var(--header-height));
 }
@@ -38,6 +41,16 @@
   display: grid;
   grid-template-rows: var(--header-height) var(--item-list-height);
   font-family: var(--quicksand-regular);
+}
+
+.light-bg {
+  background-color: var(--baby-powder);
+  color: var(--dark-gray);
+}
+
+.dark-bg {
+  background-color: var(--dark-gray);
+  color: var(--baby-powder);
 }
 
 /* Header Styling */
@@ -50,8 +63,6 @@
   gap: .5em;
   padding: .125em;
   font-family: var(--quicksand-bold);
-  background-color: var(--header-bg-clr);
-  color: var(--header-txt-clr);
 }
 
 .container__header-total {
@@ -100,13 +111,11 @@
 .container__header-options div:first-of-type h3 {
   font-size: .5rem;
   font-weight: lighter;
-  color: var(--header-txt-clr);
   text-align: center;
 }
 
 .container__header-options .price-format {
   padding: .25em 1em;
-  background-color: var(--list-container-bg-clr);
   border-radius: 1rem;
 }
 
@@ -123,7 +132,7 @@
 }
 
 .container__header-options svg[data-button="new-veggie"] {
-  fill: var(--orange);
+  fill: var(--red);
 }
 
 /* Item's list elements  */
@@ -145,8 +154,7 @@
   width: 100%;
   height: 2.5rem;
   padding: 0 .2em;
-  background-color: var(--item-bg-clr);
-  color: var(--item-txt-clr);
+  font-weight: 600;
   border-radius: 5px;
   box-shadow: 2px 2px 5px var(--item-shadow);
 }
@@ -268,6 +276,6 @@ dialog.weighted-item button {
   padding: .8em 2em;
   border-radius: 2rem;
   font-size: 1.05rem;
-  background-color: var(--orange);
-  color: var(--dark-gray);
+  background-color: var(--button-bg-clr);
+  color: var(--baby-powder);
 }
