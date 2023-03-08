@@ -157,7 +157,7 @@
   box-shadow: 2px 2px 5px var(--item-shadow);
 }
 
-.container__main-list > .item > #delete {
+.container__main-list > .item > [data-item="delete"] {
   text-align: center;
   cursor: pointer;
 }
