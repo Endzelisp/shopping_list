@@ -16,9 +16,11 @@ function main () {
     const totalPriceBs = _getElem('[data-total="total-bs"]');
     const totalPriceUSD = _getElem('[data-total="total-usd"]');
     const newItem = _getElem('[data-button="new-item"]');
+    const newWeightedItem = _getElem('[data-button="weighted-item"]');
     const itemContainer = _getElem('[data-container="main-list"]');
     const dialogExchangeRate = _getElem('[data-dialog="exchange-rate"]');
     const dialogNewItem = _getElem('[data-dialog="new-item"]');
+    const dialogNewweightedItem = _getElem('[data-dialog="weighted-item"]');
     const template = _getElem('[data-template="new-item"]');
     
     const clearList = function () {
@@ -31,7 +33,9 @@ function main () {
       exchangeRateEl,
       dialogExchangeRate,
       dialogNewItem,
+      dialogNewweightedItem,
       newItem,
+      newWeightedItem,
       itemContainer,
       template,
       totalPriceBs,
@@ -158,6 +162,9 @@ function main () {
     }
   })
 
+  UIElem.newWeightedItem.addEventListener('pointerdown', () => {
+    UIElem.dialogNewweightedItem.showModal();
+  })
 
   UIElem.dialogExchangeRate.addEventListener('close', () => {
     // Capture info about the exchange rate
