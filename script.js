@@ -118,7 +118,7 @@ function main () {
   function createItem (name, price) {
 
     function _removeItemFn () {
-      const itemEl = this.parentElement.querySelector('#item-name');
+      const itemEl = this.parentElement.querySelector('[data-item="name"]');
       delete State.savedItems[itemEl.innerText];
       Local.saveList();
       this.parentElement.remove();
@@ -126,10 +126,10 @@ function main () {
     }
 
     const clone = UIElem.template.content.cloneNode(true);
-    const newItem = clone.querySelector('div.item');
-    const itemName = newItem.querySelector('#item-name');
-    const itemPrice = newItem.querySelector('#item-price');
-    const removeItem = newItem.querySelector('span#delete');
+    const newItem = clone.querySelector('[data-item="container"]');
+    const itemName = newItem.querySelector('[data-item="name"]');
+    const itemPrice = newItem.querySelector('[data-item="price"]');
+    const removeItem = newItem.querySelector('[data-item="delete"]');
     removeItem.addEventListener('pointerdown', _removeItemFn);
     itemName.innerText = name;
     itemPrice.innerText = `${price} Bs.`;
