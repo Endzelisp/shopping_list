@@ -112,7 +112,6 @@
               <input
                 type="number"
                 id="weight"
-                value="0"
                 autofocus
                 data-input="item-weight"
               >
@@ -124,6 +123,8 @@
               <input
                 type="number"
                 id="price"
+                min="0"
+                step=".01"
                 data-input="item-price"
               >
             </label>
@@ -134,7 +135,12 @@
           </div>
           <div>
             <label for="new-weighted-item">Producto
-              <input type="text" id="new-weighted-item">
+              <input
+                type="text"
+                min="0"
+                step=".01"
+                id="new-weighted-item"
+                data-input="name">
             </label>
           </div>
           <div>
