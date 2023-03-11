@@ -163,7 +163,20 @@ function main () {
   })
 
   UIElem.newWeightedItem.addEventListener('pointerdown', () => {
-    UIElem.dialogNewweightedItem.showModal();
+    // Show up the dialog box to add a new weighted items
+    // just if the exchangeRate is set
+
+    if ('exchangeRate' in localStorage) {
+      const productEl = UIElem.dialogNewweightedItem.querySelector('[data-input="name"]');
+      const priceEl = UIElem.dialogNewweightedItem.querySelector('[data-input="price"]');
+      const weightEl = UIElem.dialogNewweightedItem.querySelector('[data-input="weight"]');
+      productEl.value = '';
+      priceEl.value = null;
+      weightEl.value = null;
+      UIElem.dialogNewweightedItem.showModal();
+    } else {
+      alert('La tasa de cambio no ha sido configurada');
+    }
   })
 
   UIElem.dialogExchangeRate.addEventListener('close', () => {
