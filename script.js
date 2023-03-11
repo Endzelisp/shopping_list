@@ -210,6 +210,25 @@ function main () {
     }
   })
 
+  UIElem.dialogNewweightedItem.addEventListener('close', () => {
+    const dialogEl = UIElem.dialogNewweightedItem;
+    const weightEl = dialogEl.querySelector('[data-input="item-weight"]');
+    const priceEl = dialogEl.querySelector('[data-input="item-price"]');
+    const currencyEl = dialogEl.querySelector('[data-input="currency"]');
+    const productEl = dialogEl.querySelector('[data-input="name"]');
+    const weight = weightEl.value;
+    const currency = currencyEl.value;
+    const product = (productEl.value).trim();
+    const price = (parseFloat(priceEl.value) * parseFloat(weight)).toFixed(2);
+
+    if (product !== '' && price !== null) {
+      updateList.detail.price = price;
+      updateList.detail.currency = currency;
+      updateList.detail.product = `${weight}Kg de ${product}`;
+
+      UIElem.dialogNewItem.dispatchEvent(updateList);
+    }
+  })
 
   UIElem.mainContainer.addEventListener('updateList', (e) => {
     // Receive captured info about the product
@@ -220,7 +239,7 @@ function main () {
     const quantity = e.detail.quantity;
     let price = e.detail.price;
 
-    price *= parseInt(quantity);
+    if (quantity) price *= parseInt(quantity);
     if (currency === 'bs') {
       price = (price / State.exchangeRate);
     }
