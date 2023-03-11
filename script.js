@@ -198,10 +198,10 @@ function main () {
     const product = (productEl.value).trim();
     const currency = currencyEl.value;
     const quantity = quantityEl.value;
-    let price = priceEl.value;
+    let price = (parseFloat(priceEl.value) * parseInt(quantity)).toFixed(2);
 
     if (product !== '' && price !== null) {
-      updateList.detail.product = product;
+      updateList.detail.product = `${quantity} ${product}`;
       updateList.detail.currency = currency;
       updateList.detail.quantity = quantity;
       updateList.detail.price = price;
@@ -236,10 +236,8 @@ function main () {
 
     const product = e.detail.product;
     const currency = e.detail.currency;
-    const quantity = e.detail.quantity;
     let price = e.detail.price;
 
-    if (quantity) price *= parseInt(quantity);
     if (currency === 'bs') {
       price = (price / State.exchangeRate);
     }
