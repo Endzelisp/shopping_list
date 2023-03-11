@@ -152,8 +152,10 @@ function main () {
     // just if the exchangeRate is set
 
     if ('exchangeRate' in localStorage) {
+      const quantityEl = UIElem.dialogNewItem.querySelector('[data-input="quantity"]');
       const productEl = UIElem.dialogNewItem.querySelector('[data-input="name"]');
       const priceEl = UIElem.dialogNewItem.querySelector('[data-input="price"]');
+      quantityEl.value = 1;
       productEl.value = '';
       priceEl.value = null;
       UIElem.dialogNewItem.showModal();
