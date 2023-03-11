@@ -191,7 +191,7 @@ function main () {
     // send it through the event detail object
 
     const dialogEl = UIElem.dialogNewItem;
-    const quantityEl = dialogEl.querySelector('[data-input="item-quantity"]');
+    const quantityEl = dialogEl.querySelector('[data-input="quantity"]');
     const priceEl = dialogEl.querySelector('[data-input="price"]');
     const currencyEl = dialogEl.querySelector('[data-input="currency"]');
     const productEl = dialogEl.querySelector('[data-input="name"]');
@@ -212,8 +212,8 @@ function main () {
 
   UIElem.dialogNewweightedItem.addEventListener('close', () => {
     const dialogEl = UIElem.dialogNewweightedItem;
-    const weightEl = dialogEl.querySelector('[data-input="item-weight"]');
-    const priceEl = dialogEl.querySelector('[data-input="item-price"]');
+    const weightEl = dialogEl.querySelector('[data-input="weight"]');
+    const priceEl = dialogEl.querySelector('[data-input="price"]');
     const currencyEl = dialogEl.querySelector('[data-input="currency"]');
     const productEl = dialogEl.querySelector('[data-input="name"]');
     const weight = weightEl.value;
