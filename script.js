@@ -226,12 +226,20 @@ function main () {
   })
 
   UIElem.dialogNewweightedItem.addEventListener('close', () => {
+    // Capture user info about the weighted product
+    // and send it through the event detail object
+    
     const dialogEl = UIElem.dialogNewweightedItem;
     const weightEl = dialogEl.querySelector('[data-input="weight"]');
     const priceEl = dialogEl.querySelector('[data-input="price"]');
     const currencyEl = dialogEl.querySelector('[data-input="currency"]');
     const productEl = dialogEl.querySelector('[data-input="name"]');
-    const weight = weightEl.value;
+
+    // Add a zero before the decimal point if the user didn't do it
+    let weight = weightEl.value;
+    if (weight[0] === '.' || weight[0] === ',') {
+      weight = `0${weight}`;
+    }
     const currency = currencyEl.value;
     const product = (productEl.value).trim();
     const price = (parseFloat(priceEl.value) * parseFloat(weight)).toFixed(2);
