@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
-
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Armando Endzelis">
-    <meta name="description" content="Interactive shopping list">
-    <link rel="shortcut icon" href="./favicon/icons8-shop-32.png" type="image/x-icon">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/header.css">
-    <link rel="stylesheet" href="./css/items.css">
-    <link rel="stylesheet" href="./css/dialogs.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Armando Endzelis" />
+    <meta name="description" content="Interactive shopping list" />
+    <link
+      rel="shortcut icon"
+      href="./favicon/icons8-shop-32.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="./css/items.css" />
+    <link rel="stylesheet" href="./css/dialogs.css" />
     <script src="./script.js" defer></script>
     <title>Lista de Compras</title>
   </head>
@@ -37,15 +40,26 @@
               <p>Bs</p>
             </span>
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-button="new-item">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            data-button="new-item"
+          >
             <title>agregar item unitario</title>
-            <path d="M11 9H13V6H16V4H13V1H11V4H8V6H11M7 18C5.9 18 5 18.9 5 20S5.9 22 7 22 9 21.1 9 20 8.1 18 7 18M17 18C15.9 18 15 18.9 15 20S15.9 22 17 22 19 21.1 19 20 18.1 18 17 18M7.2 14.8V14.7L8.1 13H15.5C16.2 13 16.9 12.6 17.2 12L21.1 5L19.4 4L15.5 11H8.5L4.3 2H1V4H3L6.6 11.6L5.2 14C5.1 14.3 5 14.6 5 15C5 16.1 5.9 17 7 17H19V15H7.4C7.3 15 7.2 14.9 7.2 14.8Z" />
+            <path
+              d="M11 9H13V6H16V4H13V1H11V4H8V6H11M7 18C5.9 18 5 18.9 5 20S5.9 22 7 22 9 21.1 9 20 8.1 18 7 18M17 18C15.9 18 15 18.9 15 20S15.9 22 17 22 19 21.1 19 20 18.1 18 17 18M7.2 14.8V14.7L8.1 13H15.5C16.2 13 16.9 12.6 17.2 12L21.1 5L19.4 4L15.5 11H8.5L4.3 2H1V4H3L6.6 11.6L5.2 14C5.1 14.3 5 14.6 5 15C5 16.1 5.9 17 7 17H19V15H7.4C7.3 15 7.2 14.9 7.2 14.8Z"
+            />
           </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-button="weighted-item">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            data-button="weighted-item"
+          >
             <title>agregar item por peso</title>
-            <path d="M8.46,15.06L7.05,16.47L5.68,15.1C4.82,16.21 4.24,17.54 4.06,19H6V21H2V20C2,15.16 5.44,11.13 10,10.2V8.2L2,5V3H22V5L14,8.2V10.2C18.56,11.13 22,15.16 22,20V21H18V19H19.94C19.76,17.54 19.18,16.21 18.32,15.1L16.95,16.47L15.54,15.06L16.91,13.68C15.8,12.82 14.46,12.24 13,12.06V14H11V12.06C9.54,12.24 8.2,12.82 7.09,13.68L8.46,15.06M12,18A2,2 0 0,1 14,20A2,2 0 0,1 12,22C11.68,22 11.38,21.93 11.12,21.79L7.27,20L11.12,18.21C11.38,18.07 11.68,18 12,18Z" />
+            <path
+              d="M8.46,15.06L7.05,16.47L5.68,15.1C4.82,16.21 4.24,17.54 4.06,19H6V21H2V20C2,15.16 5.44,11.13 10,10.2V8.2L2,5V3H22V5L14,8.2V10.2C18.56,11.13 22,15.16 22,20V21H18V19H19.94C19.76,17.54 19.18,16.21 18.32,15.1L16.95,16.47L15.54,15.06L16.91,13.68C15.8,12.82 14.46,12.24 13,12.06V14H11V12.06C9.54,12.24 8.2,12.82 7.09,13.68L8.46,15.06M12,18A2,2 0 0,1 14,20A2,2 0 0,1 12,22C11.68,22 11.38,21.93 11.12,21.79L7.27,20L11.12,18.21C11.38,18.07 11.68,18 12,18Z"
+            />
           </svg>
-          
         </div>
       </header>
       <main class="container__main">
@@ -62,42 +76,44 @@
       </main>
       <dialog data-dialog="exchange-rate">
         <form method="dialog">
-          <label for="exchange-rate">Tasa de Cambio BCV
+          <label for="exchange-rate"
+            >Tasa de Cambio BCV
             <input
               type="number"
               id="exchange-rate"
-              min="0" step=".01"
+              min="0"
+              step=".01"
               data-input="exchange-rate"
-            >
+            />
           </label>
           <button class="dialog-btn">Guardar</button>
         </form>
       </dialog>
       <dialog class="new-item" data-dialog="new-item">
         <form method="dialog">
-          <label for="quantity">Cantidad
+          <label for="quantity"
+            >Cantidad
             <input
               type="number"
               id="quantity"
               value="1"
               autofocus
               data-input="quantity"
-            >
+            />
           </label>
-          <label for="product">Producto
-            <input
-              type="text"
-              id="product"
-              data-input="name"
-            >
+          <label for="product"
+            >Producto
+            <input type="text" id="product" data-input="name" />
           </label>
-          <label for="price">Precio
+          <label for="price"
+            >Precio
             <input
               type="number"
               id="price"
               min="0"
               step=".01"
-              data-input="price">
+              data-input="price"
+            />
           </label>
           <select data-input="currency">
             <option value="usd" selected>Dolares</option>
@@ -109,7 +125,8 @@
       <dialog class="weighted-item" data-dialog="weighted-item">
         <form method="dialog">
           <div>
-            <label for="weight">Peso
+            <label for="weight"
+              >Peso
               <input
                 type="number"
                 min="0"
@@ -117,19 +134,20 @@
                 id="weight"
                 autofocus
                 data-input="weight"
-              >
+              />
             </label>
             <span>Kg</span>
           </div>
           <div>
-            <label for="price">Precio / kg
+            <label for="price"
+              >Precio / kg
               <input
                 type="number"
                 id="price"
                 min="0"
                 step=".01"
                 data-input="price"
-              >
+              />
             </label>
             <select data-input="currency">
               <option value="bs" selected>Bs</option>
@@ -137,13 +155,15 @@
             </select>
           </div>
           <div>
-            <label for="new-weighted-item">Producto
+            <label for="new-weighted-item"
+              >Producto
               <input
                 type="text"
                 min="0"
                 step=".01"
                 id="new-weighted-item"
-                data-input="name">
+                data-input="name"
+              />
             </label>
           </div>
           <div>
