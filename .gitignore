@@ -5,3 +5,7 @@ node_modules/
 #Ignore all JSON files
 
 *.json
+
+#Ignore .prettierignore file
+
+.prettierignore
