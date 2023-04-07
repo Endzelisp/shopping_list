@@ -62,48 +62,6 @@ UIElem.exchangeRateEl.addEventListener("pointerdown", () => {
   UIElem.dialogExchangeRate.showModal();
 });
 
-UIElem.newItem.addEventListener("pointerdown", () => {
-  // Show up the dialog box to add a new item
-  // just if the exchangeRate is set
-
-  if ("exchangeRate" in localStorage) {
-    const quantityEl = UIElem.dialogNewItem.querySelector(
-      '[data-input="quantity"]'
-    );
-    const productEl = UIElem.dialogNewItem.querySelector('[data-input="name"]');
-    const priceEl = UIElem.dialogNewItem.querySelector('[data-input="price"]');
-    quantityEl.value = 1;
-    productEl.value = "";
-    priceEl.value = null;
-    UIElem.dialogNewItem.showModal();
-  } else {
-    alert("La tasa de cambio no ha sido configurada");
-  }
-});
-
-UIElem.newWeightedItem.addEventListener("pointerdown", () => {
-  // Show up the dialog box to add a new weighted items
-  // just if the exchangeRate is set
-
-  if ("exchangeRate" in localStorage) {
-    const productEl = UIElem.dialogNewweightedItem.querySelector(
-      '[data-input="name"]'
-    );
-    const priceEl = UIElem.dialogNewweightedItem.querySelector(
-      '[data-input="price"]'
-    );
-    const weightEl = UIElem.dialogNewweightedItem.querySelector(
-      '[data-input="weight"]'
-    );
-    productEl.value = "";
-    priceEl.value = null;
-    weightEl.value = null;
-    UIElem.dialogNewweightedItem.showModal();
-  } else {
-    alert("La tasa de cambio no ha sido configurada");
-  }
-});
-
 UIElem.dialogExchangeRate.addEventListener("close", () => {
   // Capture info about the exchange rate
   // and save it to local storage
@@ -123,6 +81,25 @@ UIElem.dialogExchangeRate.addEventListener("close", () => {
 
   // Update item's price when the exchange rate changes
   UIElem.dialogExchangeRate.dispatchEvent(renderList);
+});
+
+UIElem.newItem.addEventListener("pointerdown", () => {
+  // Show up the dialog box to add a new item
+  // just if the exchangeRate is set
+
+  if ("exchangeRate" in localStorage) {
+    const quantityEl = UIElem.dialogNewItem.querySelector(
+      '[data-input="quantity"]'
+    );
+    const productEl = UIElem.dialogNewItem.querySelector('[data-input="name"]');
+    const priceEl = UIElem.dialogNewItem.querySelector('[data-input="price"]');
+    quantityEl.value = 1;
+    productEl.value = "";
+    priceEl.value = null;
+    UIElem.dialogNewItem.showModal();
+  } else {
+    alert("La tasa de cambio no ha sido configurada");
+  }
 });
 
 UIElem.dialogNewItem.addEventListener("close", () => {
@@ -146,6 +123,29 @@ UIElem.dialogNewItem.addEventListener("close", () => {
     updateList.detail.price = price;
 
     UIElem.dialogNewItem.dispatchEvent(updateList);
+  }
+});
+
+UIElem.newWeightedItem.addEventListener("pointerdown", () => {
+  // Show up the dialog box to add a new weighted items
+  // just if the exchangeRate is set
+
+  if ("exchangeRate" in localStorage) {
+    const productEl = UIElem.dialogNewweightedItem.querySelector(
+      '[data-input="name"]'
+    );
+    const priceEl = UIElem.dialogNewweightedItem.querySelector(
+      '[data-input="price"]'
+    );
+    const weightEl = UIElem.dialogNewweightedItem.querySelector(
+      '[data-input="weight"]'
+    );
+    productEl.value = "";
+    priceEl.value = null;
+    weightEl.value = null;
+    UIElem.dialogNewweightedItem.showModal();
+  } else {
+    alert("La tasa de cambio no ha sido configurada");
   }
 });
 
