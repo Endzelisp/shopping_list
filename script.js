@@ -34,13 +34,14 @@ const renderTotalBs = new CustomEvent("renderTotalBs", {
 // ------------
 //  Functions
 
-function createItem(name, price) {
+function createItem(name, price, id) {
   function _removeItemFn() {
-    const itemEl = this.parentElement.querySelector('[data-item="name"]');
-    delete State.savedItems[itemEl.innerText];
-    Local.saveList();
-    this.parentElement.remove();
-    UIElem.mainContainer.dispatchEvent(renderList);
+    console.log(this.parentElement);
+    // const itemEl = this.parentElement.querySelector('[data-item="name"]');
+
+    // Local.saveList();
+    // this.parentElement.remove();
+    // UIElem.mainContainer.dispatchEvent(renderList);
   }
 
   const clone = UIElem.template.content.cloneNode(true);
@@ -48,10 +49,29 @@ function createItem(name, price) {
   const itemName = newItem.querySelector('[data-item="name"]');
   const itemPrice = newItem.querySelector('[data-item="price"]');
   const removeItem = newItem.querySelector('[data-item="delete"]');
+  newItem.setAttribute("id", id);
   removeItem.addEventListener("pointerdown", _removeItemFn);
   itemName.innerText = name;
   itemPrice.innerText = `${price} Bs.`;
   return newItem;
+}
+
+function generateId(product) {
+  const randomStart = Math.random().toString().slice(-3);
+  const randomEnd = Math.random().toString().slice(-3);
+  const word = product.split(" ")[0];
+  return randomStart + word + randomEnd;
+}
+
+class Item {
+  constructor(obj) {
+    this.quantity = obj.quantity;
+    this.weight = obj.weight;
+    this.product = obj.product;
+    this.price = obj.price;
+    this.type = obj.type;
+    this.id = obj.id;
+  }
 }
 
 // ----------------
@@ -113,14 +133,17 @@ UIElem.dialogNewItem.addEventListener("close", () => {
   const productEl = dialogEl.querySelector('[data-input="name"]');
   const product = productEl.value.trim();
   const currency = currencyEl.value;
-  const quantity = quantityEl.value;
-  const price = (parseFloat(priceEl.value) * parseInt(quantity)).toFixed(2);
+  const quantity = parseInt(quantityEl.value);
+  const price = parseFloat(priceEl.value).toFixed(2);
 
   if (product !== "" && price !== null) {
-    updateList.detail.product = `${quantity} ${product}`;
+    updateList.detail.product = product;
     updateList.detail.currency = currency;
     updateList.detail.quantity = quantity;
     updateList.detail.price = price;
+    updateList.detail.type = "unitary";
+    updateList.detail.weight = null;
+    updateList.detail.id = generateId(product);
 
     UIElem.dialogNewItem.dispatchEvent(updateList);
   }
@@ -164,14 +187,19 @@ UIElem.dialogNewweightedItem.addEventListener("close", () => {
   if (weight[0] === "." || weight[0] === ",") {
     weight = `0${weight}`;
   }
+  weight = parseFloat(weight);
   const currency = currencyEl.value;
   const product = productEl.value.trim();
-  const price = (parseFloat(priceEl.value) * parseFloat(weight)).toFixed(2);
+  const price = parseFloat(priceEl.value);
 
   if (product !== "" && price !== null) {
+    updateList.detail.weight = weight;
     updateList.detail.price = price;
+    updateList.detail.product = product;
     updateList.detail.currency = currency;
-    updateList.detail.product = `${weight}Kg de ${product}`;
+    updateList.detail.type = "weighted";
+    updateList.detail.quantity = null;
+    updateList.detail.id = generateId(product);
 
     UIElem.dialogNewItem.dispatchEvent(updateList);
   }
@@ -181,14 +209,20 @@ UIElem.mainContainer.addEventListener("updateList", (e) => {
   // Receive captured info about the product
   // saving it in the State module and localStorage
 
+  const quantity = e.detail.quantity;
+  const weight = e.detail.weight;
   const product = e.detail.product;
   const currency = e.detail.currency;
+  const type = e.detail.type;
   let price = e.detail.price;
+  const id = e.detail.id;
 
   if (currency === "bs") {
     price = price / State.exchangeRate;
   }
-  State.savedItems[product] = price;
+  State.savedItems.push(
+    new Item({ quantity, weight, product, type, price, id })
+  );
   Local.saveList();
   UIElem.mainContainer.dispatchEvent(renderList);
 });
@@ -197,40 +231,43 @@ UIElem.mainContainer.addEventListener("renderList", () => {
   // Clear out the actual displayed list of items
   UIElem.clearList();
 
-  const checkObj = Object.keys(State.savedItems);
+  const checkObj = State.savedItems.map((item) => item.product);
 
   if (checkObj.length === 0 && "savedItems" in localStorage) {
-    // Runs when the saved items list obj is empty
+    // Runs when the saved items list is empty
     State.savedItems = Local.read();
   }
 
   // Render all saved items on the list
-  for (const key in State.savedItems) {
-    const price = parseFloat(State.savedItems[key]);
-    const priceInBs = price * parseFloat(State.exchangeRate);
-    UIElem.itemContainer.appendChild(createItem(key, priceInBs.toFixed(2)));
-  }
-  UIElem.mainContainer.dispatchEvent(renderTotalUSD);
+
+  State.savedItems.forEach((item) => {
+    const price = parseFloat(item.price) * parseFloat(State.exchangeRate);
+    UIElem.itemContainer.appendChild(
+      createItem(item.product, price.toFixed(2), item.id)
+    );
+  });
+
+  // UIElem.mainContainer.dispatchEvent(renderTotalUSD);
 });
 
-UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
-  // Total all product prices in USD
-  let total = 0;
-  for (const key in State.savedItems) {
-    total += parseFloat(State.savedItems[key]);
-  }
-  UIElem.totalPriceUSD.innerText = total.toFixed(2);
+// UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
+//   // Total all product prices in USD
+//   let total = 0;
+//   for (const key in State.savedItems) {
+//     total += parseFloat(State.savedItems[key]);
+//   }
+//   UIElem.totalPriceUSD.innerText = total.toFixed(2);
 
-  renderTotalBs.detail.totalInUSD = total;
-  UIElem.mainContainer.dispatchEvent(renderTotalBs);
-});
+//   renderTotalBs.detail.totalInUSD = total;
+//   UIElem.mainContainer.dispatchEvent(renderTotalBs);
+// });
 
-UIElem.mainContainer.addEventListener("renderTotalBs", (e) => {
-  // Exchange the product prices from USD to Bs
-  let total = e.detail.totalInUSD;
-  total *= parseFloat(State.exchangeRate);
-  UIElem.totalPriceBs.innerText = total.toFixed(2);
-});
+// UIElem.mainContainer.addEventListener("renderTotalBs", (e) => {
+//   // Exchange the product prices from USD to Bs
+//   let total = e.detail.totalInUSD;
+//   total *= parseFloat(State.exchangeRate);
+//   UIElem.totalPriceBs.innerText = total.toFixed(2);
+// });
 
 // -----------------
 // one time run code
