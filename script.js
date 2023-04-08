@@ -239,7 +239,10 @@ UIElem.mainContainer.addEventListener("renderList", () => {
 
   State.savedItems.forEach((item) => {
     if (item.type === "unitary") {
-      const priceBs = parseFloat(item.price) * parseFloat(State.exchangeRate);
+      const priceBs =
+        parseFloat(item.price) *
+        parseInt(item.quantity) *
+        parseFloat(State.exchangeRate);
       UIElem.itemContainer.appendChild(
         createItem(item.product, priceBs.toFixed(2), item.id)
       );
@@ -259,7 +262,10 @@ UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
   // Total all product prices in USD
   const total = State.savedItems.reduce((accumulator, currentValue) => {
     if (currentValue.type === "unitary") {
-      return accumulator + parseFloat(currentValue.price);
+      return (
+        accumulator +
+        parseFloat(currentValue.price) * parseInt(currentValue.quantity)
+      );
     } else if (currentValue.type === "weighted") {
       const price =
         parseFloat(currentValue.price) * parseFloat(currentValue.weight);
