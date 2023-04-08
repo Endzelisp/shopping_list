@@ -248,27 +248,28 @@ UIElem.mainContainer.addEventListener("renderList", () => {
     );
   });
 
-  // UIElem.mainContainer.dispatchEvent(renderTotalUSD);
+  UIElem.mainContainer.dispatchEvent(renderTotalUSD);
 });
 
-// UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
-//   // Total all product prices in USD
-//   let total = 0;
-//   for (const key in State.savedItems) {
-//     total += parseFloat(State.savedItems[key]);
-//   }
-//   UIElem.totalPriceUSD.innerText = total.toFixed(2);
+UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
+  // Total all product prices in USD
+  const total = State.savedItems.reduce(
+    (accumulator, currentValue) => accumulator + parseFloat(currentValue.price),
+    0
+  );
 
-//   renderTotalBs.detail.totalInUSD = total;
-//   UIElem.mainContainer.dispatchEvent(renderTotalBs);
-// });
+  UIElem.totalPriceUSD.innerText = total.toFixed(2);
 
-// UIElem.mainContainer.addEventListener("renderTotalBs", (e) => {
-//   // Exchange the product prices from USD to Bs
-//   let total = e.detail.totalInUSD;
-//   total *= parseFloat(State.exchangeRate);
-//   UIElem.totalPriceBs.innerText = total.toFixed(2);
-// });
+  renderTotalBs.detail.totalInUSD = total;
+  UIElem.mainContainer.dispatchEvent(renderTotalBs);
+});
+
+UIElem.mainContainer.addEventListener("renderTotalBs", (e) => {
+  // Exchange the product prices from USD to Bs
+  let total = e.detail.totalInUSD;
+  total *= parseFloat(State.exchangeRate);
+  UIElem.totalPriceBs.innerText = total.toFixed(2);
+});
 
 // -----------------
 // one time run code
