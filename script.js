@@ -36,12 +36,13 @@ const renderTotalBs = new CustomEvent("renderTotalBs", {
 
 function createItem(name, price, id) {
   function _removeItemFn() {
-    console.log(this.parentElement);
-    // const itemEl = this.parentElement.querySelector('[data-item="name"]');
-
-    // Local.saveList();
-    // this.parentElement.remove();
-    // UIElem.mainContainer.dispatchEvent(renderList);
+    const itemEl = this.parentElement;
+    const id = itemEl.getAttribute("id");
+    const indexToDelete = State.savedItems.findIndex((item) => item.id === id);
+    State.savedItems.splice(indexToDelete, 1);
+    Local.saveList();
+    itemEl.remove();
+    UIElem.mainContainer.dispatchEvent(renderList);
   }
 
   const clone = UIElem.template.content.cloneNode(true);
