@@ -231,21 +231,25 @@ UIElem.mainContainer.addEventListener("updateList", (e) => {
 UIElem.mainContainer.addEventListener("renderList", () => {
   // Clear out the actual displayed list of items
   UIElem.clearList();
-
   const checkObj = State.savedItems.map((item) => item.product);
-
   if (checkObj.length === 0 && "savedItems" in localStorage) {
     // Runs when the saved items list is empty
     State.savedItems = Local.read();
   }
 
-  // Render all saved items on the list
-
   State.savedItems.forEach((item) => {
-    const price = parseFloat(item.price) * parseFloat(State.exchangeRate);
-    UIElem.itemContainer.appendChild(
-      createItem(item.product, price.toFixed(2), item.id)
-    );
+    if (item.type === "unitary") {
+      const priceBs = parseFloat(item.price) * parseFloat(State.exchangeRate);
+      UIElem.itemContainer.appendChild(
+        createItem(item.product, priceBs.toFixed(2), item.id)
+      );
+    } else if (item.type === "weighted") {
+      const price = parseFloat(item.price) * parseFloat(item.weight);
+      const priceBs = price * parseFloat(State.exchangeRate);
+      UIElem.itemContainer.appendChild(
+        createItem(item.product, priceBs.toFixed(2), item.id)
+      );
+    }
   });
 
   UIElem.mainContainer.dispatchEvent(renderTotalUSD);
@@ -253,10 +257,15 @@ UIElem.mainContainer.addEventListener("renderList", () => {
 
 UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
   // Total all product prices in USD
-  const total = State.savedItems.reduce(
-    (accumulator, currentValue) => accumulator + parseFloat(currentValue.price),
-    0
-  );
+  const total = State.savedItems.reduce((accumulator, currentValue) => {
+    if (currentValue.type === "unitary") {
+      return accumulator + parseFloat(currentValue.price);
+    } else if (currentValue.type === "weighted") {
+      const price =
+        parseFloat(currentValue.price) * parseFloat(currentValue.weight);
+      return accumulator + price;
+    }
+  }, 0);
 
   UIElem.totalPriceUSD.innerText = total.toFixed(2);
 
