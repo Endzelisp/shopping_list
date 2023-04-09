@@ -64,6 +64,14 @@ function generateId(product) {
   return randomStart + word + randomEnd;
 }
 
+function calculateTotal(item) {
+  if (item.type === "unitary") {
+    return parseFloat(item.price) * parseInt(item.quantity);
+  } else if (item.type === "weighted") {
+    return parseFloat(item.price) * parseFloat(item.weight);
+  }
+}
+
 class Item {
   constructor(obj) {
     this.quantity = obj.quantity;
@@ -238,43 +246,21 @@ UIElem.mainContainer.addEventListener("renderList", () => {
   }
 
   State.savedItems.forEach((item) => {
-    if (item.type === "unitary") {
-      const priceBs =
-        parseFloat(item.price) *
-        parseInt(item.quantity) *
-        parseFloat(State.exchangeRate);
-      UIElem.itemContainer.appendChild(
-        createItem(item.product, priceBs.toFixed(2), item.id)
-      );
-    } else if (item.type === "weighted") {
-      const price = parseFloat(item.price) * parseFloat(item.weight);
-      const priceBs = price * parseFloat(State.exchangeRate);
-      UIElem.itemContainer.appendChild(
-        createItem(item.product, priceBs.toFixed(2), item.id)
-      );
-    }
+    const priceBs = calculateTotal(item) * parseFloat(State.exchangeRate);
+    UIElem.itemContainer.appendChild(
+      createItem(item.product, priceBs.toFixed(2), item.id)
+    );
   });
 
   UIElem.mainContainer.dispatchEvent(renderTotalUSD);
 });
 
 UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
-  // Total all product prices in USD
-  const total = State.savedItems.reduce((accumulator, currentValue) => {
-    if (currentValue.type === "unitary") {
-      return (
-        accumulator +
-        parseFloat(currentValue.price) * parseInt(currentValue.quantity)
-      );
-    } else if (currentValue.type === "weighted") {
-      const price =
-        parseFloat(currentValue.price) * parseFloat(currentValue.weight);
-      return accumulator + price;
-    }
-  }, 0);
-
+  const total = State.savedItems.reduce(
+    (accumulator, currentValue) => accumulator + calculateTotal(currentValue),
+    0
+  );
   UIElem.totalPriceUSD.innerText = total.toFixed(2);
-
   renderTotalBs.detail.totalInUSD = total;
   UIElem.mainContainer.dispatchEvent(renderTotalBs);
 });
