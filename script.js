@@ -241,14 +241,20 @@ UIElem.mainContainer.addEventListener("renderList", () => {
   UIElem.clearList();
   const checkObj = State.savedItems.map((item) => item.product);
   if (checkObj.length === 0 && "savedItems" in localStorage) {
-    // Runs when the saved items list is empty
+    // Runs if the savedItems list is empty
     State.savedItems = Local.read();
   }
 
   State.savedItems.forEach((item) => {
     const priceBs = calculateTotal(item) * parseFloat(State.exchangeRate);
     UIElem.itemContainer.appendChild(
-      createItem(item.product, priceBs.toFixed(2), item.id)
+      createItem(
+        `${item.quantity || item.weight.toString().concat(" Kg")} ${
+          item.product
+        }`,
+        priceBs.toFixed(2),
+        item.id
+      )
     );
   });
 
