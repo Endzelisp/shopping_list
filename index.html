@@ -12,7 +12,6 @@
     />
     <link rel="stylesheet" href="./css/main.css" />
     <link rel="stylesheet" href="./css/header.css" />
-    <link rel="stylesheet" href="./css/items.css" />
     <link rel="stylesheet" href="./css/dialogs.css" />
     <script type="module" src="./script.js"></script>
     <title>Lista de Compras</title>
@@ -66,11 +65,10 @@
         <section class="container__main-list" data-container="main-list">
           <!-- template for add new items -->
           <template data-template="new-item">
-            <div class="item light-bg" data-item="container">
-              <p data-item="name"></p>
-              <span data-item="price"></span>
-              <span data-item="delete">❌</span>
-            </div>
+            <link rel="stylesheet" href="./css/items.css" />
+            <p data-item="name"></p>
+            <span data-item="price"></span>
+            <span data-item="delete">❌</span>
           </template>
         </section>
       </main>
