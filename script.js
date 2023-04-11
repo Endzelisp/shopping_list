@@ -1,4 +1,5 @@
 import { UIElem, Local, State } from "./modules.js";
+import { Product } from "./item-component.js";
 
 // ----------------
 //  Custom Events
@@ -33,29 +34,6 @@ const renderTotalBs = new CustomEvent("renderTotalBs", {
 
 // ------------
 //  Functions
-
-function createItem(name, price, id) {
-  function _removeItemFn() {
-    const itemEl = this.parentElement;
-    const id = itemEl.getAttribute("id");
-    const indexToDelete = State.savedItems.findIndex((item) => item.id === id);
-    State.savedItems.splice(indexToDelete, 1);
-    Local.saveList();
-    itemEl.remove();
-    UIElem.mainContainer.dispatchEvent(renderList);
-  }
-
-  const clone = UIElem.template.content.cloneNode(true);
-  const newItem = clone.querySelector('[data-item="container"]');
-  const itemName = newItem.querySelector('[data-item="name"]');
-  const itemPrice = newItem.querySelector('[data-item="price"]');
-  const removeItem = newItem.querySelector('[data-item="delete"]');
-  newItem.setAttribute("id", id);
-  removeItem.addEventListener("pointerdown", _removeItemFn);
-  itemName.innerText = name;
-  itemPrice.innerText = `${price} Bs.`;
-  return newItem;
-}
 
 function generateId(product) {
   const randomStart = Math.random().toString().slice(-3);
@@ -247,15 +225,15 @@ UIElem.mainContainer.addEventListener("renderList", () => {
 
   State.savedItems.forEach((item) => {
     const priceBs = calculateTotal(item) * parseFloat(State.exchangeRate);
-    UIElem.itemContainer.appendChild(
-      createItem(
-        `${item.quantity || item.weight.toString().concat(" Kg")} ${
-          item.product
-        }`,
-        priceBs.toFixed(2),
-        item.id
-      )
+    const product = new Product();
+    product.loadData(
+      `${item.quantity || item.weight.toString().concat(" Kg")} ${
+        item.product
+      }`,
+      priceBs.toFixed(2),
+      item.id
     );
+    UIElem.itemContainer.appendChild(product);
   });
 
   UIElem.mainContainer.dispatchEvent(renderTotalUSD);
