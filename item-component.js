@@ -1,4 +1,4 @@
-import { Local, State } from "./modules.js";
+import { UIElem, Local, State, renderTotalUSD } from "./modules.js";
 
 export class Product extends HTMLElement {
   constructor() {
@@ -28,6 +28,10 @@ export class Product extends HTMLElement {
       Local.saveList();
       this.remove();
     });
+  }
+
+  disconnectedCallback() {
+    UIElem.mainContainer.dispatchEvent(renderTotalUSD);
   }
 }
 
