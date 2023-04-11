@@ -67,3 +67,63 @@ export const State = {
   exchangeRate: 0,
   savedItems: [],
 };
+
+export class Item {
+  constructor(obj) {
+    this.quantity = obj.quantity;
+    this.weight = obj.weight;
+    this.product = obj.product;
+    this.price = obj.price;
+    this.type = obj.type;
+    this.id = obj.id;
+  }
+}
+
+// ---------------
+// Event Handlers
+
+export const updateList = new CustomEvent("updateList", {
+  detail: {},
+  bubbles: true,
+  cancelable: false,
+  composed: false,
+});
+
+export const renderList = new CustomEvent("renderList", {
+  detail: {},
+  bubbles: true,
+  cancelable: false,
+  composed: false,
+});
+
+export const renderTotalUSD = new CustomEvent("renderTotalUSD", {
+  detail: {},
+  bubbles: true,
+  cancelable: false,
+  composed: false,
+});
+
+export const renderTotalBs = new CustomEvent("renderTotalBs", {
+  detail: {},
+  bubbles: true,
+  cancelable: false,
+  composed: false,
+});
+
+// ------------
+//  Functions
+
+export function generateId(product) {
+  const randomStart = Math.random().toString().slice(-3);
+  const randomEnd = Math.random().toString().slice(-3);
+  const word = product.split(" ")[0];
+  return randomStart + word + randomEnd;
+}
+
+export function calculateTotal(item) {
+  if (item.type === "unitary") {
+    return parseFloat(item.price) * parseInt(item.quantity);
+  } else if (item.type === "weighted") {
+    return parseFloat(item.price) * parseFloat(item.weight);
+  }
+}
