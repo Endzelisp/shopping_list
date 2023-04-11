@@ -19,7 +19,7 @@ export const UIElem = (function () {
   const template = _getElem('[data-template="new-item"]');
 
   const clearList = function () {
-    const list = itemContainer.querySelectorAll(".item");
+    const list = itemContainer.querySelectorAll("new-product");
     list.forEach((item) => item.remove());
   };
 
