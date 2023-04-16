@@ -24,15 +24,20 @@ UIElem.dialogExchangeRate.addEventListener("close", () => {
   const exRateInputEl = UIElem.dialogExchangeRate.querySelector(
     '[data-input="exchange-rate"]'
   );
-  const exRate = exRateInputEl.value;
+  const exRate = Number.parseFloat(exRateInputEl.value);
 
-  if (exRate !== undefined && exRate > 0) {
-    State.exchangeRate = exRate;
-    UIElem.exchangeRateEl.innerText = parseFloat(exRate).toFixed(2);
-    Local.saveExRate();
-  } else {
+  if (Number.isNaN(exRate)) {
     alert("Tasa de cambio no actualizada");
+    return;
   }
+  if (exRate === 0) {
+    alert("La tasa de cambio no puede ser cero");
+    return;
+  }
+
+  State.exchangeRate = exRate;
+  UIElem.exchangeRateEl.innerText = parseFloat(exRate).toFixed(2);
+  Local.saveExRate();
 
   // Update item's price when the exchange rate changes
   UIElem.dialogExchangeRate.dispatchEvent(renderList);
