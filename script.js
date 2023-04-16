@@ -36,7 +36,7 @@ UIElem.dialogExchangeRate.addEventListener("close", () => {
   }
 
   State.exchangeRate = exRate;
-  UIElem.exchangeRateEl.innerText = parseFloat(exRate).toFixed(2);
+  UIElem.exchangeRateEl.innerText = Number.parseFloat(exRate).toFixed(2);
   Local.saveExRate();
 
   // Update item's price when the exchange rate changes
@@ -74,8 +74,8 @@ UIElem.dialogNewItem.addEventListener("close", () => {
   const productEl = dialogEl.querySelector('[data-input="name"]');
   const product = productEl.value.trim();
   const currency = currencyEl.value;
-  const quantity = parseInt(quantityEl.value);
-  const price = parseFloat(priceEl.value).toFixed(2);
+  const quantity = Number.parseInt(quantityEl.value);
+  const price = Number.parseFloat(priceEl.value).toFixed(2);
 
   if (product !== "" && price !== null) {
     updateList.detail.product = product;
@@ -129,10 +129,10 @@ UIElem.dialogNewweightedItem.addEventListener("close", () => {
   if (weight[0] === "." || weight[0] === ",") {
     weight = `0${weight}`;
   }
-  weight = parseFloat(weight);
+  weight = Number.parseFloat(weight);
   const currency = currencyEl.value;
   const product = productEl.value.trim();
-  const price = parseFloat(priceEl.value);
+  const price = Number.parseFloat(priceEl.value);
 
   if (product !== "" && price !== null) {
     updateList.detail.weight = weight;
@@ -179,7 +179,8 @@ UIElem.mainContainer.addEventListener("renderList", () => {
   }
 
   State.savedItems.forEach((item) => {
-    const priceBs = calculateTotal(item) * parseFloat(State.exchangeRate);
+    const priceBs =
+      calculateTotal(item) * Number.parseFloat(State.exchangeRate);
     const product = new Product();
     product.loadData(
       `${item.quantity || item.weight.toString().concat(" Kg")} ${
@@ -196,7 +197,7 @@ UIElem.mainContainer.addEventListener("renderList", () => {
 
 UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
   const total = State.savedItems.reduce(
-    (accumulator, currentValue) => accumulator + calculateTotal(currentValue),
+    (acc, current) => acc + calculateTotal(current),
     0
   );
   UIElem.totalPriceUSD.innerText = total.toFixed(2);
@@ -207,7 +208,7 @@ UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
 UIElem.mainContainer.addEventListener("renderTotalBs", (e) => {
   // Exchange the product prices from USD to Bs
   let total = e.detail.totalInUSD;
-  total *= parseFloat(State.exchangeRate);
+  total *= Number.parseFloat(State.exchangeRate);
   UIElem.totalPriceBs.innerText = total.toFixed(2);
 });
 
@@ -217,7 +218,7 @@ UIElem.mainContainer.addEventListener("renderTotalBs", (e) => {
 if ("exchangeRate" in localStorage) {
   const exRate = localStorage.getItem("exchangeRate");
   State.exchangeRate = exRate;
-  UIElem.exchangeRateEl.innerText = parseFloat(exRate).toFixed(2);
+  UIElem.exchangeRateEl.innerText = Number.parseFloat(exRate).toFixed(2);
 } else {
   alert("Tasa de cambio no configurada");
   UIElem.exchangeRateEl.innerText = 0;
