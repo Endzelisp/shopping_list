@@ -47,19 +47,20 @@ UIElem.newItem.addEventListener("pointerdown", () => {
   // Show up the dialog box to add a new item
   // just if the exchangeRate is set
 
-  if ("exchangeRate" in localStorage) {
-    const quantityEl = UIElem.dialogNewItem.querySelector(
-      '[data-input="quantity"]'
-    );
-    const productEl = UIElem.dialogNewItem.querySelector('[data-input="name"]');
-    const priceEl = UIElem.dialogNewItem.querySelector('[data-input="price"]');
-    quantityEl.value = 1;
-    productEl.value = "";
-    priceEl.value = null;
-    UIElem.dialogNewItem.showModal();
-  } else {
+  if (!("exchangeRate" in localStorage)) {
     alert("La tasa de cambio no ha sido configurada");
+    return;
   }
+
+  const quantityEl = UIElem.dialogNewItem.querySelector(
+    '[data-input="quantity"]'
+  );
+  const productEl = UIElem.dialogNewItem.querySelector('[data-input="name"]');
+  const priceEl = UIElem.dialogNewItem.querySelector('[data-input="price"]');
+  quantityEl.value = 1;
+  productEl.value = "";
+  priceEl.value = null;
+  UIElem.dialogNewItem.showModal();
 });
 
 UIElem.dialogNewItem.addEventListener("close", () => {
@@ -93,23 +94,24 @@ UIElem.newWeightedItem.addEventListener("pointerdown", () => {
   // Show up the dialog box to add a new weighted items
   // just if the exchangeRate is set
 
-  if ("exchangeRate" in localStorage) {
-    const productEl = UIElem.dialogNewweightedItem.querySelector(
-      '[data-input="name"]'
-    );
-    const priceEl = UIElem.dialogNewweightedItem.querySelector(
-      '[data-input="price"]'
-    );
-    const weightEl = UIElem.dialogNewweightedItem.querySelector(
-      '[data-input="weight"]'
-    );
-    productEl.value = "";
-    priceEl.value = null;
-    weightEl.value = null;
-    UIElem.dialogNewweightedItem.showModal();
-  } else {
+  if (!("exchangeRate" in localStorage)) {
     alert("La tasa de cambio no ha sido configurada");
+    return;
   }
+
+  const productEl = UIElem.dialogNewweightedItem.querySelector(
+    '[data-input="name"]'
+  );
+  const priceEl = UIElem.dialogNewweightedItem.querySelector(
+    '[data-input="price"]'
+  );
+  const weightEl = UIElem.dialogNewweightedItem.querySelector(
+    '[data-input="weight"]'
+  );
+  productEl.value = "";
+  priceEl.value = null;
+  weightEl.value = null;
+  UIElem.dialogNewweightedItem.showModal();
 });
 
 UIElem.dialogNewweightedItem.addEventListener("close", () => {
