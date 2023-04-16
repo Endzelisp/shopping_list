@@ -212,16 +212,19 @@ UIElem.mainContainer.addEventListener("renderTotalBs", (e) => {
   UIElem.totalPriceBs.innerText = total.toFixed(2);
 });
 
-// -----------------
-// one time run code
+// -------------
+// Initial setup
 
-if ("exchangeRate" in localStorage) {
+function init() {
+  if (!("exchangeRate" in localStorage)) {
+    UIElem.exchangeRateEl.innerText = 0;
+    alert("Tasa de cambio no configurada");
+    return;
+  }
   const exRate = localStorage.getItem("exchangeRate");
   State.exchangeRate = exRate;
   UIElem.exchangeRateEl.innerText = Number.parseFloat(exRate).toFixed(2);
-} else {
-  alert("Tasa de cambio no configurada");
-  UIElem.exchangeRateEl.innerText = 0;
+  UIElem.mainContainer.dispatchEvent(renderList);
 }
 
-UIElem.mainContainer.dispatchEvent(renderList);
+init();
