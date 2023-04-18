@@ -50,7 +50,12 @@ export const Local = (function () {
     if (!("savedItems" in localStorage)) {
       return [];
     }
-    return JSON.parse(localStorage.savedItems);
+    const savedItems = JSON.parse(localStorage.savedItems);
+    if (!Array.isArray(savedItems)) {
+      localStorage.clear();
+      return [];
+    }
+    return savedItems;
   };
   const saveExRate = function () {
     localStorage.setItem("exchangeRate", State.exchangeRate);
