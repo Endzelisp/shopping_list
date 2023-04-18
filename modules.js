@@ -46,7 +46,10 @@ export const Local = (function () {
   const saveList = function () {
     localStorage.setItem("savedItems", JSON.stringify(State.savedItems));
   };
-  const read = function () {
+  const readList = function () {
+    if (!("savedItems" in localStorage)) {
+      return [];
+    }
     return JSON.parse(localStorage.savedItems);
   };
   const saveExRate = function () {
@@ -56,7 +59,7 @@ export const Local = (function () {
   return {
     saveList,
     saveExRate,
-    read,
+    readList,
   };
 })();
 
