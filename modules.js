@@ -52,7 +52,7 @@ export const Local = (function () {
     }
     const savedItems = JSON.parse(localStorage.savedItems);
     if (!Array.isArray(savedItems)) {
-      localStorage.clear();
+      delete localStorage.savedItems;
       return [];
     }
     return savedItems;
