@@ -172,8 +172,13 @@ UIElem.mainContainer.addEventListener("updateList", (e) => {
 UIElem.mainContainer.addEventListener("renderList", () => {
   // Clear out the actual displayed list of items
   UIElem.clearList();
-  console.log(`State status check ${State}`);
-  console.log(`savedItems status check ${State.savedItems}`);
+  console.log(State);
+  console.log(
+    "State.savedItems ",
+    State.savedItems,
+    "typeof ",
+    typeof State.savedItems
+  );
 
   const checkObj = State.savedItems.map((item) => item.product);
   if (checkObj.length === 0 && "savedItems" in localStorage) {
