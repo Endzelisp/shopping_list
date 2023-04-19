@@ -1,4 +1,7 @@
-import { UIElem, Local, State, renderTotalUSD } from "./modules.js";
+import { State } from "../../modules/state.js";
+import { renderTotalUSD } from "../../modules/custom-events.js";
+import { mainContainer } from "../../modules/ui.js";
+import * as Local from "../../modules/localstorage-management.js";
 
 export class Product extends HTMLElement {
   constructor() {
@@ -31,7 +34,7 @@ export class Product extends HTMLElement {
   }
 
   disconnectedCallback() {
-    UIElem.mainContainer.dispatchEvent(renderTotalUSD);
+    mainContainer.dispatchEvent(renderTotalUSD);
   }
 }
 
