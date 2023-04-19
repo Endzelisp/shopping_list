@@ -1,13 +1,14 @@
-import { State, generateId, calculateTotal } from "./modules.js";
-import * as Local from "./localstorage-module.js";
-import { Product } from "./item-component.js";
-import * as UI from "./UI-module.js";
+import * as UI from "./modules/ui.js";
+import * as Local from "./modules/localstorage-management.js";
+import { generateId, calculateTotal } from "./modules/utility-functions.js";
+import { State } from "./modules/state.js";
+import { Product } from "./web-components/item/item.js";
 import {
   updateList,
   renderList,
   renderTotalUSD,
   renderTotalBs,
-} from "./custom-events-module.js";
+} from "./modules/custom-events.js";
 
 class Item {
   constructor(obj) {
