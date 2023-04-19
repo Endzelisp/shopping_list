@@ -1,16 +1,24 @@
+import { State, generateId, calculateTotal } from "./modules.js";
+import * as Local from "./localstorage-module.js";
+import { Product } from "./item-component.js";
+import * as UI from "./UI-module.js";
 import {
-  Local,
-  State,
-  Item,
   updateList,
   renderList,
   renderTotalUSD,
   renderTotalBs,
-  generateId,
-  calculateTotal,
-} from "./modules.js";
-import { Product } from "./item-component.js";
-import * as UI from "./UI-module.js";
+} from "./custom-events-module.js";
+
+class Item {
+  constructor(obj) {
+    this.quantity = obj.quantity;
+    this.weight = obj.weight;
+    this.product = obj.product;
+    this.price = obj.price;
+    this.type = obj.type;
+    this.id = obj.id;
+  }
+}
 
 UI.exchangeRateEl.addEventListener("pointerdown", () => {
   // Open up exchange rate dialog box
