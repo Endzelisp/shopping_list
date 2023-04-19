@@ -1,5 +1,4 @@
 import {
-  UIElem,
   Local,
   State,
   Item,
@@ -11,17 +10,18 @@ import {
   calculateTotal,
 } from "./modules.js";
 import { Product } from "./item-component.js";
+import * as UI from "./UI-module.js";
 
-UIElem.exchangeRateEl.addEventListener("pointerdown", () => {
+UI.exchangeRateEl.addEventListener("pointerdown", () => {
   // Open up exchange rate dialog box
-  UIElem.dialogExchangeRate.showModal();
+  UI.dialogExchangeRate.showModal();
 });
 
-UIElem.dialogExchangeRate.addEventListener("close", () => {
+UI.dialogExchangeRate.addEventListener("close", () => {
   // Capture info about the exchange rate
   // and save it to local storage
 
-  const exRateInputEl = UIElem.dialogExchangeRate.querySelector(
+  const exRateInputEl = UI.dialogExchangeRate.querySelector(
     '[data-input="exchange-rate"]'
   );
   const exRate = Number.parseFloat(exRateInputEl.value);
@@ -36,14 +36,14 @@ UIElem.dialogExchangeRate.addEventListener("close", () => {
   }
 
   State.exchangeRate = exRate;
-  UIElem.exchangeRateEl.innerText = Number.parseFloat(exRate).toFixed(2);
+  UI.exchangeRateEl.innerText = Number.parseFloat(exRate).toFixed(2);
   Local.saveExRate();
 
   // Update item's price when the exchange rate changes
-  UIElem.dialogExchangeRate.dispatchEvent(renderList);
+  UI.dialogExchangeRate.dispatchEvent(renderList);
 });
 
-UIElem.newItem.addEventListener("pointerdown", () => {
+UI.newItem.addEventListener("pointerdown", () => {
   // Show up the dialog box to add a new item
   // just if the exchangeRate is set
 
@@ -52,22 +52,20 @@ UIElem.newItem.addEventListener("pointerdown", () => {
     return;
   }
 
-  const quantityEl = UIElem.dialogNewItem.querySelector(
-    '[data-input="quantity"]'
-  );
-  const productEl = UIElem.dialogNewItem.querySelector('[data-input="name"]');
-  const priceEl = UIElem.dialogNewItem.querySelector('[data-input="price"]');
+  const quantityEl = UI.dialogNewItem.querySelector('[data-input="quantity"]');
+  const productEl = UI.dialogNewItem.querySelector('[data-input="name"]');
+  const priceEl = UI.dialogNewItem.querySelector('[data-input="price"]');
   quantityEl.value = 1;
   productEl.value = "";
   priceEl.value = null;
-  UIElem.dialogNewItem.showModal();
+  UI.dialogNewItem.showModal();
 });
 
-UIElem.dialogNewItem.addEventListener("close", () => {
+UI.dialogNewItem.addEventListener("close", () => {
   // Capture user info about the product and
   // send it through the event detail object
 
-  const dialogEl = UIElem.dialogNewItem;
+  const dialogEl = UI.dialogNewItem;
   const quantityEl = dialogEl.querySelector('[data-input="quantity"]');
   const priceEl = dialogEl.querySelector('[data-input="price"]');
   const currencyEl = dialogEl.querySelector('[data-input="currency"]');
@@ -86,11 +84,11 @@ UIElem.dialogNewItem.addEventListener("close", () => {
     updateList.detail.weight = null;
     updateList.detail.id = generateId(product);
 
-    UIElem.dialogNewItem.dispatchEvent(updateList);
+    UI.dialogNewItem.dispatchEvent(updateList);
   }
 });
 
-UIElem.newWeightedItem.addEventListener("pointerdown", () => {
+UI.newWeightedItem.addEventListener("pointerdown", () => {
   // Show up the dialog box to add a new weighted items
   // just if the exchangeRate is set
 
@@ -99,26 +97,26 @@ UIElem.newWeightedItem.addEventListener("pointerdown", () => {
     return;
   }
 
-  const productEl = UIElem.dialogNewweightedItem.querySelector(
+  const productEl = UI.dialogNewweightedItem.querySelector(
     '[data-input="name"]'
   );
-  const priceEl = UIElem.dialogNewweightedItem.querySelector(
+  const priceEl = UI.dialogNewweightedItem.querySelector(
     '[data-input="price"]'
   );
-  const weightEl = UIElem.dialogNewweightedItem.querySelector(
+  const weightEl = UI.dialogNewweightedItem.querySelector(
     '[data-input="weight"]'
   );
   productEl.value = "";
   priceEl.value = null;
   weightEl.value = null;
-  UIElem.dialogNewweightedItem.showModal();
+  UI.dialogNewweightedItem.showModal();
 });
 
-UIElem.dialogNewweightedItem.addEventListener("close", () => {
+UI.dialogNewweightedItem.addEventListener("close", () => {
   // Capture user info about the weighted product
   // and send it through the event detail object
 
-  const dialogEl = UIElem.dialogNewweightedItem;
+  const dialogEl = UI.dialogNewweightedItem;
   const weightEl = dialogEl.querySelector('[data-input="weight"]');
   const priceEl = dialogEl.querySelector('[data-input="price"]');
   const currencyEl = dialogEl.querySelector('[data-input="currency"]');
@@ -143,11 +141,11 @@ UIElem.dialogNewweightedItem.addEventListener("close", () => {
     updateList.detail.quantity = null;
     updateList.detail.id = generateId(product);
 
-    UIElem.dialogNewItem.dispatchEvent(updateList);
+    UI.dialogNewItem.dispatchEvent(updateList);
   }
 });
 
-UIElem.mainContainer.addEventListener("updateList", (e) => {
+UI.mainContainer.addEventListener("updateList", (e) => {
   // Receive captured info about the product
   // saving it in the State module and localStorage
 
@@ -166,12 +164,12 @@ UIElem.mainContainer.addEventListener("updateList", (e) => {
     new Item({ quantity, weight, product, type, price, id })
   );
   Local.saveList();
-  UIElem.mainContainer.dispatchEvent(renderList);
+  UI.mainContainer.dispatchEvent(renderList);
 });
 
-UIElem.mainContainer.addEventListener("renderList", () => {
+UI.mainContainer.addEventListener("renderList", () => {
   // Clear out the actual displayed list of items
-  UIElem.clearList();
+  UI.clearList();
   if (State.savedItems.length === 0) {
     State.savedItems = Local.readList();
   }
@@ -187,27 +185,27 @@ UIElem.mainContainer.addEventListener("renderList", () => {
       priceBs.toFixed(2),
       item.id
     );
-    UIElem.itemContainer.appendChild(product);
+    UI.itemContainer.appendChild(product);
   });
 
-  UIElem.mainContainer.dispatchEvent(renderTotalUSD);
+  UI.mainContainer.dispatchEvent(renderTotalUSD);
 });
 
-UIElem.mainContainer.addEventListener("renderTotalUSD", () => {
+UI.mainContainer.addEventListener("renderTotalUSD", () => {
   const total = State.savedItems.reduce(
     (acc, current) => acc + calculateTotal(current),
     0
   );
-  UIElem.totalPriceUSD.innerText = total.toFixed(2);
+  UI.totalPriceUSD.innerText = total.toFixed(2);
   renderTotalBs.detail.totalInUSD = total;
-  UIElem.mainContainer.dispatchEvent(renderTotalBs);
+  UI.mainContainer.dispatchEvent(renderTotalBs);
 });
 
-UIElem.mainContainer.addEventListener("renderTotalBs", (e) => {
+UI.mainContainer.addEventListener("renderTotalBs", (e) => {
   // Exchange the product prices from USD to Bs
   let total = e.detail.totalInUSD;
   total *= Number.parseFloat(State.exchangeRate);
-  UIElem.totalPriceBs.innerText = total.toFixed(2);
+  UI.totalPriceBs.innerText = total.toFixed(2);
 });
 
 // -------------
@@ -215,14 +213,14 @@ UIElem.mainContainer.addEventListener("renderTotalBs", (e) => {
 
 function init() {
   if (!("exchangeRate" in localStorage)) {
-    UIElem.exchangeRateEl.innerText = 0;
+    UI.exchangeRateEl.innerText = 0;
     alert("Tasa de cambio no configurada");
     return;
   }
   const exRate = localStorage.getItem("exchangeRate");
   State.exchangeRate = exRate;
-  UIElem.exchangeRateEl.innerText = Number.parseFloat(exRate).toFixed(2);
-  UIElem.mainContainer.dispatchEvent(renderList);
+  UI.exchangeRateEl.innerText = Number.parseFloat(exRate).toFixed(2);
+  UI.mainContainer.dispatchEvent(renderList);
 }
 
 init();
