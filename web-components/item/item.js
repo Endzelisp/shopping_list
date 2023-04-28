@@ -1,15 +1,14 @@
 import { State } from "../../modules/state.js";
 import { renderTotalUSD } from "../../modules/custom-events.js";
-import { mainContainer } from "../../modules/ui.js";
+import { mainContainer, newItemTemplate } from "../../modules/ui.js";
 import * as Local from "../../modules/localstorage-management.js";
 
-export class Product extends HTMLElement {
+export class ItemElement extends HTMLElement {
   constructor() {
     super();
-    const templateElem = document.querySelector('[data-template="new-item"]');
-    const template = document.importNode(templateElem.content, true);
+    const importedTemplate = document.importNode(newItemTemplate.content, true);
     this.attachShadow({ mode: "open" });
-    this.shadowRoot.appendChild(template);
+    this.shadowRoot.appendChild(importedTemplate);
   }
 
   loadData(product, price, id) {
@@ -38,4 +37,4 @@ export class Product extends HTMLElement {
   }
 }
 
-customElements.define("new-product", Product);
+customElements.define("new-item", ItemElement);
