@@ -18,16 +18,16 @@
   </head>
 
   <body>
-    <div class="container" data-container="data-container">
+    <div class="container" data-container="main">
       <header class="container__header dark-bg">
         <div class="container__header-total">
           <h1>Total</h1>
           <span class="price-format">
-            <span data-total="total-bs">0</span>
+            <span data-element="total-bs">0</span>
             <p>Bs</p>
           </span>
           <span class="price-format">
-            <span data-total="total-usd">0</span>
+            <span data-element="total-usd">0</span>
             <p>USD</p>
           </span>
         </div>
@@ -35,14 +35,14 @@
           <div>
             <h3>Tasa de Cambio</h3>
             <span class="price-format light-bg">
-              <span data-rate="exchange-rate"></span>
+              <span data-element="exchange-rate"></span>
               <p>Bs</p>
             </span>
           </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            data-button="new-item"
+            data-button="unitary-item"
           >
             <title>agregar item unitario</title>
             <path
@@ -62,7 +62,7 @@
         </div>
       </header>
       <main class="container__main">
-        <section class="container__main-list" data-container="main-list">
+        <section class="container__main-list" data-container="list">
           <!-- template for add new items -->
           <template data-template="new-item">
             <link rel="stylesheet" href="./web-components/item/item.css" />
@@ -87,7 +87,7 @@
           <button class="dialog-btn">Guardar</button>
         </form>
       </dialog>
-      <dialog class="new-item" data-dialog="new-item">
+      <dialog class="unitary-item" data-dialog="unitary-item">
         <form method="dialog">
           <label for="quantity"
             >Cantidad
