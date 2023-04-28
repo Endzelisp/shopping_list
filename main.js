@@ -2,7 +2,7 @@ import * as UI from "./modules/ui.js";
 import * as Local from "./modules/localstorage-management.js";
 import { generateId, calculateTotal } from "./modules/utility-functions.js";
 import { State } from "./modules/state.js";
-import { Product } from "./web-components/item/item.js";
+import { ItemElement } from "./web-components/item/item.js";
 import {
   updateList,
   renderList,
@@ -21,7 +21,7 @@ class Item {
   }
 }
 
-UI.exchangeRateEl.addEventListener("pointerdown", () => {
+UI.exchangeRateElem.addEventListener("pointerdown", () => {
   // Open up exchange rate dialog box
   UI.dialogExchangeRate.showModal();
 });
@@ -45,14 +45,14 @@ UI.dialogExchangeRate.addEventListener("close", () => {
   }
 
   State.exchangeRate = exRate;
-  UI.exchangeRateEl.innerText = Number.parseFloat(exRate).toFixed(2);
+  UI.exchangeRateElem.innerText = Number.parseFloat(exRate).toFixed(2);
   Local.saveExRate();
 
   // Update item's price when the exchange rate changes
   UI.dialogExchangeRate.dispatchEvent(renderList);
 });
 
-UI.newItem.addEventListener("pointerdown", () => {
+UI.addItemBtn.addEventListener("pointerdown", () => {
   // Show up the dialog box to add a new item
   // just if the exchangeRate is set
 
@@ -61,20 +61,22 @@ UI.newItem.addEventListener("pointerdown", () => {
     return;
   }
 
-  const quantityEl = UI.dialogNewItem.querySelector('[data-input="quantity"]');
-  const productEl = UI.dialogNewItem.querySelector('[data-input="name"]');
-  const priceEl = UI.dialogNewItem.querySelector('[data-input="price"]');
+  const quantityEl = UI.dialogUnitaryItem.querySelector(
+    '[data-input="quantity"]'
+  );
+  const productEl = UI.dialogUnitaryItem.querySelector('[data-input="name"]');
+  const priceEl = UI.dialogUnitaryItem.querySelector('[data-input="price"]');
   quantityEl.value = 1;
   productEl.value = "";
   priceEl.value = null;
-  UI.dialogNewItem.showModal();
+  UI.dialogUnitaryItem.showModal();
 });
 
-UI.dialogNewItem.addEventListener("close", () => {
+UI.dialogUnitaryItem.addEventListener("close", () => {
   // Capture user info about the product and
   // send it through the event detail object
 
-  const dialogEl = UI.dialogNewItem;
+  const dialogEl = UI.dialogUnitaryItem;
   const quantityEl = dialogEl.querySelector('[data-input="quantity"]');
   const priceEl = dialogEl.querySelector('[data-input="price"]');
   const currencyEl = dialogEl.querySelector('[data-input="currency"]');
@@ -93,11 +95,11 @@ UI.dialogNewItem.addEventListener("close", () => {
     updateList.detail.weight = null;
     updateList.detail.id = generateId(product);
 
-    UI.dialogNewItem.dispatchEvent(updateList);
+    UI.dialogUnitaryItem.dispatchEvent(updateList);
   }
 });
 
-UI.newWeightedItem.addEventListener("pointerdown", () => {
+UI.addWeightedItem.addEventListener("pointerdown", () => {
   // Show up the dialog box to add a new weighted items
   // just if the exchangeRate is set
 
@@ -106,26 +108,20 @@ UI.newWeightedItem.addEventListener("pointerdown", () => {
     return;
   }
 
-  const productEl = UI.dialogNewweightedItem.querySelector(
-    '[data-input="name"]'
-  );
-  const priceEl = UI.dialogNewweightedItem.querySelector(
-    '[data-input="price"]'
-  );
-  const weightEl = UI.dialogNewweightedItem.querySelector(
-    '[data-input="weight"]'
-  );
+  const productEl = UI.dialogWeightedItem.querySelector('[data-input="name"]');
+  const priceEl = UI.dialogWeightedItem.querySelector('[data-input="price"]');
+  const weightEl = UI.dialogWeightedItem.querySelector('[data-input="weight"]');
   productEl.value = "";
   priceEl.value = null;
   weightEl.value = null;
-  UI.dialogNewweightedItem.showModal();
+  UI.dialogWeightedItem.showModal();
 });
 
-UI.dialogNewweightedItem.addEventListener("close", () => {
+UI.dialogWeightedItem.addEventListener("close", () => {
   // Capture user info about the weighted product
   // and send it through the event detail object
 
-  const dialogEl = UI.dialogNewweightedItem;
+  const dialogEl = UI.dialogWeightedItem;
   const weightEl = dialogEl.querySelector('[data-input="weight"]');
   const priceEl = dialogEl.querySelector('[data-input="price"]');
   const currencyEl = dialogEl.querySelector('[data-input="currency"]');
@@ -150,7 +146,7 @@ UI.dialogNewweightedItem.addEventListener("close", () => {
     updateList.detail.quantity = null;
     updateList.detail.id = generateId(product);
 
-    UI.dialogNewItem.dispatchEvent(updateList);
+    UI.dialogUnitaryItem.dispatchEvent(updateList);
   }
 });
 
@@ -186,7 +182,7 @@ UI.mainContainer.addEventListener("renderList", () => {
   State.savedItems.forEach((item) => {
     const priceBs =
       calculateTotal(item) * Number.parseFloat(State.exchangeRate);
-    const product = new Product();
+    const product = new ItemElement();
     product.loadData(
       `${item.quantity || item.weight.toString().concat(" Kg")} ${
         item.product
@@ -205,7 +201,7 @@ UI.mainContainer.addEventListener("renderTotalUSD", () => {
     (acc, current) => acc + calculateTotal(current),
     0
   );
-  UI.totalPriceUSD.innerText = total.toFixed(2);
+  UI.totalUSDElem.innerText = total.toFixed(2);
   renderTotalBs.detail.totalInUSD = total;
   UI.mainContainer.dispatchEvent(renderTotalBs);
 });
@@ -214,7 +210,7 @@ UI.mainContainer.addEventListener("renderTotalBs", (e) => {
   // Exchange the product prices from USD to Bs
   let total = e.detail.totalInUSD;
   total *= Number.parseFloat(State.exchangeRate);
-  UI.totalPriceBs.innerText = total.toFixed(2);
+  UI.totalBsElem.innerText = total.toFixed(2);
 });
 
 // -------------
@@ -222,13 +218,13 @@ UI.mainContainer.addEventListener("renderTotalBs", (e) => {
 
 function init() {
   if (!("exchangeRate" in localStorage)) {
-    UI.exchangeRateEl.innerText = 0;
+    UI.exchangeRateElem.innerText = 0;
     alert("Tasa de cambio no configurada");
     return;
   }
   const exRate = localStorage.getItem("exchangeRate");
   State.exchangeRate = exRate;
-  UI.exchangeRateEl.innerText = Number.parseFloat(exRate).toFixed(2);
+  UI.exchangeRateElem.innerText = Number.parseFloat(exRate).toFixed(2);
   UI.mainContainer.dispatchEvent(renderList);
 }
 
