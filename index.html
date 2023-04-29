@@ -87,36 +87,59 @@
           <button class="dialog-btn">Guardar</button>
         </form>
       </dialog>
-      <dialog class="unitary-item" data-dialog="unitary-item">
-        <form method="dialog">
-          <label for="quantity"
-            >Cantidad
-            <input
-              type="number"
-              id="quantity"
-              value="1"
-              autofocus
-              data-input="quantity"
-            />
-          </label>
+      <dialog data-dialog="unitary-item">
+        <form method="dialog" class="unitary-item">
+          <span class="close-button" data-element="close-dialog">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <title>close-box-outline</title>
+              <path
+                d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V5H19V19M17,8.4L13.4,12L17,15.6L15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4Z"
+              />
+            </svg>
+          </span>
           <label for="product"
             >Producto
             <input type="text" id="product" data-input="name" />
           </label>
-          <label for="price"
-            >Precio
-            <input
-              type="number"
-              id="price"
-              min="0"
-              step=".01"
-              data-input="price"
-            />
-          </label>
-          <select data-input="currency">
-            <option value="usd" selected>Dolares</option>
-            <option value="bs">Bolivares</option>
-          </select>
+          <div class="wrapper-labels">
+            <label for="quantity"
+              >Cantidad
+              <input
+                type="number"
+                id="quantity"
+                min="0"
+                value="1"
+                autofocus
+                data-input="quantity"
+              />
+            </label>
+            <label for="price"
+              >Precio
+              <input
+                type="number"
+                id="price"
+                min="0"
+                step=".01"
+                data-input="price"
+              />
+            </label>
+          </div>
+          <fieldset data-input="currency">
+            <div>
+              <input
+                type="radio"
+                name="currency"
+                id="usd"
+                value="usd"
+                checked
+              />
+              <label for="usd">Dolares</label>
+            </div>
+            <div>
+              <input type="radio" name="currency" id="bs" value="bs" />
+              <label for="bs">Bolivares</label>
+            </div>
+          </fieldset>
           <button class="dialog-btn">Agregar</button>
         </form>
       </dialog>
