@@ -1,72 +1,107 @@
-.dialog-btn {
-  padding: .5em 2em;
-  border-radius: 2rem;
-  font-size: 1.05rem;
-  background-color: var(--button-bg-clr);
-  color: var(--baby-powder);
-}
-
 dialog {
   margin: auto;
   border: none;
   outline: 1px solid black;
-  padding: .5em;
+  padding: 0.5em;
 }
 
 dialog::backdrop {
   background-color: #41414198;
 }
 
-dialog > form > input {
-  padding: .25em .5em;
+dialog form input {
+  padding: 0.25em 0.5em;
   font-size: 1rem;
+  border-radius: 3px;
 }
 
-/* exchange rate dialog box */
-
-dialog input#exchange-rate,
-dialog input#price {
-  width: 7rem;
+.dialog-btn {
+  padding: 0.5em 2em;
+  border-radius: 2rem;
+  font-size: 1.05rem;
+  background-color: var(--button-bg-clr);
+  color: var(--baby-powder);
 }
 
-dialog[data-dialog="exchange-rate"] form {
+[data-dialog="exchange-rate"] form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-dialog[data-dialog="exchange-rate"] label {
+[data-dialog="exchange-rate"] label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .5em;
+  gap: 0.5em;
 }
 
-dialog[data-dialog="exchange-rate"] button {
-  margin: 1.5rem;  
+[data-dialog="exchange-rate"] button {
+  margin: 1.5rem;
 }
 
+/* unitary item dialog */
 
-/* new item dialog box */
-
-.unitary-item form {
-  display: grid;
+.unitary-item {
+  display: flex;
+  flex-direction: column;
   gap: 1em;
+  width: clamp(300px, (100vw - 100px), 400px);
 }
 
-.unitary-item label {
+.close-button {
+  align-self: flex-end;
+}
+
+.close-button svg {
+  width: 24px;
+  fill: var(--dark-gray);
+  cursor: default;
+}
+
+.unitary-item > label {
   display: flex;
   flex-direction: column;
 }
 
-.unitary-item label[for="quantity"] {
-  width: 5em;
+.unitary-item .wrapper-labels {
+  display: flex;
+  gap: 2rem;
 }
 
-.unitary-item button{
-  justify-self: center;
-  width: max-content;
-  padding: .5em 1em;
+.wrapper-labels label {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper-labels label,
+.wrapper-labels input {
+  width: 100%;
+}
+
+.unitary-item fieldset {
+  display: flex;
+  justify-content: space-evenly;
+  border: none;
+}
+
+fieldset input[name="currency"] {
+  display: none;
+}
+
+fieldset [name="currency"] + label {
+  font-family: var(--quicksand-bold);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+}
+
+fieldset [name="currency"]:checked + label {
+  background-color: var(--medium-gray);
+  color: var(--baby-powder);
+}
+
+.unitary-item button {
+  align-self: center;
 }
 
 /* new weighted item dialog box */
@@ -82,7 +117,7 @@ dialog[data-dialog="exchange-rate"] button {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  gap: .5em;
+  gap: 0.5em;
 }
 
 .weighted-item label {
@@ -92,8 +127,8 @@ dialog[data-dialog="exchange-rate"] button {
 
 .weighted-item input,
 .weighted-item select {
-  padding: .25em .4em;
-  font-size: .85rem;
+  padding: 0.25em 0.4em;
+  font-size: 0.85rem;
 }
 
 .weighted-item input#weight {
