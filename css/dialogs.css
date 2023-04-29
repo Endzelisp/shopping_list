@@ -1,7 +1,7 @@
 dialog {
   margin: auto;
   border: none;
-  outline: 1px solid black;
+  outline: 1px solid var(--dark-gray);
   padding: 0.5em;
 }
 
@@ -40,13 +40,22 @@ dialog form input {
   margin: 1.5rem;
 }
 
-/* unitary item dialog */
+/* new item dialogs */
 
-.unitary-item {
+.flex-col {
   display: flex;
   flex-direction: column;
+}
+
+.unitary-item,
+.weighted-item {
   gap: 1em;
   width: clamp(300px, (100vw - 100px), 400px);
+}
+
+.wrapper-labels {
+  display: flex;
+  gap: 2rem;
 }
 
 .close-button {
@@ -59,27 +68,13 @@ dialog form input {
   cursor: default;
 }
 
-.unitary-item > label {
-  display: flex;
-  flex-direction: column;
-}
-
-.unitary-item .wrapper-labels {
-  display: flex;
-  gap: 2rem;
-}
-
-.wrapper-labels label {
-  display: flex;
-  flex-direction: column;
-}
-
 .wrapper-labels label,
 .wrapper-labels input {
   width: 100%;
 }
 
-.unitary-item fieldset {
+.unitary-item fieldset,
+.weighted-item fieldset {
   display: flex;
   justify-content: space-evenly;
   border: none;
@@ -100,57 +95,7 @@ fieldset [name="currency"]:checked + label {
   color: var(--baby-powder);
 }
 
-.unitary-item button {
+.unitary-item button,
+.weighted-item button {
   align-self: center;
-}
-
-/* new weighted item dialog box */
-
-.weighted-item > form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  row-gap: 2em;
-}
-
-.weighted-item > form div {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 0.5em;
-}
-
-.weighted-item label {
-  display: flex;
-  flex-direction: column;
-}
-
-.weighted-item input,
-.weighted-item select {
-  padding: 0.25em 0.4em;
-  font-size: 0.85rem;
-}
-
-.weighted-item input#weight {
-  width: 5rem;
-}
-
-.weighted-item input#price {
-  width: 6rem;
-}
-
-.weighted-item > form div:nth-of-type(3) {
-  grid-column: 1 / 3;
-}
-
-.weighted-item label[for="new-weighted-item"] {
-  width: 100%;
-}
-
-.weighted-item > form div:nth-of-type(4) {
-  /* button container */
-  grid-column: 1 / 3;
-  display: grid;
-  justify-content: center;
-  align-items: center;
 }
