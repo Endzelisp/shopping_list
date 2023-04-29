@@ -88,7 +88,7 @@
         </form>
       </dialog>
       <dialog data-dialog="unitary-item">
-        <form method="dialog" class="unitary-item">
+        <form method="dialog" class="unitary-item flex-col">
           <span class="close-button" data-element="close-dialog">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <title>close-box-outline</title>
@@ -97,12 +97,12 @@
               />
             </svg>
           </span>
-          <label for="product"
+          <label for="product" class="flex-col"
             >Producto
             <input type="text" id="product" data-input="name" />
           </label>
           <div class="wrapper-labels">
-            <label for="quantity"
+            <label for="quantity" class="flex-col"
               >Cantidad
               <input
                 type="number"
@@ -113,8 +113,77 @@
                 data-input="quantity"
               />
             </label>
-            <label for="price"
+            <label for="price" class="flex-col"
               >Precio
+              <input
+                type="number"
+                id="price"
+                min="0"
+                step=".01"
+                data-input="price"
+              />
+            </label>
+          </div>
+          <fieldset data-element="fieldset-currency">
+            <div>
+              <input
+                type="radio"
+                name="currency"
+                id="fs-unitary-usd"
+                value="usd"
+                checked
+              />
+              <label for="fs-unitary-usd">Dolares</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="currency"
+                id="fs-unitary-bs"
+                value="bs"
+              />
+              <label for="fs-unitary-bs">Bolivares</label>
+            </div>
+          </fieldset>
+          <button class="dialog-btn">Agregar</button>
+        </form>
+      </dialog>
+      <dialog data-dialog="weighted-item">
+        <form method="dialog" class="weighted-item flex-col">
+          <span class="close-button" data-element="close-dialog">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <title>close-box-outline</title>
+              <path
+                d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V5H19V19M17,8.4L13.4,12L17,15.6L15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4Z"
+              />
+            </svg>
+          </span>
+          <label for="new-weighted-item" class="flex-col"
+            >Producto
+            <input
+              type="text"
+              min="0"
+              step=".01"
+              id="new-weighted-item"
+              data-input="name"
+            />
+          </label>
+          <div class="wrapper-labels">
+            <div class="flex-col">
+              <label for="weight"
+                >Peso
+                <input
+                  type="number"
+                  min="0"
+                  step=".001"
+                  id="weight"
+                  autofocus
+                  data-input="weight"
+                />
+              </label>
+            </div>
+            <label for="price" class="flex-col"
+              >Precio / kg
               <input
                 type="number"
                 id="price"
@@ -129,67 +198,23 @@
               <input
                 type="radio"
                 name="currency"
-                id="usd"
+                id="fs-weighted-usd"
                 value="usd"
                 checked
               />
-              <label for="usd">Dolares</label>
+              <label for="fs-weighted-usd">Dolares</label>
             </div>
             <div>
-              <input type="radio" name="currency" id="bs" value="bs" />
-              <label for="bs">Bolivares</label>
+              <input
+                type="radio"
+                name="currency"
+                id="fs-weighted-bs"
+                value="bs"
+              />
+              <label for="fs-weighted-bs">Bolivares</label>
             </div>
           </fieldset>
           <button class="dialog-btn">Agregar</button>
-        </form>
-      </dialog>
-      <dialog class="weighted-item" data-dialog="weighted-item">
-        <form method="dialog">
-          <div>
-            <label for="weight"
-              >Peso
-              <input
-                type="number"
-                min="0"
-                step=".001"
-                id="weight"
-                autofocus
-                data-input="weight"
-              />
-            </label>
-            <span>Kg</span>
-          </div>
-          <div>
-            <label for="price"
-              >Precio / kg
-              <input
-                type="number"
-                id="price"
-                min="0"
-                step=".01"
-                data-input="price"
-              />
-            </label>
-            <select data-input="currency">
-              <option value="bs" selected>Bs</option>
-              <option value="usd">USD</option>
-            </select>
-          </div>
-          <div>
-            <label for="new-weighted-item"
-              >Producto
-              <input
-                type="text"
-                min="0"
-                step=".01"
-                id="new-weighted-item"
-                data-input="name"
-              />
-            </label>
-          </div>
-          <div>
-            <button class="dialog-btn">Agregar</button>
-          </div>
         </form>
       </dialog>
     </div>
