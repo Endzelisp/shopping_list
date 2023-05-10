@@ -15,30 +15,13 @@ dialog form input {
   border-radius: 3px;
 }
 
-.dialog-btn {
+.dialog-confirm-btn {
   align-self: center;
   padding: 0.5em 2em;
   border-radius: 2rem;
   font-size: 1.05rem;
   background-color: var(--button-bg-clr);
   color: var(--baby-powder);
-}
-
-[data-dialog="exchange-rate"] form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-[data-dialog="exchange-rate"] label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5em;
-}
-
-[data-dialog="exchange-rate"] button {
-  margin: 1.5rem;
 }
 
 /* new item dialogs */
@@ -48,8 +31,20 @@ dialog form input {
   flex-direction: column;
 }
 
-.unitary-item,
-.weighted-item {
+.close-modal-btn {
+  align-self: flex-end;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+}
+
+.close-modal-btn svg {
+  width: 24px;
+  fill: var(--dark-gray);
+  cursor: default;
+}
+
+.dialog-form {
   gap: 1em;
   width: clamp(300px, (100vw - 100px), 400px);
 }
@@ -59,23 +54,12 @@ dialog form input {
   gap: 2rem;
 }
 
-.close-modal-btn {
-  align-self: flex-end;
-}
-
-.close-modal-btn svg {
-  width: 24px;
-  fill: var(--dark-gray);
-  cursor: default;
-}
-
 .wrapper-labels label,
 .wrapper-labels input {
   width: 100%;
 }
 
-.unitary-item fieldset,
-.weighted-item fieldset {
+.dialog-form fieldset {
   display: flex;
   justify-content: space-evenly;
   border: none;
