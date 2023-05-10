@@ -73,7 +73,7 @@
         </section>
       </main>
       <dialog data-dialog="exchange-rate">
-        <form method="dialog">
+        <form method="dialog" class="dialog-form flex-col">
           <button
             class="close-modal-btn"
             type="submit"
@@ -88,7 +88,7 @@
               />
             </svg>
           </button>
-          <label for="exchange-rate"
+          <label for="exchange-rate" class="flex-col"
             >Tasa de Cambio BCV
             <input
               type="number"
@@ -98,11 +98,11 @@
               data-input="exchange-rate"
             />
           </label>
-          <button class="dialog-btn">Guardar</button>
+          <button class="dialog-confirm-btn">Guardar</button>
         </form>
       </dialog>
       <dialog data-dialog="unitary-item">
-        <form method="dialog" class="unitary-item flex-col">
+        <form method="dialog" class="dialog-form flex-col">
           <button
             class="close-modal-btn"
             type="submit"
@@ -165,11 +165,11 @@
               <label for="fs-unitary-bs">Bolivares</label>
             </div>
           </fieldset>
-          <button class="dialog-btn">Agregar</button>
+          <button class="dialog-confirm-btn">Agregar</button>
         </form>
       </dialog>
       <dialog data-dialog="weighted-item">
-        <form method="dialog" class="weighted-item flex-col">
+        <form method="dialog" class="dialog-form flex-col">
           <button
             class="close-modal-btn"
             type="submit"
@@ -240,7 +240,7 @@
               <label for="fs-weighted-bs">Bolivares</label>
             </div>
           </fieldset>
-          <button class="dialog-btn">Agregar</button>
+          <button class="dialog-confirm-btn">Agregar</button>
         </form>
       </dialog>
     </div>
