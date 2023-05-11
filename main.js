@@ -79,7 +79,7 @@ UI.dialogUnitaryItem.addEventListener("close", () => {
   const dialogEl = UI.dialogUnitaryItem;
   const quantityEl = dialogEl.querySelector('[data-input="quantity"]');
   const priceEl = dialogEl.querySelector('[data-input="price"]');
-  const currencyEl = dialogEl.querySelector('[data-fieldset="currency"]');
+  const currencyEl = dialogEl.querySelector("fieldset input:checked");
   const productEl = dialogEl.querySelector('[data-input="name"]');
   const product = productEl.value.trim();
   const currency = currencyEl.value;
@@ -124,7 +124,7 @@ UI.dialogWeightedItem.addEventListener("close", () => {
   const dialogEl = UI.dialogWeightedItem;
   const weightEl = dialogEl.querySelector('[data-input="weight"]');
   const priceEl = dialogEl.querySelector('[data-input="price"]');
-  const currencyEl = dialogEl.querySelector('[data-fieldset="currency"]');
+  const currencyEl = dialogEl.querySelector("fieldset input:checked");
   const productEl = dialogEl.querySelector('[data-input="name"]');
 
   // Add a zero before the decimal point if the user didn't do it
