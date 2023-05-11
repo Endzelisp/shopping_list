@@ -16,6 +16,7 @@ class Item {
     this.weight = obj.weight;
     this.product = obj.product;
     this.price = obj.price;
+    this.currency = obj.currency;
     this.type = obj.type;
     this.id = obj.id;
   }
@@ -166,7 +167,7 @@ UI.mainContainer.addEventListener("updateList", (e) => {
     price = price / State.exchangeRate;
   }
   State.savedItems.push(
-    new Item({ quantity, weight, product, type, price, id })
+    new Item({ quantity, weight, product, price, currency, type, id })
   );
   Local.saveList();
   UI.mainContainer.dispatchEvent(renderList);
