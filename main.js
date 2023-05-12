@@ -15,10 +15,30 @@ class Item {
     this.quantity = obj.quantity;
     this.weight = obj.weight;
     this.product = obj.product;
-    this.price = obj.price;
+    this.rawPrice = obj.price;
     this.currency = obj.currency;
     this.type = obj.type;
     this.id = obj.id;
+    this.totalPriceBs = this.#bs();
+    this.totalPriceUSD = this.#usd();
+  }
+
+  #bs() {
+    const subTotal =
+      Number.parseFloat(this.rawPrice) * (this.quantity || this.weight);
+    if (this.currency === "usd") {
+      return subTotal * State.exchangeRate;
+    }
+    return subTotal;
+  }
+
+  #usd() {
+    const subTotal =
+      Number.parseFloat(this.rawPrice) * (this.quantity || this.weight);
+    if (this.currency === "bs") {
+      return subTotal / State.exchangeRate;
+    }
+    return subTotal;
   }
 }
 
@@ -160,12 +180,9 @@ UI.mainContainer.addEventListener("updateList", (e) => {
   const product = e.detail.product;
   const currency = e.detail.currency;
   const type = e.detail.type;
-  let price = e.detail.price;
+  const price = e.detail.price;
   const id = e.detail.id;
 
-  if (currency === "bs") {
-    price = price / State.exchangeRate;
-  }
   State.savedItems.push(
     new Item({ quantity, weight, product, price, currency, type, id })
   );
