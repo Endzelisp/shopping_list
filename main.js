@@ -1,6 +1,6 @@
 import * as UI from "./modules/ui.js";
 import * as Local from "./modules/localstorage-management.js";
-import { generateId, calculateTotal } from "./modules/utility-functions.js";
+import { generateId } from "./modules/utility-functions.js";
 import { State } from "./modules/state.js";
 import { ItemElement } from "./web-components/item/item.js";
 import {
@@ -198,14 +198,12 @@ UI.mainContainer.addEventListener("renderList", () => {
   }
 
   State.savedItems.forEach((item) => {
-    const priceBs =
-      calculateTotal(item) * Number.parseFloat(State.exchangeRate);
     const product = new ItemElement();
     product.loadData(
       `${item.quantity || item.weight.toString().concat(" Kg")} ${
         item.product
       }`,
-      priceBs.toFixed(2),
+      item.totalPriceBs.toFixed(2),
       item.id
     );
     UI.itemContainer.appendChild(product);
@@ -216,7 +214,7 @@ UI.mainContainer.addEventListener("renderList", () => {
 
 UI.mainContainer.addEventListener("renderTotalUSD", () => {
   const total = State.savedItems.reduce(
-    (acc, current) => acc + calculateTotal(current),
+    (acc, current) => acc + current.totalPriceUSD,
     0
   );
   UI.totalUSDElem.innerText = total.toFixed(2);
