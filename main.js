@@ -40,6 +40,11 @@ class Item {
     }
     return subTotal;
   }
+
+  adjustPrice() {
+    this.totalPriceBs = this.#bs();
+    this.totalPriceUSD = this.#usd();
+  }
 }
 
 UI.exchangeRateElem.addEventListener("pointerdown", () => {
@@ -70,6 +75,7 @@ UI.dialogExchangeRate.addEventListener("close", () => {
   Local.saveExRate();
 
   // Update item's price when the exchange rate changes
+  State.savedItems.forEach((item) => item.adjustPrice());
   UI.dialogExchangeRate.dispatchEvent(renderList);
 });
 
