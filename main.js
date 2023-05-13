@@ -1,6 +1,10 @@
 import * as UI from "./modules/ui.js";
 import * as Local from "./modules/localstorage-management.js";
-import { generateId } from "./modules/utility-functions.js";
+import {
+  generateId,
+  isValidProduct,
+  isValidNumber,
+} from "./modules/utility-functions.js";
 import { State } from "./modules/state.js";
 import { ItemElement } from "./web-components/item/item.js";
 import {
@@ -100,30 +104,36 @@ UI.addItemBtn.addEventListener("pointerdown", () => {
 });
 
 UI.dialogUnitaryItem.addEventListener("close", () => {
-  // Capture user info about the product and
-  // send it through the event detail object
+  // Capture user info about the product
 
   const dialogEl = UI.dialogUnitaryItem;
   const quantityEl = dialogEl.querySelector('[data-input="quantity"]');
   const priceEl = dialogEl.querySelector('[data-input="price"]');
   const currencyEl = dialogEl.querySelector("fieldset input:checked");
   const productEl = dialogEl.querySelector('[data-input="name"]');
+
+  if (dialogEl.returnValue === "close") {
+    return;
+  }
+
   const product = productEl.value.trim();
   const currency = currencyEl.value;
   const quantity = Number.parseInt(quantityEl.value);
   const price = Number.parseFloat(priceEl.value).toFixed(2);
 
-  if (product !== "" && price !== null) {
-    updateList.detail.product = product;
-    updateList.detail.currency = currency;
-    updateList.detail.quantity = quantity;
-    updateList.detail.price = price;
-    updateList.detail.type = "unitary";
-    updateList.detail.weight = null;
-    updateList.detail.id = generateId(product);
-
-    UI.dialogUnitaryItem.dispatchEvent(updateList);
+  if (!isValidProduct(product) || !isValidNumber(price)) {
+    alert("Datos invalidos o incompletos");
+    return;
   }
+
+  updateList.detail.product = product;
+  updateList.detail.currency = currency;
+  updateList.detail.quantity = quantity;
+  updateList.detail.price = price;
+  updateList.detail.type = "unitary";
+  updateList.detail.weight = null;
+  updateList.detail.id = generateId(product);
+  UI.dialogUnitaryItem.dispatchEvent(updateList);
 });
 
 UI.addWeightedItem.addEventListener("pointerdown", () => {
@@ -154,6 +164,10 @@ UI.dialogWeightedItem.addEventListener("close", () => {
   const currencyEl = dialogEl.querySelector("fieldset input:checked");
   const productEl = dialogEl.querySelector('[data-input="name"]');
 
+  if (dialogEl.returnValue === "close") {
+    return;
+  }
+
   // Add a zero before the decimal point if the user didn't do it
   let weight = weightEl.value;
   if (weight[0] === "." || weight[0] === ",") {
@@ -164,17 +178,23 @@ UI.dialogWeightedItem.addEventListener("close", () => {
   const product = productEl.value.trim();
   const price = Number.parseFloat(priceEl.value);
 
-  if (product !== "" && price !== null) {
-    updateList.detail.weight = weight;
-    updateList.detail.price = price;
-    updateList.detail.product = product;
-    updateList.detail.currency = currency;
-    updateList.detail.type = "weighted";
-    updateList.detail.quantity = null;
-    updateList.detail.id = generateId(product);
-
-    UI.dialogUnitaryItem.dispatchEvent(updateList);
+  if (
+    !isValidProduct(product) ||
+    !isValidNumber(price) ||
+    !isValidNumber(weight)
+  ) {
+    alert("Datos invalidos o incompletos");
+    return;
   }
+
+  updateList.detail.weight = weight;
+  updateList.detail.price = price;
+  updateList.detail.product = product;
+  updateList.detail.currency = currency;
+  updateList.detail.type = "weighted";
+  updateList.detail.quantity = null;
+  updateList.detail.id = generateId(product);
+  UI.dialogUnitaryItem.dispatchEvent(updateList);
 });
 
 UI.mainContainer.addEventListener("updateList", (e) => {
