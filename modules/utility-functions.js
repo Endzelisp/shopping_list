@@ -4,3 +4,8 @@ export function generateId(product) {
   const word = product.split(" ")[0];
   return randomStart + word + randomEnd;
 }
+
+export const isValidProduct = (product) =>
+  product !== "" && typeof product === "string";
+
+export const isValidNumber = (num) => !isNaN(num) && num > 0;
