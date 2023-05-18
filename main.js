@@ -15,6 +15,22 @@ import {
   renderTotalBs,
 } from "./modules/custom-events.js";
 
+const ERROR_MESSAGE = {
+  EXCHANGE_RATE_NOT_SET: "Tasa de cambio no actualizada",
+  EXCHANGE_EQUAL_TO_ZERO: "La tasa de cambio no puede ser cero",
+  INVALID_INPUT: "Datos invalidos o incompletos",
+};
+
+const CURRENCY_TYPE = {
+  USD: "usd",
+  BS: "bs",
+};
+
+const PRODUCT_TYPE = {
+  UNITARY: "unitary",
+  WEIGHTED: "weighted",
+};
+
 class Item {
   constructor(obj) {
     this.quantity = obj.quantity;
@@ -31,7 +47,7 @@ class Item {
   #bs() {
     const subTotal =
       Number.parseFloat(this.rawPrice) * (this.quantity || this.weight);
-    if (this.currency === "usd") {
+    if (this.currency === CURRENCY_TYPE.USD) {
       return subTotal * State.exchangeRate;
     }
     return subTotal;
@@ -40,7 +56,7 @@ class Item {
   #usd() {
     const subTotal =
       Number.parseFloat(this.rawPrice) * (this.quantity || this.weight);
-    if (this.currency === "bs") {
+    if (this.currency === CURRENCY_TYPE.BS) {
       return subTotal / State.exchangeRate;
     }
     return subTotal;
@@ -67,11 +83,11 @@ UI.dialogExchangeRate.addEventListener("close", () => {
   const exRate = Number.parseFloat(exRateInputEl.value);
 
   if (Number.isNaN(exRate)) {
-    alert("Tasa de cambio no actualizada");
+    alert(ERROR_MESSAGE.EXCHANGE_RATE_NOT_SET);
     return;
   }
   if (exRate === 0) {
-    alert("La tasa de cambio no puede ser cero");
+    alert(ERROR_MESSAGE.EXCHANGE_EQUAL_TO_ZERO);
     return;
   }
 
@@ -89,7 +105,7 @@ UI.addItemBtn.addEventListener("pointerdown", () => {
   // just if the exchangeRate is set
 
   if (!("exchangeRate" in localStorage)) {
-    alert("La tasa de cambio no ha sido configurada");
+    alert(ERROR_MESSAGE.EXCHANGE_RATE_NOT_SET);
     return;
   }
 
@@ -123,7 +139,7 @@ UI.dialogUnitaryItem.addEventListener("close", () => {
   const price = roundToTwo(Number.parseFloat(priceEl.value));
 
   if (!isValidProduct(product) || !isValidNumber(price)) {
-    alert("Datos invalidos o incompletos");
+    alert(ERROR_MESSAGE.INVALID_INPUT);
     return;
   }
 
@@ -131,7 +147,7 @@ UI.dialogUnitaryItem.addEventListener("close", () => {
   updateList.detail.currency = currency;
   updateList.detail.quantity = quantity;
   updateList.detail.price = price;
-  updateList.detail.type = "unitary";
+  updateList.detail.type = PRODUCT_TYPE.UNITARY;
   updateList.detail.weight = null;
   updateList.detail.id = generateId(product);
   UI.dialogUnitaryItem.dispatchEvent(updateList);
@@ -142,7 +158,7 @@ UI.addWeightedItem.addEventListener("pointerdown", () => {
   // just if the exchangeRate is set
 
   if (!("exchangeRate" in localStorage)) {
-    alert("La tasa de cambio no ha sido configurada");
+    alert(ERROR_MESSAGE.EXCHANGE_RATE_NOT_SET);
     return;
   }
 
@@ -184,7 +200,7 @@ UI.dialogWeightedItem.addEventListener("close", () => {
     !isValidNumber(price) ||
     !isValidNumber(weight)
   ) {
-    alert("Datos invalidos o incompletos");
+    alert(ERROR_MESSAGE.INVALID_INPUT);
     return;
   }
 
@@ -192,7 +208,7 @@ UI.dialogWeightedItem.addEventListener("close", () => {
   updateList.detail.price = price;
   updateList.detail.product = product;
   updateList.detail.currency = currency;
-  updateList.detail.type = "weighted";
+  updateList.detail.type = PRODUCT_TYPE.WEIGHTED;
   updateList.detail.quantity = null;
   updateList.detail.id = generateId(product);
   UI.dialogUnitaryItem.dispatchEvent(updateList);
@@ -262,7 +278,7 @@ UI.mainContainer.addEventListener("renderTotalBs", (e) => {
 function init() {
   if (!("exchangeRate" in localStorage)) {
     UI.exchangeRateElem.innerText = 0;
-    alert("Tasa de cambio no configurada");
+    alert(ERROR_MESSAGE.EXCHANGE_RATE_NOT_SET);
     return;
   }
   const exRate = Number.parseFloat(localStorage.getItem("exchangeRate"));
