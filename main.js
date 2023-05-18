@@ -251,9 +251,9 @@ UI.mainContainer.addEventListener("renderTotalUSD", () => {
 
 UI.mainContainer.addEventListener("renderTotalBs", (e) => {
   // Exchange the product prices from USD to Bs
-  let total = e.detail.totalInUSD;
-  total *= Number.parseFloat(State.exchangeRate);
-  UI.totalBsElem.innerText = roundToTwo(total);
+  const totalUSD = e.detail.totalInUSD;
+  const totalBs = totalUSD * State.exchangeRate;
+  UI.totalBsElem.innerText = roundToTwo(totalBs);
 });
 
 // -------------
