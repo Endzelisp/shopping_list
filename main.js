@@ -4,6 +4,7 @@ import {
   generateId,
   isValidProduct,
   isValidNumber,
+  roundToTwo,
 } from "./modules/utility-functions.js";
 import { State } from "./modules/state.js";
 import { ItemElement } from "./web-components/item/item.js";
@@ -75,7 +76,7 @@ UI.dialogExchangeRate.addEventListener("close", () => {
   }
 
   State.exchangeRate = exRate;
-  UI.exchangeRateElem.innerText = Number.parseFloat(exRate).toFixed(2);
+  UI.exchangeRateElem.innerText = roundToTwo(exRate);
   Local.saveExRate();
 
   // Update item's price when the exchange rate changes
@@ -119,7 +120,7 @@ UI.dialogUnitaryItem.addEventListener("close", () => {
   const product = productEl.value.trim();
   const currency = currencyEl.value;
   const quantity = Number.parseInt(quantityEl.value);
-  const price = Number.parseFloat(priceEl.value).toFixed(2);
+  const price = roundToTwo(Number.parseFloat(priceEl.value));
 
   if (!isValidProduct(product) || !isValidNumber(price)) {
     alert("Datos invalidos o incompletos");
@@ -229,7 +230,7 @@ UI.mainContainer.addEventListener("renderList", () => {
       `${item.quantity || item.weight.toString().concat(" Kg")} ${
         item.product
       }`,
-      item.totalPriceBs.toFixed(2),
+      roundToTwo(item.totalPriceBs),
       item.id
     );
     UI.itemContainer.appendChild(product);
@@ -243,7 +244,7 @@ UI.mainContainer.addEventListener("renderTotalUSD", () => {
     (acc, current) => acc + current.totalPriceUSD,
     0
   );
-  UI.totalUSDElem.innerText = total.toFixed(2);
+  UI.totalUSDElem.innerText = roundToTwo(total);
   renderTotalBs.detail.totalInUSD = total;
   UI.mainContainer.dispatchEvent(renderTotalBs);
 });
@@ -252,7 +253,7 @@ UI.mainContainer.addEventListener("renderTotalBs", (e) => {
   // Exchange the product prices from USD to Bs
   let total = e.detail.totalInUSD;
   total *= Number.parseFloat(State.exchangeRate);
-  UI.totalBsElem.innerText = total.toFixed(2);
+  UI.totalBsElem.innerText = roundToTwo(total);
 });
 
 // -------------
@@ -264,9 +265,9 @@ function init() {
     alert("Tasa de cambio no configurada");
     return;
   }
-  const exRate = localStorage.getItem("exchangeRate");
+  const exRate = Number.parseFloat(localStorage.getItem("exchangeRate"));
   State.exchangeRate = exRate;
-  UI.exchangeRateElem.innerText = Number.parseFloat(exRate).toFixed(2);
+  UI.exchangeRateElem.innerText = roundToTwo(exRate);
   UI.mainContainer.dispatchEvent(renderList);
 }
 
