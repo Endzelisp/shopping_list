@@ -23,10 +23,7 @@ export class ItemElement extends HTMLElement {
     const removeItem = this.shadowRoot.querySelector('[data-item="delete"]');
     removeItem.addEventListener("pointerdown", () => {
       const id = this.getAttribute("id");
-      const indexToDelete = State.savedItems.findIndex(
-        (item) => item.id === id
-      );
-      State.savedItems.splice(indexToDelete, 1);
+      State.deleteItem(id);
       Local.saveList();
       this.remove();
     });
