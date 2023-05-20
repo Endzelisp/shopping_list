@@ -233,25 +233,18 @@ UI.mainContainer.addEventListener("updateList", (e) => {
   UI.mainContainer.dispatchEvent(renderList);
 });
 
+const renderItem = (item) => {
+  const product = new ItemElement();
+  product.loadData(
+    `${item.quantity || item.weight.toString().concat(" Kg")} ${item.product}`,
+    roundToTwo(item.totalPriceBs),
+    item.id
+  );
+  UI.itemContainer.appendChild(product);
+};
+
 UI.mainContainer.addEventListener("renderList", () => {
-  // Clear out the actual displayed list of items
-  UI.clearList();
-  if (State.savedItems.length === 0) {
-    State.savedItems = Local.readList();
-  }
-
-  State.savedItems.forEach((item) => {
-    const product = new ItemElement();
-    product.loadData(
-      `${item.quantity || item.weight.toString().concat(" Kg")} ${
-        item.product
-      }`,
-      roundToTwo(item.totalPriceBs),
-      item.id
-    );
-    UI.itemContainer.appendChild(product);
-  });
-
+  renderItem(State.savedItems[State.savedItems.length - 1]);
   UI.mainContainer.dispatchEvent(renderTotalUSD);
 });
 
@@ -284,7 +277,8 @@ function init() {
   const exRate = Number.parseFloat(localStorage.getItem("exchangeRate"));
   State.exchangeRate = exRate;
   UI.exchangeRateElem.innerText = roundToTwo(exRate);
-  UI.mainContainer.dispatchEvent(renderList);
+  State.savedItems = Local.readList();
+  State.savedItems.forEach(renderItem);
 }
 
 init();
