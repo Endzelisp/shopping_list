@@ -96,6 +96,7 @@
               min="0"
               step=".01"
               data-input="exchange-rate"
+              required
             />
           </label>
           <button class="dialog-confirm-btn">Guardar</button>
@@ -120,7 +121,7 @@
           </button>
           <label for="product" class="flex-col"
             >Producto
-            <input type="text" id="product" data-input="name" />
+            <input type="text" id="product" data-input="name" required />
           </label>
           <div class="wrapper-labels">
             <label for="quantity" class="flex-col"
@@ -132,6 +133,7 @@
                 value="1"
                 autofocus
                 data-input="quantity"
+                required
               />
             </label>
             <label for="price" class="flex-col"
@@ -142,6 +144,7 @@
                 min="0"
                 step=".01"
                 data-input="price"
+                required
               />
             </label>
           </div>
@@ -194,6 +197,7 @@
               step=".01"
               id="new-weighted-item"
               data-input="name"
+              required
             />
           </label>
           <div class="wrapper-labels">
@@ -205,8 +209,8 @@
                   min="0"
                   step=".001"
                   id="weight"
-                  autofocus
                   data-input="weight"
+                  required
                 />
               </label>
             </div>
@@ -218,6 +222,7 @@
                 min="0"
                 step=".01"
                 data-input="price"
+                required
               />
             </label>
           </div>
