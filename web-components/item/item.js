@@ -26,11 +26,8 @@ export class ItemElement extends HTMLElement {
       State.deleteItem(id);
       Local.saveList();
       this.remove();
+      mainContainer.dispatchEvent(renderTotalUSD);
     });
-  }
-
-  disconnectedCallback() {
-    mainContainer.dispatchEvent(renderTotalUSD);
   }
 }
 
