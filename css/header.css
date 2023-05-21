@@ -1,18 +1,17 @@
-
 .container__header {
   display: grid;
   position: sticky;
   top: 0;
   grid-template-columns: repeat(2, 1fr);
-  gap: .5em;
-  padding: .125em;
   font-family: var(--quicksand-bold);
 }
 
-.container__header-total {
+.container__header-total,
+.container__header-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
+  padding: 12px;
 }
 
 .container__header-total > h1 {
@@ -26,19 +25,13 @@
   display: flex;
   justify-content: right;
   align-items: center;
-  font-size: .95rem;
-  gap: .35em;
+  font-size: 0.95rem;
+  gap: 4px;
   user-select: none;
 }
 
 .price-format > p {
-  font-size: .8rem;
-}
-
-.container__header-options {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  font-size: 0.8rem;
 }
 
 .container__header-options > * {
@@ -50,30 +43,26 @@
   grid-column: 1 / 3;
   display: flex;
   flex-direction: column;
-  gap: .125em;
+  gap: 2px;
 }
 
 .container__header-options div:first-of-type h3 {
-  font-size: .5rem;
+  font-size: 0.5rem;
   font-weight: lighter;
   text-align: center;
 }
 
 .container__header-options .price-format {
-  padding: .25em 1em;
-  border-radius: 1rem;
+  padding: 4px 16px;
+  border-radius: 16px;
 }
 
-.container__header-options svg {
+.svg-add-item-btn {
   width: 2rem;
   height: 2rem;
-  padding: .2em;
-  background-color: var(--baby-powder);
-  border-radius: 2rem;
-  box-shadow: 1px 1px 2px 1px var(--red);
-}
-
-.container__header-options svg[data-button="new-item"],
-.container__header-options svg[data-button="weighted-item"] {
+  padding: 2px;
   fill: var(--dark-gray);
+  background-color: var(--baby-powder);
+  border-radius: 32px;
+  box-shadow: 1px 1px 2px 1px var(--red);
 }
