@@ -114,9 +114,9 @@ UI.addItemBtn.addEventListener("pointerdown", () => {
   );
   const productEl = UI.dialogUnitaryItem.querySelector('[data-input="name"]');
   const priceEl = UI.dialogUnitaryItem.querySelector('[data-input="price"]');
-  quantityEl.value = 1;
-  productEl.value = "";
-  priceEl.value = null;
+  quantityEl.value = quantityEl.defaultValue;
+  productEl.value = productEl.defaultValue;
+  priceEl.value = priceEl.defaultValue;
   UI.dialogUnitaryItem.showModal();
 });
 
@@ -165,9 +165,10 @@ UI.addWeightedItem.addEventListener("pointerdown", () => {
   const productEl = UI.dialogWeightedItem.querySelector('[data-input="name"]');
   const priceEl = UI.dialogWeightedItem.querySelector('[data-input="price"]');
   const weightEl = UI.dialogWeightedItem.querySelector('[data-input="weight"]');
-  productEl.value = "";
-  priceEl.value = null;
-  weightEl.value = null;
+  productEl.value = productEl.defaultValue;
+  priceEl.value = priceEl.defaultValue;
+  weightEl.value = weightEl.defaultValue;
+
   UI.dialogWeightedItem.showModal();
 });
 
