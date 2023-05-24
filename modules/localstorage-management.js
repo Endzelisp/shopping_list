@@ -6,15 +6,12 @@ export function saveList() {
 }
 
 export function readList() {
-  if (!("savedItems" in localStorage)) {
-    return [];
+  const savedItems = JSON.parse(localStorage?.savedItems);
+  if (Array.isArray(savedItems)) {
+    return savedItems;
   }
-  const savedItems = JSON.parse(localStorage.savedItems);
-  if (!Array.isArray(savedItems)) {
-    delete localStorage.savedItems;
-    return [];
-  }
-  return savedItems;
+  delete localStorage.savedItems;
+  return [];
 }
 
 export function saveExRate() {
