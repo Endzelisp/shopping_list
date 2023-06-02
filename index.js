@@ -14,6 +14,7 @@ import {
   renderTotalUSD,
   renderTotalBs,
 } from "./modules/custom-events.js";
+import { ExchangeRateButton } from "./web-components/exchange-rate-button/exchange-rate-button.js";
 
 const ERROR_MESSAGE = {
   EXCHANGE_RATE_NOT_SET: "Tasa de cambio no actualizada",
@@ -68,75 +69,82 @@ class Item {
   }
 }
 
-UI.exchangeRateElem.addEventListener("pointerdown", () => {
-  // Open up exchange rate dialog box
-  UI.dialogExchangeRate.showModal();
-});
+/**
+ * Display the exchange rate dialog box
+ */
+UI.exRateButton.onpointerdown = () => {
+  UI.dialogs.exchangeRate.dialog.showModal();
+};
 
-UI.dialogExchangeRate.addEventListener("close", () => {
-  // Capture info about the exchange rate
-  // and save it to local storage
+/**
+ * Get the exchange rate and save it
+ * */
+UI.dialogs.exchangeRate.dialog.onclose = () => {
+  if (UI.dialogs.exchangeRate.dialog.returnValue === "close") {
+    return;
+  }
 
-  const exRateInputEl = UI.dialogExchangeRate.querySelector(
-    '[data-input="exchange-rate"]'
-  );
-  const exRate = Number.parseFloat(exRateInputEl.value);
-
+  const exRateInput = UI.dialogs.exchangeRate.input;
+  const exRate = Number.parseFloat(exRateInput.value);
   if (Number.isNaN(exRate)) {
     alert(ERROR_MESSAGE.EXCHANGE_RATE_NOT_SET);
     return;
   }
+
   if (exRate === 0) {
     alert(ERROR_MESSAGE.EXCHANGE_EQUAL_TO_ZERO);
     return;
   }
 
   State.exchangeRate = exRate;
+  UI.exRateButton.dataset.rate = exRate;
   UI.exchangeRateElem.innerText = roundToTwo(exRate);
   Local.saveExRate();
 
   // Update item's price when the exchange rate changes
   State.savedItems.forEach((item) => item.adjustPrice());
-  UI.dialogExchangeRate.dispatchEvent(renderList);
-});
+  UI.dialogs.exchangeRate.dialog.dispatchEvent(renderList);
+};
 
-UI.addItemBtn.addEventListener("pointerdown", () => {
-  // Show up the dialog box to add a new item
-  // just if the exchangeRate is set
-
+/**
+ * Display the dialog box to add a new item
+ */
+UI.addItemBtn.onpointerdown = () => {
   if (!("exchangeRate" in localStorage)) {
     alert(ERROR_MESSAGE.EXCHANGE_RATE_NOT_SET);
     return;
   }
 
-  const quantityEl = UI.dialogUnitaryItem.querySelector(
-    '[data-input="quantity"]'
-  );
-  const productEl = UI.dialogUnitaryItem.querySelector('[data-input="name"]');
-  const priceEl = UI.dialogUnitaryItem.querySelector('[data-input="price"]');
-  quantityEl.value = quantityEl.defaultValue;
+  const productEl = UI.dialogs.unitaryItem.inputProduct;
+  const quantityEl = UI.dialogs.unitaryItem.inputQty;
+  const priceEl = UI.dialogs.unitaryItem.inputPrice;
+
+  // Set all input values to their default values
   productEl.value = productEl.defaultValue;
+  quantityEl.value = quantityEl.defaultValue;
   priceEl.value = priceEl.defaultValue;
-  UI.dialogUnitaryItem.showModal();
-});
+  UI.dialogs.unitaryItem.dialog.showModal();
+};
 
-UI.dialogUnitaryItem.addEventListener("close", () => {
-  // Capture user info about the product
+/**
+ * Get unitary product description
+ */
+UI.dialogs.unitaryItem.dialog.onclose = () => {
+  const productEl = UI.dialogs.unitaryItem.inputProduct;
+  const quantityEl = UI.dialogs.unitaryItem.inputQty;
+  const priceEl = UI.dialogs.unitaryItem.inputPrice;
+  const currencyEl = UI.dialogs.unitaryItem.dialog.querySelector(
+    "fieldset input:checked"
+  );
 
-  const dialogEl = UI.dialogUnitaryItem;
-  const quantityEl = dialogEl.querySelector('[data-input="quantity"]');
-  const priceEl = dialogEl.querySelector('[data-input="price"]');
-  const currencyEl = dialogEl.querySelector("fieldset input:checked");
-  const productEl = dialogEl.querySelector('[data-input="name"]');
-
-  if (dialogEl.returnValue === "close") {
+  if (UI.dialogs.unitaryItem.dialog.returnValue === "close") {
     return;
   }
 
   const product = productEl.value.trim();
-  const currency = currencyEl.value;
   const quantity = Number.parseInt(quantityEl.value);
   const price = roundToTwo(Number.parseFloat(priceEl.value));
+  const currency = currencyEl.value;
 
   if (!isValidProduct(product) || !isValidNumber(price)) {
     alert(ERROR_MESSAGE.INVALID_INPUT);
@@ -144,45 +152,47 @@ UI.dialogUnitaryItem.addEventListener("close", () => {
   }
 
   updateList.detail.product = product;
-  updateList.detail.currency = currency;
   updateList.detail.quantity = quantity;
-  updateList.detail.price = price;
-  updateList.detail.type = PRODUCT_TYPE.UNITARY;
   updateList.detail.weight = null;
+  updateList.detail.price = price;
+  updateList.detail.currency = currency;
+  updateList.detail.type = PRODUCT_TYPE.UNITARY;
   updateList.detail.id = generateId(product);
-  UI.dialogUnitaryItem.dispatchEvent(updateList);
-});
+  UI.dialogs.unitaryItem.dialog.dispatchEvent(updateList);
+};
 
-UI.addWeightedItem.addEventListener("pointerdown", () => {
-  // Show up the dialog box to add a new weighted items
-  // just if the exchangeRate is set
-
+/**
+ * Display the dialog box to add a new weighted item
+ */
+UI.addWeightedItem.onpointerdown = () => {
   if (!("exchangeRate" in localStorage)) {
     alert(ERROR_MESSAGE.EXCHANGE_RATE_NOT_SET);
     return;
   }
 
-  const productEl = UI.dialogWeightedItem.querySelector('[data-input="name"]');
-  const priceEl = UI.dialogWeightedItem.querySelector('[data-input="price"]');
-  const weightEl = UI.dialogWeightedItem.querySelector('[data-input="weight"]');
+  const productEl = UI.dialogs.weightedItem.inputProduct;
+  const weightEl = UI.dialogs.weightedItem.inputWeight;
+  const priceEl = UI.dialogs.weightedItem.inputPrice;
+
+  // Set all input values to their default values
   productEl.value = productEl.defaultValue;
-  priceEl.value = priceEl.defaultValue;
   weightEl.value = weightEl.defaultValue;
+  priceEl.value = priceEl.defaultValue;
+  UI.dialogs.weightedItem.dialog.showModal();
+};
 
-  UI.dialogWeightedItem.showModal();
-});
+/**
+ * Get weighted product description
+ */
+UI.dialogs.weightedItem.dialog.onclose = () => {
+  const productEl = UI.dialogs.weightedItem.inputProduct;
+  const weightEl = UI.dialogs.weightedItem.inputWeight;
+  const priceEl = UI.dialogs.weightedItem.inputPrice;
+  const currencyEl = UI.dialogs.weightedItem.dialog.querySelector(
+    "fieldset input:checked"
+  );
 
-UI.dialogWeightedItem.addEventListener("close", () => {
-  // Capture user info about the weighted product
-  // and send it through the event detail object
-
-  const dialogEl = UI.dialogWeightedItem;
-  const weightEl = dialogEl.querySelector('[data-input="weight"]');
-  const priceEl = dialogEl.querySelector('[data-input="price"]');
-  const currencyEl = dialogEl.querySelector("fieldset input:checked");
-  const productEl = dialogEl.querySelector('[data-input="name"]');
-
-  if (dialogEl.returnValue === "close") {
+  if (UI.dialogs.weightedItem.dialog.returnValue === "close") {
     return;
   }
 
@@ -205,20 +215,21 @@ UI.dialogWeightedItem.addEventListener("close", () => {
     return;
   }
 
-  updateList.detail.weight = weight;
-  updateList.detail.price = price;
   updateList.detail.product = product;
+  updateList.detail.weight = weight;
+  updateList.detail.quantity = null;
+  updateList.detail.price = price;
   updateList.detail.currency = currency;
   updateList.detail.type = PRODUCT_TYPE.WEIGHTED;
-  updateList.detail.quantity = null;
   updateList.detail.id = generateId(product);
-  UI.dialogUnitaryItem.dispatchEvent(updateList);
-});
+  UI.dialogs.unitaryItem.dialog.dispatchEvent(updateList);
+};
 
+/**
+ * Receive the info about the product saving it
+ *  in the State module and localStorage
+ */
 UI.mainContainer.addEventListener("updateList", (e) => {
-  // Receive captured info about the product
-  // saving it in the State module and localStorage
-
   const quantity = e.detail.quantity;
   const weight = e.detail.weight;
   const product = e.detail.product;
@@ -234,6 +245,9 @@ UI.mainContainer.addEventListener("updateList", (e) => {
   UI.mainContainer.dispatchEvent(renderList);
 });
 
+/**
+ *  Render the item's list
+ */
 UI.mainContainer.addEventListener("renderList", () => {
   UI.clearList();
   State.savedItems.forEach((item) => {
@@ -251,6 +265,9 @@ UI.mainContainer.addEventListener("renderList", () => {
   UI.mainContainer.dispatchEvent(renderTotalUSD);
 });
 
+/**
+ * Calculate total in USD and display the result
+ */
 UI.mainContainer.addEventListener("renderTotalUSD", () => {
   const total = State.savedItems.reduce(
     (acc, current) => acc + current.totalPriceUSD,
@@ -261,16 +278,18 @@ UI.mainContainer.addEventListener("renderTotalUSD", () => {
   UI.mainContainer.dispatchEvent(renderTotalBs);
 });
 
+/**
+ * Calculate total in Bs and display the result
+ */
 UI.mainContainer.addEventListener("renderTotalBs", (e) => {
-  // Exchange the product prices from USD to Bs
   const totalUSD = e.detail.totalInUSD;
   const totalBs = totalUSD * State.exchangeRate;
   UI.totalBsElem.innerText = roundToTwo(totalBs);
 });
 
-// -------------
-// Initial setup
-
+/**
+ * Load information from localStorage and initalize the webApp
+ */
 function init() {
   if (!("exchangeRate" in localStorage)) {
     UI.exchangeRateElem.innerText = 0;
