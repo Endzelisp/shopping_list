@@ -70,10 +70,6 @@ UI.dialogs.exchangeRate.dialog.onclose = () => {
   UI.exRateButton.dataset.rate = exRate;
   UI.exchangeRateElem.innerText = roundToTwo(exRate);
   Local.saveExRate();
-
-  // Update item's price when the exchange rate changes
-  const renderedItems = [...document.querySelectorAll("new-item")];
-  renderedItems.forEach((item) => item.adjustPrice());
   UI.dialogs.exchangeRate.dialog.dispatchEvent(renderList);
 };
 
@@ -223,6 +219,7 @@ UI.mainContainer.addEventListener("renderList", () => {
   UI.clearList();
   State.savedItems.forEach((item) => {
     const product = new ItemElement(item);
+    UI.exRateButton.subscribe(product);
     UI.itemContainer.appendChild(product);
   });
   UI.mainContainer.dispatchEvent(renderTotalUSD);

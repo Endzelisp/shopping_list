@@ -18,34 +18,34 @@ export class ItemElement extends HTMLElement {
     this.currency = props.currency;
     this.type = props.type;
     this.id = props.id;
-    this.totalPriceBs = this.#bs();
-    this.totalPriceUSD = this.#usd();
+    this.totalPriceBs = this.#bs(State.exchangeRate);
+    this.totalPriceUSD = this.#usd(State.exchangeRate);
     const importedTemplate = document.importNode(newItemTemplate.content, true);
     this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(importedTemplate);
   }
 
-  #bs() {
+  #bs(exRate) {
     const subTotal =
       Number.parseFloat(this.rawPrice) * (this.quantity || this.weight);
     if (this.currency === CURRENCY_TYPE.USD) {
-      return subTotal * State.exchangeRate;
+      return subTotal * exRate;
     }
     return subTotal;
   }
 
-  #usd() {
+  #usd(exRate) {
     const subTotal =
       Number.parseFloat(this.rawPrice) * (this.quantity || this.weight);
     if (this.currency === CURRENCY_TYPE.BS) {
-      return subTotal / State.exchangeRate;
+      return subTotal / exRate;
     }
     return subTotal;
   }
 
-  adjustPrice() {
-    this.totalPriceBs = this.#bs();
-    this.totalPriceUSD = this.#usd();
+  notify({ exRate }) {
+    this.totalPriceBs = this.#bs(exRate);
+    this.totalPriceUSD = this.#usd(exRate);
   }
 
   connectedCallback() {
