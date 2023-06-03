@@ -5,13 +5,6 @@ export const updateList = new CustomEvent("updateList", {
   composed: false,
 });
 
-export const renderList = new CustomEvent("renderList", {
-  detail: {},
-  bubbles: true,
-  cancelable: false,
-  composed: false,
-});
-
 export const renderTotalUSD = new CustomEvent("renderTotalUSD", {
   detail: {},
   bubbles: true,
