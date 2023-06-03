@@ -251,17 +251,15 @@ UI.mainContainer.addEventListener("renderTotalBs", (e) => {
 /**
  * Load information from localStorage and initalize the webApp
  */
-function init() {
-  if (!("exchangeRate" in localStorage)) {
+(() => {
+  if ("exchangeRate" in localStorage) {
+    const exRate = Number.parseFloat(localStorage.getItem("exchangeRate"));
+    State.exchangeRate = exRate;
+    UI.exchangeRateElem.innerText = roundToTwo(exRate);
+    State.savedItems = Local.readList();
+    UI.mainContainer.dispatchEvent(renderList);
+  } else {
     UI.exchangeRateElem.innerText = 0;
     alert(ERROR_MESSAGE.EXCHANGE_RATE_NOT_SET);
-    return;
   }
-  const exRate = Number.parseFloat(localStorage.getItem("exchangeRate"));
-  State.exchangeRate = exRate;
-  UI.exchangeRateElem.innerText = roundToTwo(exRate);
-  State.savedItems = Local.readList();
-  UI.mainContainer.dispatchEvent(renderList);
-}
-
-init();
+})();
