@@ -213,8 +213,7 @@ UI.mainContainer.addEventListener("updateList", (e) => {
     type,
     id,
   });
-  const itemCustomEl = new ItemElement(item);
-  UI.exRateButton.subscribe(itemCustomEl);
+  const itemCustomEl = new ItemElement(item, UI.exRateButton);
   UI.itemContainer.appendChild(itemCustomEl);
   State.savedItems.push(item);
   Local.saveList();
@@ -254,8 +253,7 @@ UI.mainContainer.addEventListener("renderTotalBs", (e) => {
     UI.exchangeRateElem.innerText = roundToTwo(exRate);
     State.savedItems = Local.readList();
     State.savedItems.forEach((item) => {
-      const product = new ItemElement(item);
-      UI.exRateButton.subscribe(product);
+      const product = new ItemElement(item, UI.exRateButton);
       UI.itemContainer.appendChild(product);
     });
     UI.mainContainer.dispatchEvent(renderTotalUSD);

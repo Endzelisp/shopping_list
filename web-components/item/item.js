@@ -9,7 +9,7 @@ const CURRENCY_TYPE = {
 };
 
 export class ItemElement extends HTMLElement {
-  constructor(props) {
+  constructor(props, observer) {
     super();
     this.quantity = props.quantity;
     this.weight = props.weight;
@@ -26,6 +26,8 @@ export class ItemElement extends HTMLElement {
     this.itemName = shadowRoot.querySelector('[data-item="name"]');
     this.itemPrice = shadowRoot.querySelector('[data-item="price"]');
     this.deleteItemBtn = shadowRoot.querySelector('[data-item="delete"]');
+    this.obs = observer;
+    this.obs.subscribe(this);
   }
 
   #bs(exRate) {
@@ -65,6 +67,10 @@ export class ItemElement extends HTMLElement {
       this.remove();
       mainContainer.dispatchEvent(renderTotalUSD);
     });
+  }
+
+  disconnectedCallback() {
+    this.obs.unSubscribe(this);
   }
 }
 
