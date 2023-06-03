@@ -1,8 +1,16 @@
 dialog {
-  margin: auto;
+  position: relative;
+  top: 5%;
+  margin: 0 auto;
   border: none;
   outline: 1px solid var(--dark-gray);
   padding: 0.5em;
+}
+
+@media (min-width: 640px) {
+  dialog {
+    margin: auto;
+  }
 }
 
 dialog::backdrop {
