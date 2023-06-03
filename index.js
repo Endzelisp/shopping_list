@@ -249,7 +249,7 @@ UI.mainContainer.addEventListener("renderTotalBs", (e) => {
 });
 
 /**
- * Load information from localStorage and initalize the webApp
+ * Load information from localStorage and initialize the webApp
  */
 (() => {
   if ("exchangeRate" in localStorage) {
