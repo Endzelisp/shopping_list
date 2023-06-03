@@ -10,7 +10,6 @@ import { State } from "./modules/state.js";
 import { ItemElement } from "./web-components/item/item.js";
 import {
   updateList,
-  renderList,
   renderTotalUSD,
   renderTotalBs,
 } from "./modules/custom-events.js";
@@ -70,7 +69,7 @@ UI.dialogs.exchangeRate.dialog.onclose = () => {
   UI.exRateButton.dataset.rate = exRate;
   UI.exchangeRateElem.innerText = roundToTwo(exRate);
   Local.saveExRate();
-  UI.dialogs.exchangeRate.dialog.dispatchEvent(renderList);
+  UI.dialogs.exchangeRate.dialog.dispatchEvent(renderTotalUSD);
 };
 
 /**
@@ -205,23 +204,20 @@ UI.mainContainer.addEventListener("updateList", (e) => {
   const price = e.detail.price;
   const id = e.detail.id;
 
-  State.savedItems.push(
-    new Item({ quantity, weight, product, price, currency, type, id })
-  );
-  Local.saveList();
-  UI.mainContainer.dispatchEvent(renderList);
-});
-
-/**
- *  Render the item's list
- */
-UI.mainContainer.addEventListener("renderList", () => {
-  UI.clearList();
-  State.savedItems.forEach((item) => {
-    const product = new ItemElement(item);
-    UI.exRateButton.subscribe(product);
-    UI.itemContainer.appendChild(product);
+  const item = new Item({
+    quantity,
+    weight,
+    product,
+    price,
+    currency,
+    type,
+    id,
   });
+  const itemCustomEl = new ItemElement(item);
+  UI.exRateButton.subscribe(itemCustomEl);
+  UI.itemContainer.appendChild(itemCustomEl);
+  State.savedItems.push(item);
+  Local.saveList();
   UI.mainContainer.dispatchEvent(renderTotalUSD);
 });
 
@@ -257,7 +253,12 @@ UI.mainContainer.addEventListener("renderTotalBs", (e) => {
     State.exchangeRate = exRate;
     UI.exchangeRateElem.innerText = roundToTwo(exRate);
     State.savedItems = Local.readList();
-    UI.mainContainer.dispatchEvent(renderList);
+    State.savedItems.forEach((item) => {
+      const product = new ItemElement(item);
+      UI.exRateButton.subscribe(product);
+      UI.itemContainer.appendChild(product);
+    });
+    UI.mainContainer.dispatchEvent(renderTotalUSD);
   } else {
     UI.exchangeRateElem.innerText = 0;
     alert(ERROR_MESSAGE.EXCHANGE_RATE_NOT_SET);
