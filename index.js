@@ -22,50 +22,20 @@ const ERROR_MESSAGE = {
   INVALID_INPUT: "Datos invalidos o incompletos",
 };
 
-const CURRENCY_TYPE = {
-  USD: "usd",
-  BS: "bs",
-};
-
 const PRODUCT_TYPE = {
   UNITARY: "unitary",
   WEIGHTED: "weighted",
 };
 
 class Item {
-  constructor(obj) {
-    this.quantity = obj.quantity;
-    this.weight = obj.weight;
-    this.product = obj.product;
-    this.rawPrice = obj.price;
-    this.currency = obj.currency;
-    this.type = obj.type;
-    this.id = obj.id;
-    this.totalPriceBs = this.#bs();
-    this.totalPriceUSD = this.#usd();
-  }
-
-  #bs() {
-    const subTotal =
-      Number.parseFloat(this.rawPrice) * (this.quantity || this.weight);
-    if (this.currency === CURRENCY_TYPE.USD) {
-      return subTotal * State.exchangeRate;
-    }
-    return subTotal;
-  }
-
-  #usd() {
-    const subTotal =
-      Number.parseFloat(this.rawPrice) * (this.quantity || this.weight);
-    if (this.currency === CURRENCY_TYPE.BS) {
-      return subTotal / State.exchangeRate;
-    }
-    return subTotal;
-  }
-
-  adjustPrice() {
-    this.totalPriceBs = this.#bs();
-    this.totalPriceUSD = this.#usd();
+  constructor(props) {
+    this.quantity = props.quantity;
+    this.weight = props.weight;
+    this.product = props.product;
+    this.rawPrice = props.price;
+    this.currency = props.currency;
+    this.type = props.type;
+    this.id = props.id;
   }
 }
 
@@ -102,7 +72,8 @@ UI.dialogs.exchangeRate.dialog.onclose = () => {
   Local.saveExRate();
 
   // Update item's price when the exchange rate changes
-  State.savedItems.forEach((item) => item.adjustPrice());
+  const renderedItems = [...document.querySelectorAll("new-item")];
+  renderedItems.forEach((item) => item.adjustPrice());
   UI.dialogs.exchangeRate.dialog.dispatchEvent(renderList);
 };
 
@@ -251,17 +222,9 @@ UI.mainContainer.addEventListener("updateList", (e) => {
 UI.mainContainer.addEventListener("renderList", () => {
   UI.clearList();
   State.savedItems.forEach((item) => {
-    const product = new ItemElement();
-    product.loadData(
-      `${item.quantity || item.weight.toString().concat(" Kg")} ${
-        item.product
-      }`,
-      roundToTwo(item.totalPriceBs),
-      item.id
-    );
+    const product = new ItemElement(item);
     UI.itemContainer.appendChild(product);
   });
-
   UI.mainContainer.dispatchEvent(renderTotalUSD);
 });
 
@@ -269,7 +232,8 @@ UI.mainContainer.addEventListener("renderList", () => {
  * Calculate total in USD and display the result
  */
 UI.mainContainer.addEventListener("renderTotalUSD", () => {
-  const total = State.savedItems.reduce(
+  const renderedItems = [...document.querySelectorAll("new-item")];
+  const total = renderedItems.reduce(
     (acc, current) => acc + current.totalPriceUSD,
     0
   );
