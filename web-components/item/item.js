@@ -21,8 +21,11 @@ export class ItemElement extends HTMLElement {
     this.totalPriceBs = this.#bs(State.exchangeRate);
     this.totalPriceUSD = this.#usd(State.exchangeRate);
     const importedTemplate = document.importNode(newItemTemplate.content, true);
-    this.attachShadow({ mode: "open" });
-    this.shadowRoot.appendChild(importedTemplate);
+    const shadowRoot = this.attachShadow({ mode: "open" });
+    shadowRoot.appendChild(importedTemplate);
+    this.itemName = shadowRoot.querySelector('[data-item="name"]');
+    this.itemPrice = shadowRoot.querySelector('[data-item="price"]');
+    this.deleteItemBtn = shadowRoot.querySelector('[data-item="delete"]');
   }
 
   #bs(exRate) {
@@ -46,18 +49,16 @@ export class ItemElement extends HTMLElement {
   notify({ exRate }) {
     this.totalPriceBs = this.#bs(exRate);
     this.totalPriceUSD = this.#usd(exRate);
+    this.itemPrice.innerText = `${this.totalPriceBs} Bs.`;
   }
 
   connectedCallback() {
-    const itemName = this.shadowRoot.querySelector('[data-item="name"]');
-    const itemPrice = this.shadowRoot.querySelector('[data-item="price"]');
     this.setAttribute("id", this.id);
-    itemName.innerText = `${
+    this.itemName.innerText = `${
       this.quantity || this.weight.toString().concat(" Kg")
     } ${this.product}`;
-    itemPrice.innerText = `${this.totalPriceBs} Bs.`;
-    const removeItem = this.shadowRoot.querySelector('[data-item="delete"]');
-    removeItem.addEventListener("pointerdown", () => {
+    this.itemPrice.innerText = `${this.totalPriceBs} Bs.`;
+    this.deleteItemBtn.addEventListener("pointerdown", () => {
       const id = this.getAttribute("id");
       State.deleteItem(id);
       Local.saveList();
