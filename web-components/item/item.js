@@ -2,6 +2,7 @@ import { State } from "../../modules/state.js";
 import { renderTotalUSD } from "../../modules/custom-events.js";
 import { mainContainer, newItemTemplate } from "../../modules/ui.js";
 import * as Local from "../../modules/localstorage-management.js";
+import { roundToTwo } from "../../modules/utility-functions.js";
 
 const CURRENCY_TYPE = {
   USD: "usd",
@@ -51,7 +52,7 @@ export class ItemElement extends HTMLElement {
   notify({ exRate }) {
     this.totalPriceBs = this.#bs(exRate);
     this.totalPriceUSD = this.#usd(exRate);
-    this.itemPrice.innerText = `${this.totalPriceBs} Bs.`;
+    this.itemPrice.innerText = `${roundToTwo(this.totalPriceBs)} Bs.`;
   }
 
   connectedCallback() {
@@ -59,7 +60,7 @@ export class ItemElement extends HTMLElement {
     this.itemName.innerText = `${
       this.quantity || this.weight.toString().concat(" Kg")
     } ${this.product}`;
-    this.itemPrice.innerText = `${this.totalPriceBs} Bs.`;
+    this.itemPrice.innerText = `${roundToTwo(this.totalPriceBs)} Bs.`;
     this.deleteItemBtn.addEventListener("pointerdown", () => {
       const id = this.getAttribute("id");
       State.deleteItem(id);
