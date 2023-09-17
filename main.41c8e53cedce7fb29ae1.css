@@ -1,0 +1,247 @@
+new-item {
+  width: 100%;
+}
+
+new-item::part(item-container) {
+  display: grid;
+  grid-template-columns: 60% 30% 10%;
+  align-content: center;
+  height: 2.5rem;
+  font-weight: 600;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px var(--item-shadow);
+  cursor: default;
+}
+
+new-item::part(item-name) {
+  padding-left: 8px;
+  margin: 0;
+}
+.container__header {
+  display: grid;
+  position: sticky;
+  top: 0;
+  grid-template-columns: repeat(2, 1fr);
+  font-family: var(--quicksand-bold);
+}
+
+.container__header-total,
+.container__header-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  padding: 12px;
+}
+
+.container__header-total > h1 {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  align-self: center;
+  font-size: 1.25rem;
+}
+
+.price-format {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-size: 0.95rem;
+  gap: 4px;
+  user-select: none;
+}
+
+.price-format > p {
+  font-size: 0.8rem;
+}
+
+.container__header-options > * {
+  justify-self: center;
+  align-self: center;
+}
+
+.container__header-options rate-button {
+  grid-column: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.container__header-options rate-button h3 {
+  font-size: 0.5rem;
+  font-weight: lighter;
+  text-align: center;
+}
+
+.container__header-options .price-format {
+  padding: 4px 16px;
+  border-radius: 16px;
+}
+
+.svg-add-item-btn {
+  width: 2rem;
+  height: 2rem;
+  padding: 2px;
+  fill: var(--dark-gray);
+  background-color: var(--baby-powder);
+  border-radius: 32px;
+  box-shadow: 1px 1px 2px 1px var(--red);
+}
+
+@font-face {
+  font-family: "quicksand-regular";
+  src: url(3dbf9ddfca6b40824df6.woff2) format("woff2"),
+    url(eafdbadb18f69d09f63c.woff) format("woff");
+}
+
+@font-face {
+  font-family: "quicksand-bold";
+  src: url(310443aa407d03538638.woff2) format("woff2"),
+    url(8f1606cf1e5103fcddd9.woff) format("woff");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --baby-powder: #fffffa;
+  --medium-gray: #515052;
+  --dark-gray: #333138;
+  --red: #ff312e;
+  --header-bg-clr: var(--dark-gray);
+  --title-txt-clr: var(--baby-powder);
+  --list-container-bg-clr: var(--baby-powder);
+  --item-bg-clr: var(--baby-powder);
+  --body-txt-clr: var(--dark-gray);
+  --item-shadow: var(--medium-gray);
+  --button-bg-clr: var(--red);
+  --quicksand-regular: "quicksand-regular";
+  --quicksand-bold: "quicksand-bold";
+  --header-height: 112px;
+  --item-list-height: calc(100svh - var(--header-height));
+}
+
+.container {
+  display: grid;
+  grid-template-rows: var(--header-height) var(--item-list-height);
+  position: relative;
+  font-family: var(--quicksand-regular);
+}
+
+.container__main-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  top: 0;
+  min-height: var(--item-list-height);
+  padding: 12px 6px;
+  background-color: var(--list-container-bg-clr);
+}
+
+/* Utilitary Classes */
+
+.light-bg {
+  background-color: var(--baby-powder);
+  color: var(--dark-gray);
+}
+
+.dark-bg {
+  background-color: var(--dark-gray);
+  color: var(--baby-powder);
+}
+
+dialog {
+  position: relative;
+  top: 5%;
+  margin: 0 auto;
+  border: none;
+  outline: 1px solid var(--dark-gray);
+  padding: 0.5em;
+}
+
+@media (min-width: 640px) {
+  dialog {
+    margin: auto;
+  }
+}
+
+dialog::backdrop {
+  background-color: #41414198;
+}
+
+dialog form input {
+  padding: 0.25em 0.5em;
+  font-size: 1rem;
+  border-radius: 3px;
+}
+
+.dialog-confirm-btn {
+  align-self: center;
+  padding: 0.5em 2em;
+  border-radius: 2rem;
+  font-size: 1.05rem;
+  background-color: var(--button-bg-clr);
+  color: var(--baby-powder);
+}
+
+/* new item dialogs */
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.close-modal-btn {
+  align-self: flex-end;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+}
+
+.close-modal-btn svg {
+  width: 24px;
+  fill: var(--dark-gray);
+  cursor: default;
+}
+
+.dialog-form {
+  gap: 1em;
+  width: clamp(300px, (100vw - 100px), 400px);
+}
+
+.wrapper-labels {
+  display: flex;
+  gap: 2rem;
+}
+
+.wrapper-labels label,
+.wrapper-labels input {
+  width: 100%;
+}
+
+.dialog-form fieldset {
+  display: flex;
+  justify-content: space-evenly;
+  border: none;
+}
+
+fieldset input[name="currency"] {
+  display: none;
+}
+
+fieldset [name="currency"] + label {
+  font-family: var(--quicksand-bold);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+}
+
+fieldset [name="currency"]:checked + label {
+  background-color: var(--medium-gray);
+  color: var(--baby-powder);
+}
+
