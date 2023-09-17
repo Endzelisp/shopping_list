@@ -1,0 +1,68 @@
+.container__header {
+  display: grid;
+  position: sticky;
+  top: 0;
+  grid-template-columns: repeat(2, 1fr);
+  font-family: var(--quicksand-bold);
+}
+
+.container__header-total,
+.container__header-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  padding: 12px;
+}
+
+.container__header-total > h1 {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  align-self: center;
+  font-size: 1.25rem;
+}
+
+.price-format {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-size: 0.95rem;
+  gap: 4px;
+  user-select: none;
+}
+
+.price-format > p {
+  font-size: 0.8rem;
+}
+
+.container__header-options > * {
+  justify-self: center;
+  align-self: center;
+}
+
+.container__header-options rate-button {
+  grid-column: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.container__header-options rate-button h3 {
+  font-size: 0.5rem;
+  font-weight: lighter;
+  text-align: center;
+}
+
+.container__header-options .price-format {
+  padding: 4px 16px;
+  border-radius: 16px;
+}
+
+.svg-add-item-btn {
+  width: 2rem;
+  height: 2rem;
+  padding: 2px;
+  fill: var(--dark-gray);
+  background-color: var(--baby-powder);
+  border-radius: 32px;
+  box-shadow: 1px 1px 2px 1px var(--red);
+}

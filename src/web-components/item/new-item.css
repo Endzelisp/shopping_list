@@ -1,0 +1,19 @@
+new-item {
+  width: 100%;
+}
+
+new-item::part(item-container) {
+  display: grid;
+  grid-template-columns: 60% 30% 10%;
+  align-content: center;
+  height: 2.5rem;
+  font-weight: 600;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px var(--item-shadow);
+  cursor: default;
+}
+
+new-item::part(item-name) {
+  padding-left: 8px;
+  margin: 0;
+}

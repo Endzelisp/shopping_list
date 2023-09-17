@@ -1,0 +1,68 @@
+@font-face {
+  font-family: "quicksand-regular";
+  src: url(../assets/fonts/quicksand_book-webfont.woff2) format("woff2"),
+    url(../assets/fonts/quicksand_book-webfont.woff) format("woff");
+}
+
+@font-face {
+  font-family: "quicksand-bold";
+  src: url(../assets/fonts/quicksand_bold-webfont.woff2) format("woff2"),
+    url(../assets/fonts/quicksand_bold-webfont.woff) format("woff");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --baby-powder: #fffffa;
+  --medium-gray: #515052;
+  --dark-gray: #333138;
+  --red: #ff312e;
+  --header-bg-clr: var(--dark-gray);
+  --title-txt-clr: var(--baby-powder);
+  --list-container-bg-clr: var(--baby-powder);
+  --item-bg-clr: var(--baby-powder);
+  --body-txt-clr: var(--dark-gray);
+  --item-shadow: var(--medium-gray);
+  --button-bg-clr: var(--red);
+  --quicksand-regular: "quicksand-regular";
+  --quicksand-bold: "quicksand-bold";
+  --header-height: 112px;
+  --item-list-height: calc(100svh - var(--header-height));
+}
+
+.container {
+  display: grid;
+  grid-template-rows: var(--header-height) var(--item-list-height);
+  position: relative;
+  font-family: var(--quicksand-regular);
+}
+
+.container__main-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  top: 0;
+  min-height: var(--item-list-height);
+  padding: 12px 6px;
+  background-color: var(--list-container-bg-clr);
+}
+
+/* Utilitary Classes */
+
+.light-bg {
+  background-color: var(--baby-powder);
+  color: var(--dark-gray);
+}
+
+.dark-bg {
+  background-color: var(--dark-gray);
+  color: var(--baby-powder);
+}
