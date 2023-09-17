@@ -1,11 +1,10 @@
-#Ignore node_modules folder
-
 node_modules/
-
-#Ignore all JSON files
-
-*.json
-
-#Ignore .prettierignore file
+dist/
 
 .prettierignore
+webpack.config.js
+
+#Ignore all JSON files except package.json
+
+*.json
+!package.json
