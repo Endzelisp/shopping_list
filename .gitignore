@@ -1,10 +1,11 @@
 node_modules/
-dist/
+#dist/
 
 .prettierignore
 webpack.config.js
 
-#Ignore all JSON files except package.json
+#Ignore all JSON files except package.json and manifest.json
 
 *.json
 !package.json
+!manifest.json
