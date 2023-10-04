@@ -9,11 +9,15 @@ need to pay.
 
 ## App features
 
-The app allow you to set the exchange rate, add products in Bs and USD, add weighted products as veggies and all items are
+- The app allow you to set the exchange rate, add products in Bs and USD, add weighted products as veggies and all items are
 showed below in Bs where you are able to delete them if you want. If you have some products in the list and you change the
 exchange rate all prices of products which were added in USD will automatically update and the products which were added in
 Bs will not be affected by the exchage rate update.
+- I designed the shopping list to be used on mobile phones, but could be used on desktop for testing purposes
+- It's a PWA so you can install it on your device
 
 Web app created with 💓 to my mom, I hope it could be helpful to other people as well.
+
+[Shopping List live version](https://endzelisp.github.io/shopping_list/)
 
 I will not longer add any other feature to this project, instead soon I will start a new one with some additional cool stuff.
